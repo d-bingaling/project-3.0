@@ -11,48 +11,33 @@
                     "widget_type": "prt"
                 }
             },
+
             {
-                "prod_company_phone": {
+                "percentages_additional_uses": {
                     "acl": "deal_memo",
                     "args": {
-                        "dynamic": true
+
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "USA Basic Cable 10%"
+                            ],
+                            [
+                                2,
+                                "UK Video 5%"
+                            ],
+                            [
+                                3,
+                                "US Video 4%"
+                            ]
+                        ]
                     },
-                    "label": "Production company phone",
-                    "widget_type": "string"
-                }
-            },
-            {
-                "designated_base_phone": {
-                    "acl": "deal_memo",
-                    "args": {
-                        "dynamic": true
-                    },
-                    "label": "Designated base phone",
-                    "widget_type": "string"
-                }
-            },
-            {
-                "production_number": {
-                    "acl": "deal_memo",
-                    "args": {
-                        "dynamic": true
-                    },
-                    "label": "Production number",
-                    "widget_type": "string"
-                }
-            },
-            {
-                "production_email": {
-                    "acl": "deal_memo",
-                    "args": {
-                        "dynamic": true
-                    },
-                    "label": "Production email",
-                    "widget_type": "string"
+                    "label": "Percentages for additional uses",
+                    "widget_type": "multiselect"
                 }
             }
-
-
 
         ]
     }]

@@ -1,0 +1,26 @@
+
+{# Total engagement fee #}
+{% set total_engagement_fee = ((deal_memo.meta.get('number_engagement_fees', decimal.Decimal("0")) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal("0"))) * deal_memo.meta.get('engagement_fee', decimal.Decimal("0"))).quantize(decimal.Decimal(".01")) %}
+
+{# Total production day payments #}
+{% set total_production_payments = (deal_memo.meta.get('production_day_payments', decimal.Decimal("0")) * decimal.Decimal("61.50")).quantize(decimal.Decimal(".01")) %}
+
+{# Engagement fee payment - Section G total #}
+{% set engagement_fee_payment = (total_engagement_fee + total_production_payments).quantize(decimal.Decimal(".01")) %}
+
+
+
+
+
+<table>
+    <tbody>
+        <tr>
+            <td>USA Basic Cable</td>
+            <td>10%</td>
+            <td>{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.10")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
