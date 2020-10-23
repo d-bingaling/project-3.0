@@ -1,0 +1,354 @@
+{
+    "percentages_additional_uses": {
+        "acl": "only_internal",
+        "args": {
+            "controls": [
+                "first_USA",
+                "second_USA",
+                "thereafter",
+                "first_USA_non_prime",
+                "second_non_prime",
+                "USA_PBS_net",
+                "USA_full_syn",
+                "USA_basic_cable",
+                "USA_major_pay",
+                "USA_ott_vod_rights",
+                "ltd_theatric_uk",
+                "ltd_theatric_us",
+                "full_theatric_row",
+                "uk_video",
+                "us_video",
+                "row_video",
+                "uk_dto_dtr",
+                "us_dto_dtr",
+                "row_dto_dtr"
+
+
+            ],
+            "dynamic": true,
+            "nullable": false,
+            "options": [
+                [
+                    1,
+                    "1st USA Prime Time Network TX - 75%"
+                ],
+                [
+                    2,
+                    "2nd USA Prime Time Network TX - 25%"
+                ],
+                [
+                    3,
+                    "Thereafter per TX"
+                ],
+                [
+                    4,
+                    "1st USA non Prime Time Network TX"
+                ],
+                [
+                    5,
+                    "2nd & each subsequent non Prime Time TX"
+                ],
+                [
+                    6,
+                    "USA PBS Network"
+                ],
+                [
+                    7,
+                    "USA Full Syndication"
+                ],
+                [
+                    8,
+                    "USA Basic Cable"
+                ],
+                [
+                    9,
+                    "USA Major Pay"
+                ],
+                [
+                    10,
+                    "USA OTT VOD Rights"
+                ],
+                [
+                    11,
+                    "Limited Theatric (UK)"
+                ],
+                [
+                    12,
+                    "Limited Theatric (USA)"
+                ],
+                [
+                    13,
+                    "Limited Theatric (Rest of World)"
+                ],
+                [
+                    14,
+                    "UK Video"
+                ],
+                [
+                    15,
+                    "US Video"
+                ],
+                [
+                    16,
+                    "Rest of World Video"
+                ],
+                [
+                    17,
+                    "UK DTO/DTR"
+                ],
+                [
+                    18,
+                    "US DTO/DTR"
+                ],
+                [
+                    19,
+                    "ROW DTO/DTR"
+                ]
+            ]
+        },
+        "label": "Percentages for additional uses",
+        "widget_type": "multiselect"
+    }
+},
+
+
+
+
+
+{
+    "first_USA": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 1 in deal_memo.meta['percentages_additional_uses'] %} 1st USA Prime Time Network TX - 75% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.75\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+
+        "widget_type": "jinja2"
+    }
+}, {
+    "second_USA": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 2 in deal_memo.meta['percentages_additional_uses'] %} 2nd USA Prime Time Network TX - 25% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "thereafter": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 3 in deal_memo.meta['percentages_additional_uses'] %} Thereafter per TX - 15% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+
+        "widget_type": "jinja2"
+    }
+}, {
+    "first_USA_non_prime": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 4 in deal_memo.meta['percentages_additional_uses'] %} 1st USA non Prime Time Network TX - 35% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "second_non_prime": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 5 in deal_memo.meta['percentages_additional_uses'] %} 2nd & each subsequent non Prime Time TX - 7.5% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.075\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "USA_PBS_net": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 6 in deal_memo.meta['percentages_additional_uses'] %} USA PBS Network - 15% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "USA_full_syn": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 7 in deal_memo.meta['percentages_additional_uses'] %} USA Full Syndication - 25% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "USA_basic_cable": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 8 in deal_memo.meta['percentages_additional_uses'] %} USA Basic Cable - 10% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "USA_major_pay": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 9 in deal_memo.meta['percentages_additional_uses'] %} USA Major Pay - 30% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.30\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "USA_ott_vod_rights": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 10 in deal_memo.meta['percentages_additional_uses'] %} USA OTT VOD Rights - 3% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.03\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "ltd_theatric_uk": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 11 in deal_memo.meta['percentages_additional_uses'] %} Limited Theatric (UK) - 14% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "ltd_theatric_us": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 12 in deal_memo.meta['percentages_additional_uses'] %} Limited Theatric (USA) - 14% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "full_theatric_row": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 13 in deal_memo.meta['percentages_additional_uses'] %} Full Theatric (Rest of World) - 14% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "uk_video": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 14 in deal_memo.meta['percentages_additional_uses'] %} UK Video - 5% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "us_video": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 15 in deal_memo.meta['percentages_additional_uses'] %} US Video - 4% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "row_video": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 16 in deal_memo.meta['percentages_additional_uses'] %} Rest of World Video - 4% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "uk_dto_dtr": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 17 in deal_memo.meta['percentages_additional_uses'] %} UK DTO/DTR - 2% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "us_dto_dtr": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 18 in deal_memo.meta['percentages_additional_uses'] %} US DTO/DTR - 2% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+}, {
+    "row_dto_dtr": {
+        "acl": "default",
+        "args": {
+            "template": "{% if 19 in deal_memo.meta['percentages_additional_uses'] %} ROW DTO/DTR - 2% - £ <strong>{{ ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
+        },
+        "widget_type": "jinja2"
+    }
+},
+
+
+
+
+
+
+
+{ % if 1 in deal_memo.meta['percentages_additional_uses'] % } {
+    {
+        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.75\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                        { % if 2 in deal_memo.meta['percentages_additional_uses'] % } {
+                            {
+                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                { % if 3 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                    {
+                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                        { % if 4 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                            {
+                                                                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                { % if 5 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                    {
+                                                                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.075\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                        { % if 6 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                            {
+                                                                                                                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                { % if 7 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                    {
+                                                                                                                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                        { % if 8 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                            {
+                                                                                                                                                                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                { % if 9 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                    {
+                                                                                                                                                                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.30\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                        { % if 10 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.03\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                { % if 11 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                                        { % if 12 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                                                                { % if 13 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                                                                                        { % if 14 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                                                                                                                { % if 15 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                                                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                                                                                                                                        { % if 16 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                                                                                                                                                                { % if 17 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                                                                                                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                                                                                                                                                                                        { % if 18 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                                                                                                                                                                                            {
+                                                                                                                                                                                                                                                                                                                                                                                                                                ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}
+
+                                                                                                                                                                                                                                                                                                                                                                                                                                                { % if 19 in deal_memo.meta['percentages_additional_uses'] % } {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                    {
+                                                                                                                                                                                                                                                                                                                                                                                                                                                        ((deal_memo.meta.get('stunts_daily_fee', decimal.Decimal(\"0\"))) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}

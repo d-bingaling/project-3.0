@@ -1,0 +1,2350 @@
+
+{# SID GENTLE CAST - PACT EQUITY #}
+
+{# ========== VARIABLES START ========== #}
+
+{# GENERAL VARIABLES - THESE NEED TO BE SET #}
+
+	{# Note: The total for Section I is searated with the title [Section I - Part B total]. There is a minimum £50 total for this section #}
+
+	{% set debugging = 'hide' %} {# For use with debugging - Set to [show] to show debugging table  #}
+
+
+{# MACROS - DO NOT CHANGE THESE #}
+
+{# DO NOT EDIT #}
+	{% macro warning(field) -%} {# To handle warnings #}
+
+	    <span class="warning">Missing information - {{ field.capitalize() }}</span>
+
+	{%- endmacro %}
+
+{# DO NOT EDIT #}
+	{% macro dmif(widget_id, warning) %} {# Convert decimal into human readable - do not input as a string % #}
+
+	    {% if deal_memo.meta[widget_id] %}{{ deal_memo.meta[widget_id] }}{% else %}<span class="warning">Missing information - {{warning}}</span>{% endif %}
+
+	{% endmacro %}	
+
+{# DO NOT EDIT #}
+	{% macro percent(value) -%} {# Convert decimal into human readable - do not input as a string % #}
+
+	    {{ (((value * 100)|string).rstrip('0')).rstrip('.') }}{# This strips out any trailing [0] If there is a leftover [.] it will remove that as well (75.00% = 75% and 7.2500% = 7.25%) #}
+
+	{%- endmacro %}
+
+{# DO NOT EDIT #}
+	{% macro date(date_widget_id) -%} {# insert a date with formatting dd/mm/yyyy #}
+		{% if deal_memo.meta[date_widget_id] %}
+	    	{{ deal_memo.meta[date_widget_id].strftime('%d/%m/%Y') }}
+	    {% else %}
+	    	{{ warning(date_widget_id).replace('_', ' ') }}
+	    {% endif %}
+
+	{%- endmacro %}
+
+{# DO NOT EDIT #}
+	{% macro comm_num(number) -%} {# Format number with commas every 1000s #}
+		{{ "£{:,}".format(number) }}
+	{%- endmacro %}
+
+	{# DO NOT EDIT #} {% set tick = '<strong class=\"large_tick\">&#10004;</strong>' %} {# To make ticks simpler #}
+
+	{# DO NOT EDIT #} {% set box = '<strong class=\"large_tick\">□</strong>' %} {# To make empty tick box simpler #}
+
+	{# DO NOT EDIT #} {% set zero = decimal.Decimal("0") %}
+
+
+
+
+	{# SECTION E - Dates #}
+
+		{# Settings for Section E - Part A #}
+
+			{# Total number of days for T8(1) and T8(2) #}
+			{# DO NOT EDIT #}
+				{% set eng_1 = deal_memo.meta.get('engagement_period_1_days', zero) %}
+				{% set eng_2 = deal_memo.meta.get('engagement_period_2_days', zero) %}
+				{% set eng_3 = deal_memo.meta.get('engagement_period_3_days', zero) %}
+				{% set eng_4 = deal_memo.meta.get('engagement_period_4_days', zero) %}
+				{% set eng_5 = deal_memo.meta.get('engagement_period_5_days', zero) %}
+				{% set eng_6 = deal_memo.meta.get('engagement_period_6_days', zero) %}
+				{% set eng_7 = deal_memo.meta.get('engagement_period_7_days', zero) %}
+				{% set eng_8 = deal_memo.meta.get('engagement_period_8_days', zero) %}
+				{% set eng_9 = deal_memo.meta.get('engagement_period_9_days', zero) %}
+				{% set eng_10 = deal_memo.meta.get('engagement_period_10_days', zero) %}
+
+			{# Total number of days #}
+			{# DO NOT EDIT #}
+				{% if deal_memo.meta.get('number_engagement_period') == 1 %}			{% set total_days = (eng_1) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 2 %}			{% set total_days = (eng_1 + eng_2) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 3 %}			{% set total_days = (eng_1 + eng_2 + eng_3) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 4 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 5 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 6 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 7 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 8 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7 + eng_8) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 9 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7 + eng_8 + eng_9) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 10 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7 + eng_8 + eng_9 + eng_10) %}
+				{% endif %}
+
+
+
+	{# SECTION F - Engagements #}
+
+		{# SECTION F - PART A #}
+			{% set episode_category = 'category_a' %} {# Set the episode category (SECTION F - PART A) --- SET BY - SET DATE  #}
+				{# Category A = category_a  #}
+				{# Category B = category_b  #}
+
+		{# SECTION F - PART D #}
+			{# Total engagement fee payable #}
+				{# DO NOT EDIT #} {# XXXXXX #} {% set total_engagement_payable = deal_memo.meta.get('number_engagement_fees', zero) + deal_memo.meta.get('additional_multi_episodic', zero) %}
+
+			{# Total engagement fee #}
+				{# DO NOT EDIT #} {# XXXXXX #} {% set total_engagement_fee = ((deal_memo.meta.get('number_engagement_fees', zero) + deal_memo.meta.get('additional_multi_episodic', zero)) * deal_memo.meta.get('engagement_fee', zero)).quantize(decimal.Decimal(".01")) %}
+
+		{# SECTION F - PART E #}
+			{% set prod_day_payment_rate = decimal.Decimal("61.50") %} {# PROBABLY DOESNT NEED TO CHANGE Set the production day payment rate (section F) This is £61.50 (as of 2020) #}
+
+			{# Total production day payments #}
+				{# DO NOT EDIT #} {# XXXXXX #} {% set total_production_payments = (deal_memo.meta.get('production_day_payments', zero) * prod_day_payment_rate).quantize(decimal.Decimal(".01")) %}
+
+
+	{# SECTION G - Production payments #}
+
+		{# Engagement fee payment - Section G total #}
+			{# DO NOT EDIT #} {# XXXXXX #} {% set engagement_fee_payment = (total_engagement_fee + total_production_payments).quantize(decimal.Decimal(".01")) %}
+
+	{# SECTION H - Nominated additional uses #}
+
+		{% set nom_add_uses_option = 'option_a' %} {# Set the nominated additional uses (section H) --- SET BY - SET DATE  #}
+			{# Option A = option_a  #}
+			{# Option B = option_b  #}
+
+		{% set nom_add_uses_base_percent = decimal.Decimal("0.35") %} {# PROBABLY DOESNT NEED TO CHANGE Set the nominated additional uses percent (section H) This is 35% (as of 2019) #}
+
+		{# SECTION H - OPTION B - PART C - TABLE #}
+
+			{% set HC01_percent = decimal.Decimal("0.75") %} 			{% set HC01_set = 0 %} {# 1st USA Prime Time Network TX #}
+			{% set HC02_percent = decimal.Decimal("0.35") %} 			{% set HC02_set = 0 %} {# 1st USA non PrimeTime Network TX #}
+			{% set HC03_percent = decimal.Decimal("0.15") %} 			{% set HC03_set = 0 %} {# USA PBS Network #}
+			{% set HC04_percent = decimal.Decimal("0.25") %} 			{% set HC04_set = 0 %} {# USA Full Syndication #}
+			{% set HC05_percent = decimal.Decimal("0.10") %} 			{% set HC05_set = 1 %} {# USA Basic Cable #}
+			{% set HC06_percent = decimal.Decimal("0.30") %} 			{% set HC06_set = 0 %} {# USA Major Pay #}
+			
+		{# SECTION H - OPTION B - PART C - CUSTOM TABLE - Use if there are additional table rows to include #}	
+
+			{% set HC07_percent = decimal.Decimal("0.1") %} 			{% set HC07_set = 0 %} {#  #}
+			{% set HC08_percent = decimal.Decimal("0.2") %} 			{% set HC08_set = 0 %} {#  #}
+			{% set HC09_percent = decimal.Decimal("0.3") %} 			{% set HC09_set = 0 %} {#  #}
+			{% set HC10_percent = decimal.Decimal("0.4") %} 			{% set HC10_set = 0 %} {#  #}
+			{% set HC11_percent = decimal.Decimal("0.5") %} 			{% set HC11_set = 0 %} {#  #}
+
+		{# SECTION H - PART C TOTALS #}
+
+			{# Sum of pre purchase table percentages #}
+				{# DO NOT EDIT #} {% set section_h_table_percent_total = ((HC01_percent * HC01_set) + (HC02_percent * HC02_set) + (HC03_percent * HC03_set) + (HC04_percent * HC04_set) + (HC05_percent * HC05_set) + (HC06_percent * HC06_set) + (HC07_percent * HC07_set) + (HC08_percent * HC08_set) + (HC09_percent * HC09_set) + (HC10_percent * HC10_set) + (HC11_percent * HC11_set)) %}
+
+			{# Section H - Total if option B is selected #}
+				{# This takes into account the minimum of 35% in section H - part B #}
+					{% if section_h_table_percent_total >= nom_add_uses_base_percent %}
+						{# DO NOT EDIT #} {% set section_h_total = (section_h_table_percent_total * engagement_fee_payment) %}
+					{% else %}
+						{# DO NOT EDIT #} {% set section_h_total = (engagement_fee_payment * nom_add_uses_base_percent) %}
+					{% endif %}
+			
+
+
+	{# SECTION I - Other additional uses #}
+
+		{# SECTION I - PART A - 2nd UK PRIMARY TX #}
+		
+
+
+			{% set IA01_percent = decimal.Decimal("0.55") %} 		 	{% set IA01_set = 0 %} {# Peak time #}
+			{% set IA02_percent = decimal.Decimal("0.275") %} 			{% set IA02_set = 0 %} {# Day time off peak #}
+			{% set IA03_percent = decimal.Decimal("0.1375") %} 			{% set IA03_set = 0 %} {# Night time off peak #}
+			
+			{# SECTION I - PART A - TOTALS #}
+
+				{# Total sum percentage [Section I - part A] #}
+					{# DO NOT EDIT #}
+						{% set section_ia_table_percent_total = ((IA01_percent * IA01_set) + (IA02_percent * IA02_set) + (IA03_percent * IA03_set)) %}
+
+
+		{# SECTION I - PART B - SHOWCASE PREMIER #}
+
+			{% set IB01_percent = decimal.Decimal("0.25") %} 			{% set IB01_set = 0 %} {# 3 Showcase premiers #} 
+			{% set IB02_percent = decimal.Decimal("0.10") %} 			{% set IB02_set = 0 %} {# 1 Showcase premier #}
+
+			{# SECTION I - PART B - TOTALS #}
+
+			{# DO NOT EDIT #}
+				{# IB02 - calculating minimum £50 #}
+					{% if IB02_set == 1 %}
+						{% if ((IB02_percent * IB02_set) * engagement_fee_payment) < 50 %}
+							{% set section_ib50_total = 50 %}
+						{% else %}
+							{% set section_ib50_total = (engagement_fee_payment * IB02_percent) %}
+						{% endif %}
+						
+					{% elif IB02_set == 0 %}
+						{% set section_ib50_total = zero %}
+					{% endif %}
+
+				{# Total sum percentage [Section I - part B] #}
+					{# DO NOT EDIT #} {% set section_ib_table_percent_total = ((IB01_percent * IB01_set)) %}
+
+
+
+		{# SECTION I - PART C - ADDITIONAL USES TABLE #}
+
+			{# SECTION I - PART C - STANDARD TABLE #}
+
+				{# Percentages in decimals #}								{# 0 = Not in use #} 
+																			{# 1 = In use #}
+
+				{% set IC01_percent = decimal.Decimal("0.35") %} 			{% set IC01_set = 0 %} {# Rest of world TV rights - 7 years #}
+				{% set IC02_percent = decimal.Decimal("0.75") %} 			{% set IC02_set = 0 %} {# 1st USA Prime time network TX #}
+				{% set IC03_percent = decimal.Decimal("0.25") %} 			{% set IC03_set = 0 %} {# 2nd USA Prime time network TX #}
+				{% set IC04_percent = decimal.Decimal("0.15") %} 			{% set IC04_set = 0 %} {# Thereafter per TX #}
+				{% set IC05_percent = decimal.Decimal("0.35") %} 			{% set IC05_set = 0 %} {# 1st USA non Prime time network TX #}
+				{% set IC06_percent = decimal.Decimal("0.075") %} 			{% set IC06_set = 0 %} {# 2nd & each subsequent non prime time network TX #}
+				{% set IC07_percent = decimal.Decimal("0.15") %} 			{% set IC07_set = 0 %} {# USA PBS Network #}
+				{% set IC08_percent = decimal.Decimal("0.25") %} 			{% set IC08_set = 0 %} {# USA Full sindication #}
+				{% set IC09_percent = decimal.Decimal("0.10") %} 			{% set IC09_set = 1 %} {# USA Basic cable #}
+				{% set IC10_percent = decimal.Decimal("0.30") %} 			{% set IC10_set = 0 %} {# USA Major pay #}
+				{% set IC11_percent = decimal.Decimal("0.03") %} 			{% set IC11_set = 0 %} {# USA OTT VOD Rights #}
+				{% set IC12_percent = decimal.Decimal("0.14") %} 			{% set IC12_set = 0 %} {# Limited Theatric UK #}
+				{% set IC13_percent = decimal.Decimal("0.14") %} 			{% set IC13_set = 0 %} {# Limited Theatric USA #}
+				{% set IC14_percent = decimal.Decimal("0.14") %} 			{% set IC14_set = 0 %} {# Full Theatric Rest of world #}
+				{% set IC15_percent = decimal.Decimal("0.05") %} 			{% set IC15_set = 1 %} {# UK Video #}
+				{% set IC16_percent = decimal.Decimal("0.04") %} 			{% set IC16_set = 1 %} {# US Video #}
+				{% set IC17_percent = decimal.Decimal("0.04") %} 			{% set IC17_set = 1 %} {# Rest of world video #}
+				{% set IC18_percent = decimal.Decimal("0.02") %} 			{% set IC18_set = 1 %} {# UK DTO/DTR #}
+				{% set IC19_percent = decimal.Decimal("0.02") %} 			{% set IC19_set = 1 %} {# US DTO/DTR #}
+				{% set IC20_percent = decimal.Decimal("0.02") %} 			{% set IC20_set = 1 %} {# Rest of world DTO/DTR #}
+
+			{# SECTION I - PART C - CUSTOM TABLE - Use if there are additional table rows to include #}		
+
+				{% set IC21_percent = decimal.Decimal("0.15") %} 			{% set IC21_set = 0 %} {# Additional note clause #}
+				{% set IC22_percent = decimal.Decimal("0.1") %} 			{% set IC22_set = 0 %} {#  #}
+				{% set IC23_percent = decimal.Decimal("0.1") %} 			{% set IC23_set = 0 %} {#  #}
+				{% set IC24_percent = decimal.Decimal("0.1") %} 			{% set IC24_set = 0 %} {#  #}
+				{% set IC25_percent = decimal.Decimal("0.1") %} 			{% set IC25_set = 0 %} {#  #}
+				{% set IC26_percent = decimal.Decimal("0.1") %} 			{% set IC26_set = 0 %} {#  #}
+				{% set IC27_percent = decimal.Decimal("0.1") %} 			{% set IC27_set = 0 %} {#  #}
+				{% set IC28_percent = decimal.Decimal("0.1") %} 			{% set IC28_set = 0 %} {#  #}
+				{% set IC29_percent = decimal.Decimal("0.1") %} 			{% set IC29_set = 0 %} {#  #}
+				{% set IC30_percent = decimal.Decimal("0.1") %} 			{% set IC30_set = 0 %} {#  #}
+
+
+
+			{# SECTION I - PART C - TOTALS #}
+
+				{# Total percentage due from the standard table [Section I - part C] #}
+					{# DO NOT EDIT #} {% set section_ic_standard_table_percent_total = ((IC01_percent * IC01_set) + (IC02_percent * IC02_set) + (IC03_percent * IC03_set) + (IC04_percent * IC04_set) + (IC05_percent * IC05_set) + (IC06_percent * IC06_set) + (IC07_percent * IC07_set) + (IC08_percent * IC08_set) + (IC09_percent * IC09_set) + (IC10_percent * IC10_set) + (IC11_percent * IC11_set) + (IC12_percent * IC12_set) + (IC13_percent * IC13_set) + (IC14_percent * IC14_set) + (IC15_percent * IC15_set) + (IC16_percent * IC16_set) + (IC17_percent * IC17_set) + (IC18_percent * IC18_set) + (IC19_percent * IC19_set) + (IC20_percent * IC20_set)) %}
+
+
+				{# Total percentage due from the custom table [Section I - part C] #}
+					{# DO NOT EDIT #} {% set section_ic_custom_table_percent_total = ((IC21_percent * IC21_set) + (IC22_percent * IC22_set) + (IC23_percent * IC23_set) + (IC24_percent * IC24_set) + (IC25_percent * IC25_set) + (IC26_percent * IC26_set) + (IC27_percent * IC27_set) + (IC28_percent * IC28_set) + (IC29_percent * IC29_set) + (IC30_percent * IC30_set)) %}
+				
+
+				{# Total percentage due - standard + custom [Section I - part C] #}
+					{# DO NOT EDIT #} {% set section_i_part_c_total = (section_ic_standard_table_percent_total + section_ic_custom_table_percent_total) %}
+
+
+
+
+		{# SECTION I - PART D - SVOD PRE PURCHASE #}
+
+			{# SECTION I - PART D - TABLE #}
+
+				{% set ID01_percent = decimal.Decimal("0.07") %} 			{% set ID01_set = 0 %}{# Primary window - UK-SVOD - 5 years - 7% #}
+				{% set ID02_percent = decimal.Decimal("0.08") %} 			{% set ID02_set = 1 %} {# Primary window - UK-SVOD - 7 years - 8% #}
+				{% set ID03_percent = decimal.Decimal("0.09") %} 			{% set ID03_set = 0 %} {# Primary window - UK-SVOD - 10 years - 9% #}
+				{% set ID04_percent = decimal.Decimal("0.11") %} 			{% set ID04_set = 0 %} {# Primary window - UK-SVOD - 15 years - 11% #}
+					{# DO NOT EDIT #}	{% if (ID01_set + ID02_set + ID03_set + ID04_set) == 1 %}
+											{% set _01_primary_uk_svod = ((ID01_percent * ID01_set) + (ID02_percent * ID02_set) + (ID03_percent * ID03_set) + (ID04_percent * ID04_set)) %}
+										{% else %}{% set _01_primary_uk_svod = 0 %}{% endif %}
+
+
+				{% set ID05_percent = decimal.Decimal("0.15") %} 			{% set ID05_set = 0 %} {# Primary window - USA-SVOD - 5 years - 15% #}
+				{% set ID06_percent = decimal.Decimal("0.16") %} 			{% set ID06_set = 1 %} {# Primary window - USA-SVOD - 7 years  - 16% #}
+				{% set ID07_percent = decimal.Decimal("0.18") %} 			{% set ID07_set = 0 %} {# Primary window - USA-SVOD - 10 years - 18% #}
+				{% set ID08_percent = decimal.Decimal("0.21") %} 			{% set ID08_set = 0 %} {# Primary window - USA-SVOD - 15 years - 21% #}
+					{# DO NOT EDIT #}	{% if (ID05_set + ID06_set + ID07_set + ID08_set) == 1 %}
+											{% set _02_primary_us_svod = ((ID05_percent * ID05_set) + (ID06_percent * ID06_set) + (ID07_percent * ID07_set) + (ID08_percent * ID08_set)) %}
+										{% else %}{% set _02_primary_us_svod = 0 %}{% endif %}					
+
+
+				{% set ID09_percent = decimal.Decimal("0.16") %} 			{% set ID09_set = 0 %} {# Primary window - North America (US and Canada) - 5 years - 16% #}
+				{% set ID10_percent = decimal.Decimal("0.17") %} 			{% set ID10_set = 0 %} {# Primary window - North America (US and Canada) - 7 years - 17% #}
+				{% set ID11_percent = decimal.Decimal("0.19") %} 			{% set ID11_set = 0 %} {# Primary window - North America (US and Canada) - 10 years - 19% #}
+				{% set ID12_percent = decimal.Decimal("0.22") %} 			{% set ID12_set = 0 %} {# Primary window - North America (US and Canada) - 15 years - 22% #}
+					{# DO NOT EDIT #}	{% if (ID09_set + ID10_set + ID11_set + ID12_set) == 1 %}
+											{% set _03_primary_north_amer_svod = ((ID09_percent * ID09_set) + (ID10_percent * ID10_set) + (ID11_percent * ID11_set) + (ID12_percent * ID12_set)) %}
+										{% else %}{% set _03_primary_north_amer_svod = 0 %}{% endif %}							
+
+
+				{% set ID13_percent = decimal.Decimal("0.06") %} 			{% set ID13_set = 0 %} {# Secondary window holdback - UK - 7 years - 6m - 6% #}
+				{% set ID14_percent = decimal.Decimal("0.04") %} 			{% set ID14_set = 0 %} {# Secondary window holdback - UK - 7 years - 12m - 4% #}
+				{% set ID15_percent = decimal.Decimal("0.07") %} 			{% set ID15_set = 0 %} {# Secondary window holdback - UK - 10 years - 6m - 7% #}
+				{% set ID16_percent = decimal.Decimal("0.05") %} 			{% set ID16_set = 0 %} {# Secondary window holdback - UK - 10 years - 12m - 5% #}
+					{# DO NOT EDIT #}	{% if (ID13_set + ID14_set + ID15_set + ID16_set) == 1 %}
+											{% set _04_secondary_hold_uk_svod = ((ID13_percent * ID13_set) + (ID14_percent * ID14_set) + (ID15_percent * ID15_set) + (ID16_percent * ID16_set)) %}
+										{% else %}{% set _04_secondary_hold_uk_svod = 0 %}{% endif %}						
+
+
+				{% set ID17_percent = decimal.Decimal("0.10") %} 			{% set ID17_set = 0 %} {# Secondary window holdback - US - 7 years - 6m - 10% #}
+				{% set ID18_percent = decimal.Decimal("0.08") %} 			{% set ID18_set = 0 %} {# Secondary window holdback - US - 7 years - 12m - 8% #}
+				{% set ID19_percent = decimal.Decimal("0.12") %} 			{% set ID19_set = 0 %} {# Secondary window holdback - US - 10 years - 6m - 12% #}
+				{% set ID20_percent = decimal.Decimal("0.10") %} 			{% set ID20_set = 0 %} {# Secondary window holdback - US - 10 years - 12m - 10% #}
+					{# DO NOT EDIT #}	{% if (ID17_set + ID18_set + ID19_set + ID20_set) == 1 %}
+											{% set _05_secondary_hold_us_svod = ((ID17_percent * ID17_set) + (ID18_percent * ID18_set) + (ID19_percent * ID19_set) + (ID20_percent * ID20_set)) %}
+										{% else %}{% set _05_secondary_hold_us_svod = 0 %}{% endif %}
+
+
+				{% set ID21_percent = decimal.Decimal("0.11") %} 			{% set ID21_set = 0 %} {# Secondary window holdback - North America (US and Canada) - 7 years - 6m - 11% #}
+				{% set ID22_percent = decimal.Decimal("0.09") %} 			{% set ID22_set = 0 %} {# Secondary window holdback - North America (US and Canada) - 7 years - 12m - 9% #}
+				{% set ID23_percent = decimal.Decimal("0.135") %} 			{% set ID23_set = 0 %} {# Secondary window holdback - North America (US and Canada) - 10 years - 6m - 13.5% #}
+				{% set ID24_percent = decimal.Decimal("0.115") %} 			{% set ID24_set = 0 %} {# Secondary window holdback - North America (US and Canada) - 10 years - 12m - 11.5% #}
+					{# DO NOT EDIT #}	{% if (ID21_set + ID22_set + ID23_set + ID24_set) == 1 %}
+											{% set _06_secondary_hold_north_amer_svod = ((ID21_percent * ID21_set) + (ID22_percent * ID22_set) + (ID23_percent * ID23_set) + (ID24_percent * ID24_set)) %}
+										{% else %}{% set _06_secondary_hold_north_amer_svod = 0 %}{% endif %}
+
+
+				{% set ID25_percent = decimal.Decimal("0.06") %} 			{% set ID25_set = 0 %} {# Second window - UK SVOD - 5 years - 6% #}
+				{% set ID26_percent = decimal.Decimal("0.07") %} 			{% set ID26_set = 0 %} {# Second window - UK SVOD - 7 years - 7% #}
+				{% set ID27_percent = decimal.Decimal("0.08") %} 			{% set ID27_set = 0 %} {# Second window - UK SVOD - 10 years - 8% #}
+				{% set ID28_percent = decimal.Decimal("0.10") %} 			{% set ID28_set = 0 %} {# Second window - UK SVOD - 15 years - 10% #}
+					{# DO NOT EDIT #}	{% if (ID25_set + ID26_set + ID27_set + ID28_set) == 1 %}
+											{% set _07_secondary_uk_svod = ((ID25_percent * ID25_set) + (ID26_percent * ID26_set) + (ID27_percent * ID27_set) + (ID28_percent * ID28_set)) %}
+										{% else %}{% set _07_secondary_uk_svod = 0 %}{% endif %}
+
+
+				{% set ID29_percent = decimal.Decimal("0.13") %} 			{% set ID29_set = 0 %} {# Second window - US SVOD inc OTT SVOD rights - 5 years - 13% #}
+				{% set ID30_percent = decimal.Decimal("0.14") %} 			{% set ID30_set = 0 %} {# Second window - US SVOD inc OTT SVOD rights - 7 years - 14% #}
+				{% set ID31_percent = decimal.Decimal("0.16") %} 			{% set ID31_set = 0 %} {# Second window - US SVOD inc OTT SVOD rights - 10 years - 16% #}
+				{% set ID32_percent = decimal.Decimal("0.19") %} 			{% set ID32_set = 0 %} {# Second window - US SVOD inc OTT SVOD rights - 15 years - 19% #}
+					{# DO NOT EDIT #}	{% if (ID29_set + ID30_set + ID31_set + ID32_set) == 1 %}
+											{% set _08_secondary_us_svod = ((ID29_percent * ID29_set) + (ID30_percent * ID30_set) + (ID31_percent * ID31_set) + (ID32_percent * ID32_set)) %}
+										{% else %}{% set _08_secondary_us_svod = 0 %}{% endif %}
+
+				
+				{% set ID33_percent = decimal.Decimal("0.14") %} 			{% set ID33_set = 0 %} {# Second window - North America (US and Canada) SVOD inc OTT SVOD rights - 5 years - 14% #}
+				{% set ID34_percent = decimal.Decimal("0.15") %} 			{% set ID34_set = 0 %} {# Second window - North America (US and Canada) SVOD inc OTT SVOD rights - 7 years - 15% #}
+				{% set ID35_percent = decimal.Decimal("0.17") %} 			{% set ID35_set = 0 %} {# Second window - North America (US and Canada) SVOD inc OTT SVOD rights - 10 years - 17% #}
+				{% set ID36_percent = decimal.Decimal("0.20") %} 			{% set ID36_set = 0 %} {# Second window - North America (US and Canada) SVOD inc OTT SVOD rights - 15 years - 20% #}
+					{# DO NOT EDIT #}	{% if (ID33_set + ID34_set + ID35_set + ID36_set) == 1 %}
+											{% set _09_secondary_north_amer_svod = ((ID33_percent * ID33_set) + (ID34_percent * ID34_set) + (ID35_percent * ID35_set) + (ID36_percent * ID36_set)) %}
+										{% else %}{% set _09_secondary_north_amer_svod = 0 %}{% endif %}					
+
+
+				{% set ID37_percent = decimal.Decimal("0.02") %} 			{% set ID37_set = 0 %} {# ROW SVOD - 7 to 10 years - 2% #}
+				{% set ID38_percent = decimal.Decimal("0.05") %} 			{% set ID38_set = 0 %} {# ROW SVOD - 7 to 15 years - 5% #}
+					{# DO NOT EDIT #}	{% if (ID37_set + ID38_set) == 1 %}
+											{% set _10_secondary_us_svod = ((ID37_percent * ID37_set) + (ID38_percent * ID38_set)) %}
+										{% else %}{% set _10_secondary_us_svod = 0 %}{% endif %}					
+
+
+			{# SVOD pre-purchase works on a given number of years. Set the pre purchase number of years here if any of the following are due #}
+				{% set ID39_percent = decimal.Decimal("0.0025") %} 			{% set ID39_years = decimal.Decimal("4") %}		{% set ID39_set = 0 %} {# SVOD Pre-purchased - UK - 0.25% #}
+				{% set ID40_percent = decimal.Decimal("0.0050") %} 			{% set ID40_years = decimal.Decimal("4") %}		{% set ID40_set = 0 %} {# SVOD Pre-purchased - US - 0.5% #}
+				{% set ID41_percent = decimal.Decimal("0.0025") %} 			{% set ID41_years = decimal.Decimal("4") %}		{% set ID41_set = 0 %} {# SVOD Pre-purchased - ROW - 0.25% #}
+					{# DO NOT EDIT #} {% set _11_secondary_us_svod = (((ID39_percent * ID39_set) * ID39_years) + ((ID40_percent * ID40_set) * ID40_years) + ((ID41_percent * ID41_set) * ID41_years)) %}
+
+
+			{# SECTION I - PART D - CUSTOM TABLE - Use if there are additional table rows to include #}		
+
+				{% set ID42_percent = decimal.Decimal("0.1") %} 			{% set ID42_set = 0 %} {#  #}
+				{% set ID43_percent = decimal.Decimal("0.1") %} 			{% set ID43_set = 0 %} {#  #}
+				{% set ID44_percent = decimal.Decimal("0.1") %} 			{% set ID44_set = 0 %} {#  #}
+				{% set ID45_percent = decimal.Decimal("0.1") %} 			{% set ID45_set = 0 %} {#  #}
+				{% set ID46_percent = decimal.Decimal("0.1") %} 			{% set ID46_set = 0 %} {#  #}
+				{% set ID47_percent = decimal.Decimal("0.1") %} 			{% set ID47_set = 0 %} {#  #}
+				{% set ID48_percent = decimal.Decimal("0.1") %} 			{% set ID48_set = 0 %} {#  #}
+				{% set ID49_percent = decimal.Decimal("0.1") %} 			{% set ID49_set = 0 %} {#  #}
+				{% set ID50_percent = decimal.Decimal("0.1") %} 			{% set ID50_set = 0 %} {#  #}							
+
+
+			{# SECTION I - PART D - TOTALS #}
+
+				{# Total percentage due from the standard table [Section I - part D] #}
+					{# DO NOT EDIT #} {% set section_id_standard_table_percent_total = (_01_primary_uk_svod + _02_primary_us_svod + _03_primary_north_amer_svod + _04_secondary_hold_uk_svod + _05_secondary_hold_us_svod + _06_secondary_hold_north_amer_svod + _07_secondary_uk_svod + _08_secondary_us_svod + _09_secondary_north_amer_svod + _10_secondary_us_svod + _11_secondary_us_svod) %}
+					
+
+				{# Total percentage due from the custom table [Section I - part D] #}
+					{# DO NOT EDIT #} {% set section_id_custom_percent_table_total = ((ID42_percent * ID42_set) + (ID43_percent * ID43_set) + (ID44_percent * ID44_set) + (ID45_percent * ID45_set) + (ID46_percent * ID46_set) + (ID47_percent * ID47_set) + (ID48_percent * ID48_set) + (ID49_percent * ID49_set) + (ID50_percent * ID50_set)) %}
+
+
+				{# Total percentage due - standard + custom [Section I - part D] #}
+					{# DO NOT EDIT #} {% set section_i_part_d_total = (section_id_standard_table_percent_total + section_id_custom_percent_table_total) %}
+
+				
+				{# Section I total #}
+					{% set section_i_total = (((section_ia_table_percent_total + section_ib_table_percent_total + section_i_part_c_total + section_i_part_d_total) * engagement_fee_payment) + section_ib50_total).quantize(decimal.Decimal(".01"), rounding=decimal.ROUND_UP) %}
+
+
+			
+
+	{# SECTION J - Rehearsals #}
+
+		{# If something needed to go here it would be in here. #}
+
+	{# SECTION K - Total gauranteed minimum payment #}
+
+		{# Alex made all of this. #}
+
+	{# SECTION M - Pension #}
+
+
+
+
+{# ========== VARIABLES END ========== #}
+
+
+
+
+
+
+
+
+
+{# ========== CONFIGURATION WARNINGS ========== #}
+
+	{# ========== Episode category ========== #}
+		{% if episode_category != 'category_a' and episode_category != 'category_b' %}
+
+			{{ warning('Episode category has not been correctly defined as a variable in section F') }}
+
+		{% endif %}	
+
+	{# ========== Nominated addditional uses variable ========== #}
+		{% if nom_add_uses_option != 'option_a' and nom_add_uses_option != 'option_b' %}
+
+			{{ warning('Nominated additionl uses has not been correctly defined as a variable in section H') }}
+
+		{% endif %}
+
+	
+
+
+
+{% include 'pact_logo' %}
+
+
+
+
+
+
+
+<p class='center'><strong>STANDARD FORM OF ENGAGEMENT FOR ARTISTS IN TELEVISION PRODUCTION</strong></p>
+<p class ='center'>in accordance with the<br />
+PACT/Equity Television Production Agreement<br />
+(hereinafter referred to as the Agreement)<br />
+effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 January 2019.</p>
+
+
+
+
+
+
+<table class='top'>
+    <tbody>
+        <tr>
+            <td><p><strong>THIS CONTRACT MADE ON</strong> {{ datetime.today().strftime('%d/%m/%Y') }}<br />incorporating the terms and conditions of the Agreement</p></td>
+            <td><strong>PRODUCTION No: {{ deal_memo.project_record.project.settings.get('production_number', warning('production number')) }}</strong></td>
+        </tr>
+    </tbody>
+</table> 
+<hr noshade>
+<br />
+
+{# SECTION A A A A A A A A A A A - SECTION A A A A A A A A A A A A #}
+
+<table>
+    <tbody>
+        <tr>
+            <td>
+            <p><strong>Section A</strong></p>
+            <p>
+                Production Company: {{ deal_memo.project_record.project.production_company.name }}<br />
+                Address: {% if deal_memo.project_record.project.production_company.address %}{{ deal_memo.project_record.project.production_company.address.replace('/n', ',') }}{% else %}{{ warning('production company address')}}{% endif %}<br />
+                Designated Base: {{ deal_memo.project_record.project.settings.get('production_base', warning('designated base')) }}<br />
+				Email Address: {{  deal_memo.project_record.project.settings.get('production_email', warning('prod company email')) }}
+            </p>
+            </td>
+            <td>
+            <p><br /></p>
+                <p class='right'>Phone No: {{  deal_memo.project_record.project.settings.get('prod_company_phone', warning('prod company phone')) }}</p>
+                <p class='right'>Phone No: {{ deal_memo.project_record.project.settings.get('designated_base_phone', warning('designated base phone')) }}</p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr noshade>
+
+<br />
+
+
+
+
+
+
+
+
+
+
+{# SECTION B SECTION B B B B B B B B B B SECTION B B B B B B B B #}
+
+<table>
+    <tbody>
+        <tr>
+            <td>
+                <p><strong>Section B</strong></p>
+                <p>Artist: {{ deal_memo.meta.get('firstname', warning('first name')) }} {{ deal_memo.meta.get('lastname', warning('last name')) }}<br />
+                Address: {{ deal_memo.meta['address1'] or warning('address') }}, 
+                {% if deal_memo.meta['address2'] %}{{ deal_memo.meta.get('address2') }}, {% endif %}
+                {% if deal_memo.meta['address3'] %}{{ deal_memo.meta.get('address3') }}, {% endif %}
+                {% if deal_memo.meta['uk_address'] == 'uk' %}{{ deal_memo['address_county'] or warning('county')}}, {% endif %}
+                {{ deal_memo.meta['postcode'] or warning('postcode') }}<br />
+				Email Address: {{ deal_memo.meta['email'] or warning('email') }}</p>
+            </td>    
+            <td class='right'>     
+                Phone No: {{ deal_memo.meta['crew_phone'] or warning('phone number') }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+<hr noshade>
+<br />
+
+
+
+
+
+
+
+
+{# SECTION C C C C C C C C C SECTION C C C C C C C C C C C C C C C #}
+
+
+<table>
+    <tbody>
+        <tr>
+            <td>
+            <p><strong>Section C</strong></p>
+            <p>
+                Agent: {{ deal_memo.meta['agency_name'] or warning('agency name')}} (attention: {{ deal_memo.meta['agent_name'] or warning('agent name') }})<br />
+                Address: {{ deal_memo.meta['agent_address'] or warning('agent address') }}<br />
+				Email Address: {{ deal_memo.meta['agent_email'] or warning('agent email') }}
+            </p>
+            </td>
+            <td class='right'>
+                Phone No: {{ deal_memo.meta['agent_phone'] or warning('agent phone') }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr noshade>
+<br />
+
+
+{# SECTION D D D D D D D D D D D D D SECTION D D D D D D D D D D D #}
+
+<table>
+    <tbody>
+        <tr>
+            <td>
+            <p><strong>Section D</strong></p>
+            <p>
+                Part: {{ deal_memo.meta['character_name'] or warning('character name / part') }}<br />
+                Production: {% if deal_memo.project_record.project.name %}{{ deal_memo.project_record.project.name }}{% else %}{{ warning('project name')}}{% endif %}
+            </p>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<hr noshade>
+<br />
+
+
+
+
+
+
+
+{# SECTION E E E E E E E E SECTION E E E E E E E E SECTION E E E E #}
+
+<p><strong>Section E</strong></p>
+
+
+{% if deal_memo.meta['engagement_period'] == 'clause_t8_1_and_2' %}
+
+	<p>The Producer shall have first call on the Artist's services for a period beginning on the first day on which the Artist shall, following a call from the Producer, attend to render services in the filming/recording of the Artist's part for the following nominated and/or unspecified period(s) in accordance with the provisions of Clause (T8)1 and 2:</p>
+
+	<table class="indent top table_j">
+		<tbody>
+			<tr>
+				<td></td>
+				<td><strong>Dates of engagement</strong></td>
+				<td></td>
+				<td><strong>Number of days</strong></td>
+			</tr>
+
+<!-- ONE ENGAGEMENT -->
+
+			<tr>
+				<td>i)</td>
+				<td>From: {{ date('start_date') }}</td>
+				<td>To: {{ date('leaving_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_1_days', warning("Engagement i - Days")) }}</td>
+			</tr>
+
+	{% if 'number_engagement_period' in deal_memo.meta %}
+
+<!-- TWO ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 2 %}
+
+			<tr>
+				<td>ii)</td>
+				<td>From: {{ date('engagement_period_2_start_date') }}</td>
+				<td>To: {{ date('engagement_period_2_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_2_days', warning("Engagement ii - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- THREE ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 3 %}
+
+			<tr>
+				<td>iii)</td>
+				<td>From: {{ date('engagement_period_3_start_date') }}</td>
+				<td>To: {{ date('engagement_period_3_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_3_days', warning("Engagement iii - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- FOUR ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 4 %}
+
+			<tr>
+				<td>iv)</td>
+				<td>From: {{ date('engagement_period_4_start_date') }}</td>
+				<td>To: {{ date('engagement_period_4_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_4_days', warning("Engagement iv - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- FIVE ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 5 %}
+
+			<tr>
+				<td>v)</td>
+				<td>From: {{ date('engagement_period_5_start_date') }}</td>
+				<td>To: {{ date('engagement_period_5_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_5_days', warning("Engagement v - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- SIX ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 6 %}
+
+			<tr>
+				<td>vi)</td>
+				<td>From: {{ date('engagement_period_6_start_date') }}</td>
+				<td>To: {{ date('engagement_period_6_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_6_days', warning("Engagement vi - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- SEVEN ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 7 %}
+
+			<tr>
+				<td>vii)</td>
+				<td>From: {{ date('engagement_period_7_start_date') }}</td>
+				<td>To: {{ date('engagement_period_7_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_7_days', warning("Engagement vii - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- EIGHT ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 8 %}
+
+			<tr>
+				<td>viii)</td>
+				<td>From: {{ date('engagement_period_8_start_date') }}</td>
+				<td>To: {{ date('engagement_period_8_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_8_days', warning("Engagement viii - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- NINE ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 9 %}
+
+			<tr>
+				<td>ix)</td>
+				<td>From: {{ date('engagement_period_9_start_date') }}</td>
+				<td>To: {{ date('engagement_period_9_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_9_days', warning("Engagement ix - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- TEN ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 10 %}
+
+			<tr>
+				<td>x)</td>
+				<td>From: {{ date('engagement_period_10_start_date') }}</td>
+				<td>To: {{ date('engagement_period_10_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_10_days', warning("Engagement x - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+			<tr>
+				<td></td>
+				<td></td>
+				<td><strong><strong>Total number of days:</strong></strong></td>
+				<td><strong>{{ total_days }}</strong></td>
+			</tr>
+
+	{% else %}
+
+		{{ warning('Number of engagement periods') }}
+
+	{% endif %}
+
+		</tbody>
+	</table>
+
+{% elif deal_memo.meta['engagement_period'] == 'clause_t8_3' %}
+
+	<p><strong>Eight Weeks or more continuous engagement (Clause (T8) 3)</strong></p>
+
+	<p>Overall period from <strong>{{ date('start_date') }}</strong> to <strong>{{ date('leaving_date') }}</strong></p>
+
+	<p>Guaranteed number of engagement day fees <strong>{{ deal_memo.meta.get('guaranteed_day_fees', warning("Engagement day fees")) }}</strong>, Guaranteed number of production days <strong>{{ deal_memo.meta.get('guaranteed_production_days', warning("No. of production days")) }}</strong></p>
+
+	<p>The period of engagement may be extended subject to Clause (T17) of the Agreement.</p>
+
+
+
+{% elif deal_memo.meta['engagement_period'] == 'clause_t8_4' %}
+
+	<p>One Day Network Engagement (Clause (T8) 4)</p>
+
+	<p>Date of Engagement: <strong>{% if deal_memo.meta['start_date'] %}{{ deal_memo.meta.get('start_date').strftime('%d/%m/%Y') }}{% else %}{{ warning('date of engagement') }}{% endif %}</strong></p>
+
+
+
+{% else %}
+
+	<p>{{ warning("Engagement period has not been defined") }}</p>
+
+{% endif %}
+
+<hr noshade>
+
+
+<br />
+
+
+
+<p><strong>Section F</strong></p>
+
+
+
+	<table class='table_f_a'>
+		<tbody>
+			<tr>
+				<td>(i) Number of episodes: <strong>{{ deal_memo.meta.get('number_of_episodes', zero) }}</strong></td>
+				<td>Category A {% if episode_category == 'category_a' %} {{ tick }}{% else %} {{ box }}{% endif %}</td>
+				<td>Category B {% if episode_category == 'category_b' %} {{ tick }}{% else %} {{ box }}{% endif %}</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+<p>(ii) Number of Engagement Fees payable: <strong>{{ deal_memo.meta.get('number_engagement_fees', zero) }}</strong></p>
+
+
+
+<p>(iii) Number of additional multi-episodic Engagement Fees payable: <strong>{{ deal_memo.meta.get('additional_multi_episodic', zero) }}</strong></p>
+
+
+
+<p>
+	(iv) Total Engagement Fees payable [(ii) + (iii)]: <strong>{{ total_engagement_payable }}</strong> multiplied by Engagement Fee: <strong>£{{ (deal_memo.meta.get('engagement_fee', zero)).quantize(decimal.Decimal(".01")) }}</strong> = <strong>{{ comm_num(total_engagement_fee) }}</strong>
+</p>
+
+<p>
+    (v) Number of Production Day payments: <strong>{{ deal_memo.meta.get('production_day_payments', zero) }}</strong> multiplied by <strong>£{{ prod_day_payment_rate }}</strong> = <strong>{{ comm_num(total_production_payments) }}</strong>
+</p>
+
+
+
+<p>The Producer has the right to incorporate the Artist's performance into more than one separately transmitted episode, segment or instalment of the production.</p>
+
+
+<hr noshade>
+
+<br />
+<p><strong>Section G</strong></p>
+
+<p>The Producer shall pay the Artist <strong>{{ comm_num(engagement_fee_payment) }}</strong> for the period(s) specified in Section E above calculated by adding Section F(iv) and F(v) whether or not the Artist is called to render services. This payment shall acquire one transmission on one of the main UK channels as well as non theatric rights throughout the world. Other payments under the Agreement may form part of the Artist's aggregate earnings upon which additional uses are calculated.</p>
+
+
+
+
+
+<hr noshade>
+<br />
+
+<p><strong>Section H Nominated Additional Uses</strong></p>
+
+<p>The Producer must acquire a Nominated Additional Use and undertakes to pay this use in accordance with the provisions of (T6) 3 and (T23) 2 and 6 of the Agreement. This payment shall not be compulsory for ITV regional, schools and adult education, compilations, recordings of live performances and engagements under Clause (T8)4a - for such programmes it shall only become due when the first Additional Use takes place.</p>
+
+
+
+<p>Use Fees are calculated as percentages of Artists Earnings as specified in Section G.</p>
+
+
+
+{# Section H - Part A #}
+
+	<table class='table_f_a indent'>
+		<tbody>
+			<tr>
+				<td>(a) Rest of World (ex UK and US) TV</td>
+				<td>{% if nom_add_uses_option == 'option_a' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
+			</tr>
+			<tr>
+				<td>(b) Nominated US TV Uses</td>
+				<td>{% if nom_add_uses_option == 'option_b' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
+			</tr>
+		</tbody>
+	</table>
+
+
+
+
+{# Section H - Part B #}
+
+	<p><strong>(a) Rest of World (ex UK and US) Television</strong></p>
+
+	{% if nom_add_uses_option == 'option_a' %} {# If option A is defined in the variables it will load this #}
+
+		{# Section H - Total if option A is selected #}
+			{% set section_h_total = (engagement_fee_payment * nom_add_uses_base_percent).quantize(decimal.Decimal(".01")) %}
+
+		<p>Pre-Purchase of Rest of World (ex UK and US) TV: <strong>{{ percent(nom_add_uses_base_percent) }}%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£{{ section_h_total }}</strong></p>
+
+	{% else %} {# If option B is defined in the variables it will load this #}
+
+		<p>Pre-Purchase of Rest of World (ex UK and US) TV: <strong>{{ percent(nom_add_uses_base_percent) }}%</strong> times <strong>£......</strong> (total Artist Earnings) = <strong>£......</strong></p>
+
+	{% endif %}
+
+<p><br /></p>
+
+
+{# Section H - Part C #}
+
+	<strong>(b) Nominated US TV Uses</strong>
+
+	{% if nom_add_uses_option == 'option_b' %} {# If option B is defined in the variables it will load this #}
+
+		<p>Pre-Purchase of Nominated US TV Uses: <strong>{{ percent(nom_add_uses_base_percent) }}%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£{{ (engagement_fee_payment * nom_add_uses_base_percent).quantize(decimal.Decimal(".01")) }}</strong></p>
+
+		<p>This pre-purchase will be applied to the Uses ticked below:</p>
+
+		<table class="border indent table_h_b">
+			<tbody>
+				<tr>
+					<td>1st USA Prime Time Network TX</td>
+					<td>{{ percent(HC01_percent) }}%</td>
+					<td>{% if HC01_set == 1 %}{{ tick }}{% endif %}</td>
+				</tr>
+				<tr>
+					<td>1st USA non PrimeTime Network TX</td>
+					<td>{{ percent(HC02_percent) }}%</td>
+					<td>{% if HC02_set == 1 %}{{ tick }}{% endif %}</td>
+				</tr>
+				<tr>
+					<td>USA PBS Network</td>
+					<td>{{ percent(HC03_percent) }}%</td>
+					<td>{% if HC03_set == 1 %}{{ tick }}{% endif %}</td>
+				</tr>
+				<tr>
+					<td>USA Full Syndication</td>
+					<td>{{ percent(HC04_percent) }}%</td>
+					<td>{% if HC04_set == 1 %}{{ tick }}{% endif %}</td>
+				</tr>
+				<tr>
+					<td>USA Basic Cable</td>
+					<td>{{ percent(HC05_percent) }}%</td>
+					<td>{% if HC05_set == 1 %}{{ tick }}{% endif %}</td>
+				</tr>
+				<tr>
+					<td>USA Major Pay</td>
+					<td>{{ percent(HC06_percent) }}%</td>
+					<td>{% if HC06_set == 1 %}{{ tick }}{% endif %}</td>
+				</tr>
+
+				{% if HC07_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC07_percent) }}%</td>
+						<td>{% if HC07_set == 1 %}{{ tick }}{% endif %}</td>
+					</tr>
+				{% endif %}
+				{% if HC08_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC08_percent) }}%</td>
+						<td>{% if HC08_set == 1 %}{{ tick }}{% endif %}</td>
+					</tr>
+				{% endif %}
+				{% if HC09_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC09_percent) }}%</td>
+						<td>{% if HC09_set == 1 %}{{ tick }}{% endif %}</td>
+					</tr>
+				{% endif %}
+				{% if HC10_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC10_percent) }}%</td>
+						<td>{% if HC10_set == 1 %}{{ tick }}{% endif %}</td>
+					</tr>
+				{% endif %}
+				{% if HC11_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC11_percent) }}%</td>
+						<td>{% if HC11_set == 1 %}{{ tick }}{% endif %}</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+
+		<p>If the Total % of Nominated Uses is greater than 35%, then an additional payment equivalent to the difference in the percentages multiplied by the Artist’s total Earnings must also be made:</p>
+
+		<table class="indent table_h_b_2">
+			<tbody>
+				<tr>
+					<td>Total % of Nominated Uses:</td>
+					<td><strong>{{ percent(section_h_table_percent_total) }}%</strong></td>
+				</tr>
+				<tr>
+					<td>LESS:</td>
+					<td><strong>{{ percent(nom_add_uses_base_percent) }}%</strong></td>
+				</tr>
+				{% if section_h_table_percent_total > nom_add_uses_base_percent %}
+					<tr>
+						<td>Difference:</td>
+						<td><strong>{{ percent((section_h_table_percent_total - nom_add_uses_base_percent)) }}%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£{{ (engagement_fee_payment * (section_h_table_percent_total - nom_add_uses_base_percent)).quantize(decimal.Decimal(".01")) }}</strong></td> 
+					</tr>
+				{% else %}
+					<tr>
+						<td>Difference:</td>
+						<td><strong>{{ percent((section_h_table_percent_total - nom_add_uses_base_percent)) }}%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£......</strong></td> 
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+
+
+	{% else %} {# If option A is defined in the variables it will load this #}
+
+		<p>Pre-Purchase of Nominated US TV Uses: <strong>{{ percent(nom_add_uses_base_percent) }}%</strong> times <strong>£......</strong> (total Artist Earnings) = <strong>£......</strong></p>
+
+		<p>This pre-purchase will be applied to the Uses ticked below:</p>
+
+		<table class="border indent table_h_b">
+			<tbody>
+				<tr>
+					<td>1st USA Prime Time Network TX</td>
+					<td>{{ percent(HC01_percent) }}%</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>1st USA non PrimeTime Network TX</td>
+					<td>{{ percent(HC02_percent) }}%</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>USA PBS Network</td>
+					<td>{{ percent(HC03_percent) }}%</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>USA Full Syndication</td>
+					<td>{{ percent(HC04_percent) }}%</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>USA Basic Cable</td>
+					<td>{{ percent(HC05_percent) }}%</td>
+					<td>&nbsp;</td>
+				</tr>
+				<tr>
+					<td>USA Major Pay</td>
+					<td>{{ percent(HC06_percent) }}%</td>
+					<td>&nbsp;</td>
+				</tr>
+
+				{% if HC07_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC07_percent) }}%</td>
+						<td>&nbsp;</td>
+					</tr>
+				{% endif %}
+				{% if HC08_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC08_percent) }}%</td>
+						<td>&nbsp;</td>
+					</tr>
+				{% endif %}
+				{% if HC09_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC09_percent) }}%</td>
+						<td>&nbsp;</td>
+					</tr>
+				{% endif %}
+				{% if HC10_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC10_percent) }}%</td>
+						<td>&nbsp;</td>
+					</tr>
+				{% endif %}
+				{% if HC11_set == 1 %}
+					<tr>
+						<td>TITLE</td>
+						<td>{{ percent(HC11_percent) }}%</td>
+						<td>&nbsp;</td>
+					</tr>
+				{% endif %}
+			</tbody>
+		</table>
+
+
+
+		<p>If the Total % of Nominated Uses is greater than 35%, then an additional payment equivalent to the difference in the percentages multiplied by the Artist’s total Earnings must also be made:</p>
+
+		<table class="indent table_h_b_2">
+			<tbody>
+				<tr>
+					<td>Total % of Nominated Uses:</td>
+					<td><strong>......%</strong></td>
+				</tr>
+				<tr>
+					<td>LESS:</td>
+					<td><strong>......%</strong></td>
+				</tr>
+				<tr>
+					<td>Difference:</td>
+					<td><strong>......%</strong> times <strong>£......</strong> (total Artist Earnings) = <strong>£......</strong></td> 
+				</tr>
+			</tbody>
+		</table>
+
+	{% endif %}
+
+
+<p>If the Total % of Nominated Uses is less than 35%, then the unused difference may be applied at a later date to any US Television Use as set out in the above table.</p>
+
+
+
+<p>A Producer may switch to a different choice from (a) or (b) above at any time up to 12 months from first UK transmission or prior to the first sale of the production whichever is the earlier. A Producer must notify an Artist in writing in advance of any such switch. Where notice in writing in advance is not given, the original choice between (a) and (b) shall be binding.</p>
+
+
+
+<hr noshade>
+<br />
+{# ========== Section I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I I  ========== #}
+
+<p><strong>Section I - Other Additional Uses</strong></p>
+
+<p>The Producer undertakes to pre-purchase, where indicated, the additional uses shown below:</p>
+
+
+{# Section I - Part A #}
+
+<strong>2nd and each subsequent UK Primary TX *</strong>
+
+<table class="table_i_a">
+	<tbody>
+		<tr>
+			<td>Peak Time</td>
+			{% if IA01_set == 1 %}
+				<td>{{ percent(IA01_percent) }}%</td>
+				<td>times £{{ engagement_fee_payment }}</td>
+				<td>(total Artist Earnings) = £{{ (engagement_fee_payment * IA01_percent).quantize(decimal.Decimal(".01")) }}</td>
+			{% else %}
+				<td>{{ percent(IA01_percent) }}%</td>
+				<td>times £......</td>
+				<td>(total Artist Earnings) = £......</td>
+			{% endif %}
+		</tr>
+
+        
+		<tr>
+			<td>Day Time off Peak</td>
+			{% if IA02_set == 1 %}
+				<td>{{ percent(IA02_percent) }}%</td>
+				<td>times £{{ engagement_fee_payment }}</td>
+				<td>(total Artist Earnings) = £{{ (engagement_fee_payment * IA02_percent).quantize(decimal.Decimal(".01")) }}</td>
+			{% else %}
+				<td>{{ percent(IA02_percent) }}%</td>
+				<td>times £......</td>
+				<td>(total Artist Earnings) = £......</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td>Night Time off Peak</td>
+			{% if IA03_set == 1 %}
+				<td>{{ percent(IA03_percent) }}%</td>
+				<td>times £{{ engagement_fee_payment }}</td>
+				<td>(total Artist Earnings) = £{{ (engagement_fee_payment * IA03_percent).quantize(decimal.Decimal(".01")) }}</td>
+			{% else %}
+				<td>{{ percent(IA03_percent) }}%</td>
+				<td>times £......</td>
+				<td>(total Artist Earnings) = £......</td>
+			{% endif %}
+		</tr>
+	</tbody>
+</table>
+
+<p>* If the programme is to be repeated within a week of first TX, the repeat payments shall be 75% of the rates set out above.</p>
+
+
+{# Section I - Part B #}
+
+	{# 1 showcase premier #}
+		{% if (engagement_fee_payment * IB02_percent).quantize(decimal.Decimal(".01")) < decimal.Decimal("50") %}
+			{% set one_showcase = decimal.Decimal("50") %}
+		{% else %}
+			{% set one_showcase = (engagement_fee_payment * IB02_percent).quantize(decimal.Decimal(".01")) %}
+		{% endif %}
+
+<strong>Showcase Premieres</strong>
+
+<table class="table_i_b">
+	<tbody>
+		<tr>
+			<td>3 Showcase Premieres</td>
+			{% if IB01_set == 1 %}
+				<td>{{ percent(IB01_percent) }}%</td>
+				<td>£{{ (engagement_fee_payment * IB01_percent).quantize(decimal.Decimal(".01")) }}</td>
+			{% else %}
+				<td>{{ percent(IB01_percent) }}%</td>
+				<td>£......</td>
+			{% endif %}
+		</tr>
+		<tr>
+			<td>1 Showcase Premiere</td>
+			{% if IB02_set == 1 %}
+				<td>{{ percent(IB02_percent) }}%</td>
+				<td>£{{ one_showcase }} <i>[minimum £50]</i></td>
+			{% else %}
+				<td>{{ percent(IB02_percent) }}%</td>
+				<td>£...... <i>[minimum £50]</i></td>
+			{% endif %}
+		</tr>
+	</tbody>
+</table>
+
+
+{# Section I - Part C #}
+
+<p>In the event that the royalty provisions as detailed in Appendix TA are not applied (and if not already pre-purchased as set out in Section H above), the percentages for purchasing Additional Uses, as detailed below, shall be payable:</p>
+
+	<table class="border table_i_c_d indent">
+		<tbody>
+				<tr>
+					<td>Rest of World TV rights - 7 years</td>
+					<td>{{ percent(IC01_percent) }}%</td>
+					<td>{% if IC01_set == 1 %}£{{ (engagement_fee_payment * IC01_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+			
+				<tr>
+					<td>1st USA Prime Time Network TX</td>
+					<td>{{ percent(IC02_percent) }}%</td>
+					<td>{% if IC02_set == 1 %}£{{ (engagement_fee_payment * IC02_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+			
+				<tr>
+					<td>2nd USA Prime Time Network TX</td>
+					<td>{{ percent(IC03_percent) }}%</td>
+					<td>{% if IC03_set == 1 %}£{{ (engagement_fee_payment * IC03_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+			
+				<tr>
+					<td>Thereafter per TX</td>
+					<td>{{ percent(IC04_percent) }}%</td>
+					<td>{% if IC04_set == 1 %}£{{ (engagement_fee_payment * IC04_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+			
+				<tr>
+					<td>1st USA non Prime Time Network TX</td>
+					<td>{{ percent(IC05_percent) }}%</td>
+					<td>{% if IC05_set == 1 %}£{{ (engagement_fee_payment * IC05_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+			
+				<tr>
+					<td>2nd & each subsequent non Prime Time TX</td>
+					<td>{{ percent(IC06_percent) }}%</td>
+					<td>{% if IC06_set == 1 %}£{{ (engagement_fee_payment * IC06_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>USA PBS Network</td>
+					<td>{{ percent(IC07_percent) }}%</td>
+					<td>{% if IC07_set == 1 %}£{{ (engagement_fee_payment * IC07_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>USA Full Syndication</td>
+					<td>{{ percent(IC08_percent) }}%</td>
+					<td>{% if IC08_set == 1 %}£{{ (engagement_fee_payment * IC08_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>USA Basic Cable</td>
+					<td>{{ percent(IC09_percent) }}%</td>
+					<td>{% if IC09_set == 1 %}£{{ (engagement_fee_payment * IC09_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>USA Major Pay</td>
+					<td>{{ percent(IC10_percent) }}%</td>
+					<td>{% if IC10_set == 1 %}£{{ (engagement_fee_payment * IC10_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>USA OTT VOD Rights</td>
+					<td>{{ percent(IC11_percent) }}%</td>
+					<td>{% if IC11_set == 1 %}£{{ (engagement_fee_payment * IC11_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>Limited Theatric (UK)</td>
+					<td>{{ percent(IC12_percent) }}%</td>
+					<td>{% if IC12_set == 1 %}£{{ (engagement_fee_payment * IC12_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>Limited Theatric (USA)</td>
+					<td>{{ percent(IC13_percent) }}%</td>
+					<td>{% if IC13_set == 1 %}£{{ (engagement_fee_payment * IC13_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>Full Theatric (Rest of World)</td>
+					<td>{{ percent(IC14_percent) }}%</td>
+					<td>{% if IC14_set == 1 %}£{{ (engagement_fee_payment * IC14_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>*UK Video</td>
+					<td>{{ percent(IC15_percent) }}%</td>
+					<td>{% if IC15_set == 1 %}£{{ (engagement_fee_payment * IC15_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>*US Video</td>
+					<td>{{ percent(IC16_percent) }}%</td>
+					<td>{% if IC16_set == 1 %}£{{ (engagement_fee_payment * IC16_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>*Rest of World Video</td>
+					<td>{{ percent(IC17_percent) }}%</td>
+					<td>{% if IC17_set == 1 %}£{{ (engagement_fee_payment * IC17_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>UK DTO/DTR</td>
+					<td>{{ percent(IC18_percent) }}%</td>
+					<td>{% if IC18_set == 1 %}£{{ (engagement_fee_payment * IC18_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>US DTO/DTR</td>
+					<td>{{ percent(IC19_percent) }}%</td>
+					<td>{% if IC19_set == 1 %}£{{ (engagement_fee_payment * IC19_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+				<tr>
+					<td>ROW DTO/DTR</td>
+					<td>{{ percent(IC20_percent) }}%</td>
+					<td>{% if IC20_set == 1 %}£{{ (engagement_fee_payment * IC20_percent).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+				</tr>
+
+			{% if IC21_set == 1 %}
+				<tr>
+					<td>See additional note below table</td>
+					<td>{{ percent(IC21_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC21_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC22_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC22_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC22_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC23_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC23_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC23_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC24_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC24_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC24_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC25_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC25_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC25_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC26_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC26_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC26_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC27_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC27_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC27_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC28_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC28_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC28_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC29_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC29_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC29_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+			{% if IC30_set == 1 %}
+				<tr>
+					<td>TITLE NEEDED IF IN USE**********</td>
+					<td>{{ percent(IC30_percent) }}%</td>
+					<td>£{{ (engagement_fee_payment * IC30_percent).quantize(decimal.Decimal(".01")) }}</td>
+				</tr>
+			{% endif %}
+
+		</tbody>
+	</table>
+
+
+<p>
+	*A minimum of two markets must be acquired at any one time. If a UK Broadcaster, or any of its subsidiaries, retain the video rights for distribution, then the royalty must be applied.
+</p>
+
+
+<p><br /></p>
+
+{# Section I - Part D #}
+
+<p><strong><u>SVOD Pre-Purchases</u></strong></p>
+
+	<table class="border table_i_c_d indent">
+		<tbody>
+			<tr>
+				<td><strong>Primary Window:</strong> UK - SVOD <br />(5 yrs 7%; 7 yrs 8%; 10 yrs 9%; 15 yrs 11%)</td>
+					{% if (ID01_set + ID02_set + ID03_set + ID04_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID01_set + ID02_set + ID03_set + ID04_set) == 1 %}
+						{% if ID01_set == 1 %}
+							<td>{{ percent(ID01_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID01_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID02_set == 1 %}
+							<td>{{ percent(ID02_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID02_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID03_set == 1 %}
+							<td>{{ percent(ID03_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID03_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID04_set == 1 %}
+							<td>{{ percent(ID04_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID04_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>Primary Window:</strong> USA - SVOD <br />(5 yrs 15%; 7 yrs 16%; 10 yrs 18%; 15 yrs 21%)</td>
+					{% if (ID05_set + ID06_set + ID07_set + ID08_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID05_set + ID06_set + ID07_set + ID08_set) == 1 %}
+						{% if ID05_set == 1 %}
+							<td>{{ percent(ID05_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID05_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID06_set == 1 %}
+							<td>{{ percent(ID06_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID06_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID07_set == 1 %}
+							<td>{{ percent(ID07_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID07_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID08_set == 1 %}
+							<td>{{ percent(ID08_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID08_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>Primary Window:</strong> North America (US & Canada) <br />(5 yrs 16%; 7 yrs 17%; 10 yrs 19%; 15 yrs 22%)</td>
+					{% if (ID09_set + ID10_set + ID11_set + ID12_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID09_set + ID10_set + ID11_set + ID12_set) == 1 %}
+						{% if ID09_set == 1 %}
+							<td>{{ percent(ID09_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID09_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID10_set == 1 %}
+							<td>{{ percent(ID10_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID10_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID11_set == 1 %}
+							<td>{{ percent(ID11_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID11_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID12_set == 1 %}
+							<td>{{ percent(ID12_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID12_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>Secondary Window Holdback UK:</strong> <br />7 yrs (6m: 6%, 12m: 4%) / 10 yrs(6m: 7%, 12m: 5%)</td>
+					{% if (ID13_set + ID14_set + ID15_set + ID16_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID13_set + ID14_set + ID15_set + ID16_set) == 1 %}
+						{% if ID13_set == 1 %}
+							<td>{{ percent(ID13_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID13_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID14_set == 1 %}
+							<td>{{ percent(ID14_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID14_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID15_set == 1 %}
+							<td>{{ percent(ID15_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID15_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID16_set == 1 %}
+							<td>{{ percent(ID16_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID16_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>Secondary window holdback US:</strong> <br />7 yrs (6m: 10%, 12m: 8%) / 10 yrs(6m: 12%, 12m: 10%)</td>
+					{% if (ID17_set + ID18_set + ID19_set + ID20_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID17_set + ID18_set + ID19_set + ID20_set) == 1 %}
+						{% if ID17_set == 1 %}
+							<td>{{ percent(ID17_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID17_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID18_set == 1 %}
+							<td>{{ percent(ID18_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID18_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID19_set == 1 %}
+							<td>{{ percent(ID19_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID19_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID20_set == 1 %}
+							<td>{{ percent(ID20_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID20_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>Secondary Window Holdback North America (US & Canada):</strong> <br />7 yrs (6m: 11%, 12m: 9%) / 10 yrs(6m: 13.5%, 12m: 11.5%)</td>
+					{% if (ID21_set + ID22_set + ID23_set + ID24_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID21_set + ID22_set + ID23_set + ID24_set) == 1 %}
+						{% if ID21_set == 1 %}
+							<td>{{ percent(ID21_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID21_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID22_set == 1 %}
+							<td>{{ percent(ID22_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID22_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID23_set == 1 %}
+							<td>{{ percent(ID23_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID23_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID24_set == 1 %}
+							<td>{{ percent(ID24_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID24_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>Secondary Window UK - SVOD:</strong> <br />(5 yrs 6%; 7 yrs 7%; 10 yrs 8%; 15 yrs 10%)</td>
+					{% if (ID25_set + ID26_set + ID27_set + ID28_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID25_set + ID26_set + ID27_set + ID28_set) == 1 %}
+						{% if ID25_set == 1 %}
+							<td>{{ percent(ID25_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID25_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID26_set == 1 %}
+							<td>{{ percent(ID26_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID26_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID27_set == 1 %}
+							<td>{{ percent(ID27_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID27_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID28_set == 1 %}
+							<td>{{ percent(ID28_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID28_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>Secondary Window USA - SVOD (including OTT SVOD Rights):</strong>  <br />(5 yrs 13%; 7 yrs 14%; 10 yrs 16%; 15 yrs 19%)</td>
+					{% if (ID29_set + ID30_set + ID31_set + ID32_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID29_set + ID30_set + ID31_set + ID32_set) == 1 %}
+						{% if ID29_set == 1 %}
+							<td>{{ percent(ID29_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID29_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID30_set == 1 %}
+							<td>{{ percent(ID30_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID30_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID31_set == 1 %}
+							<td>{{ percent(ID31_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID31_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID32_set == 1 %}
+							<td>{{ percent(ID32_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID32_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>Secondary Window North America (US & Canada) - SVOD (Including OTT SVOD Rights):</strong>  <br />(5 yrs 14%; 7 yrs 15%; 10 yrs 17%; 15 yrs 20%)</td>
+					{% if (ID33_set + ID34_set + ID35_set + ID36_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID33_set + ID34_set + ID35_set + ID36_set) == 1 %}
+						{% if ID33_set == 1 %}
+							<td>{{ percent(ID33_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID33_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID34_set == 1 %}
+							<td>{{ percent(ID34_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID34_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID35_set == 1 %}
+							<td>{{ percent(ID35_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID35_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID36_set == 1 %}
+							<td>{{ percent(ID36_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID36_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+			</tr>
+
+			<tr>
+				<td><strong>ROW SVOD only:</strong> (where ROW has been pre-purchased as a Nominated Additional Use for a period of 7 years SVOD rights only): <br />7-10 y: 2%, 7-15 y: 5%</td>
+					{% if (ID37_set + ID38_set) > 1 %}
+						<td colspan="2">{{ warning('Incorrect table settings. More than one option has been selected. Check the code base and try again.') }}</td>
+					{% elif (ID37_set + ID38_set) == 1 %}
+						{% if ID37_set == 1 %}
+							<td>{{ percent(ID37_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID37_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% elif ID38_set == 1 %}
+							<td>{{ percent(ID38_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * ID38_percent).quantize(decimal.Decimal(".01")) }}</td>
+						{% endif %}
+					{% else %}
+						<td> - %</td>
+						<td>£ - </td>
+					{% endif %}
+
+			</tr>
+				{% if (ID39_set + ID40_set + ID41_set) >= 1 %}
+
+					{% if ID39_set == 1 %}
+
+						<tr>
+							<td><strong>SVOD Rights Pre-Purchased:</strong> For each additional year beyond 15 years <br />(UK: 0.25%)</td>
+							<td>{{ percent(ID39_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * (ID39_percent * ID39_years)).quantize(decimal.Decimal(".01")) }}</td>
+						</tr>
+
+					{% endif %}
+
+					{% if ID40_set == 1 %}
+			
+						<tr>
+							<td><strong>SVOD Rights Pre-Purchased:</strong> For each additional year beyond 15 years <br />(US: 0.5%)</td>
+							<td>{{ percent(ID40_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * (ID40_percent * ID40_years)).quantize(decimal.Decimal(".01")) }}</td>
+						</tr>
+
+					{% endif %}
+
+					{% if ID41_set == 1 %}
+
+						<tr>
+							<td><strong>SVOD Rights Pre-Purchased:</strong> For each additional year beyond 15 years <br />(ROW: 0.25%)</td>
+							<td>{{ percent(ID41_percent) }}%</td>
+							<td>£{{ (engagement_fee_payment * (ID41_percent * ID41_years)).quantize(decimal.Decimal(".01")) }}</td>
+						</tr>
+
+					{% endif %}
+
+				{% elif (ID39_set + ID40_set + ID41_set) == 0 %} {# This is acvivated if not table rows are selected #}
+
+					<tr>
+						<td><strong>SVOD Rights Pre-Purchased:</strong> For each additional year beyond 15 years <br />(UK: 0.25%, US: 0.5%, ROW: 0.25%)</td>
+						<td> - %</td>
+						<td>£ - </td>
+					</tr>
+
+				{% endif %}
+		</tbody>
+	</table>
+
+
+
+<hr noshade>
+
+{# SECTION J J J J J J J J J J J - SECTION J J J J J J J J J J J #}
+
+<br />
+<p><strong>Section J</strong></p>
+
+{# Section J total #}
+	{{deal_memo.calculators.cast.rehearsal_fee(deal_memo)}}
+
+<p>The Artist shall be required to render services for rehearsal of their part prior to their first day of principal photography specified in Section E.</p>
+
+
+
+<table class="table_j">
+	<tbody>
+		<tr>
+			<td>Rehearsal Period</td>
+			<td>
+				From: <strong>{% if deal_memo.meta['cast_rehearsal_start_date'] %}{{ date('cast_rehearsal_start_date') }}{% else %} - {% endif %}</strong>
+			</td> 
+			<td>
+				To: <strong>{% if deal_memo.meta['cast_rehearsal_end_date'] %}{{ date('cast_rehearsal_end_date') }}{% else %} - {% endif %}</strong>
+			</td>
+			<td>
+				{% if deal_memo.meta['cast_rehearsal_days_weeks'] == 'days' %}Number of days: <strong>{{ deal_memo.meta.get('cast_rehearsal_weeks', zero) }}</strong>{% else %}Number of weeks: <strong>{{ deal_memo.meta.get('cast_rehearsal_weeks', zero) }}</strong>{% endif %}
+			</td>
+		</tr>
+		{% if deal_memo.meta['cast_additional_rehearsal_toggle'] == 'yes' %}
+			<tr>
+				<td>Second Rehearsal Period</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['cast_rehearsal_start_date_2'] %}{{ date('cast_rehearsal_start_date_2') }}{% else %} - {% endif %}</strong>
+				</td>
+				<td>
+					To: <strong>{% if deal_memo.meta['cast_rehearsal_end_date_2'] %}{{ date('cast_rehearsal_end_date_2') }}{% else %} - {% endif %}</strong>
+				</td>
+				<td>
+				</td>
+			</tr>
+		{% endif %}
+		<tr>
+			<td colspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Rehearsal Fee(s) </td>
+			<td colspan="3">
+				<strong>£{{ deal_memo.meta.get('cast_rehearsal_weeks_fee', zero).quantize(decimal.Decimal(".01")) }}</strong>{% if deal_memo.meta['cast_rehearsal_days_weeks'] == 'days' %} per day{% else %} per week{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Total Rehearsal payments</td>
+			<td colspan="3">
+				<strong>£{{deal_memo.calculators.cast.rehearsal_fee(deal_memo)}}</strong>
+			</td>
+		</tr>		
+	</tbody>
+</table>
+
+
+<p><br /></p>
+
+<p>The Artist shall be required to self-isolate prior to their first day of principal photography specified in Section E.</p> 
+
+{% if deal_memo.meta['self_iso_period'] != null %}
+	<table class="table_j">
+		<tbody>
+			<tr>
+				<td>Isolation Period</td>
+				<td>Dates of isolation periods</td>
+			</tr>
+			<tr>
+				<td>i)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_1_start'] != null %}{{ date('iso_date_1_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_1_end'] != null %}{{ date('iso_date_1_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% if deal_memo.meta['self_iso_period'] >= 2 %}
+			<tr>
+			<td>ii)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_2_start'] %}{{ date('iso_date_2_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_2_end'] %}{{ date('iso_date_2_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% endif %}
+			{% if deal_memo.meta['self_iso_period'] >= 3 %}
+			<tr>
+			<td>iii)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_3_start'] %}{{ date('iso_date_3_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_3_end'] %}{{ date('iso_date_3_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% endif %}
+			{% if deal_memo.meta['self_iso_period'] >= 4 %}
+			<tr>
+			<td>iv)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_4_start'] %}{{ date('iso_date_4_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_4_end'] %}{{ date('iso_date_4_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% endif %}
+			{% if deal_memo.meta['self_iso_period'] >= 5 %}
+			<tr>
+			<td>v)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_5_start'] %}{{ date('iso_date_5_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_5_end'] %}{{ date('iso_date_5_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% endif %}
+			<tr>
+			{% if deal_memo.meta['cast_self_isolation_days_weeks'] == 'days' %}
+				<td>
+					Number of days:
+				</td>
+				<td><strong>{{ deal_memo.meta.get('cast_self_isolation_weeks', zero) }}</strong></td>
+			{% else %}
+				<td>
+					Number of weeks: 
+				</td>
+				<td><strong>{{ deal_memo.meta.get('cast_self_isolation_weeks', zero) }}</strong></td>
+			{% endif %}
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Isolation Fee(s) </td>
+				<td colspan="3">
+					<strong>£{{ deal_memo.meta.get('cast_self_isolation_weeks_fee', zero).quantize(decimal.Decimal(".01")) }}</strong>{% if deal_memo.meta['cast_self_isolation_days_weeks'] == 'days' %} per day{% else %} per week{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Total Isolation payments</td>
+				<td colspan="3">
+					<strong>
+					£{{ (deal_memo.meta.get('cast_self_isolation_weeks_fee', zero)) *
+					(deal_memo.meta.get('cast_self_isolation_weeks', zero)).quantize(decimal.Decimal("1")) }}
+					</strong>      
+				</td>
+			</tr>		
+		</tbody>
+	</table>
+
+{% else %}
+
+		<table class="table_j">
+		<tbody>
+			<tr>
+				<td>Isolation Period</td>
+				<td>Dates of isolation periods</td>
+			</tr>
+			<tr>
+				<td>i)</td>
+				<td>
+					From: <strong>-</strong>
+				</td> 
+				<td>
+					To: <strong>-</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Number of weeks:
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Isolation Fee(s) </td>
+				<td colspan="3">
+					<strong>£.........</strong> per week 
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Total Isolation payments</td>
+				<td colspan="3">
+					<strong>£...........</strong>     
+				</td>
+			</tr>		
+		</tbody>
+	</table>
+{% endif %}
+
+
+
+
+{# SECTION K K K K K K K K K K - SECTION K K K K K K K K K K #}
+<hr noshade>
+<br />
+{# Total guaranteed minimum payment #}
+	{% set tgmp = (engagement_fee_payment + section_h_total + section_i_total + deal_memo.calculators.cast.rehearsal_fee(deal_memo) + (deal_memo.meta.get('cast_self_isolation_weeks_fee', zero)) * (deal_memo.meta.get('cast_self_isolation_weeks', zero)) + deal_memo.meta.get('additional_nominal_sum', zero)).quantize(decimal.Decimal(".01"), rounding=decimal.ROUND_UP) %}
+
+<p><strong>Section K</strong></p>
+
+<p>Total Guaranteed Minimum Payment (Section G+H+*I+*J) = <strong>{{ comm_num(tgmp) }}
+</strong></p>
+
+<p class="indent"><i>[*I and J where applicable]</i></p>
+
+
+<br />
+
+
+
+
+
+
+
+
+<hr noshade>
+<br />
+{# SECTION L L L L L L L L L - SECTION L L L L L L L L L L L #}
+
+<p><strong>Section L</strong></p>
+
+{% if deal_memo.meta['voice_over'] == "custom_vo" %}
+
+	<pre>{{ deal_memo.meta['custom_voice_over_clause'] or warning("Custom voice over clause") }}</pre>
+
+{% else %}
+
+	{% if deal_memo.meta['voice_over'] == 'yes_vo' %}
+
+		<p>Subject always to Clause (T5) 11 of the Agreement the Producer shall have the right to dub the Artist's voice.</p>
+
+	{% elif deal_memo.meta['voice_over'] == 'no_vo' %}
+
+		<p>Subject always to Clause (T5) 11 of the Agreement the Producer shall not have the right to dub the Artist's voice.</p>
+
+	{% else %}
+
+		{{ warning("Voice over approval") }}
+
+	{% endif %}
+
+{% endif %}
+
+
+
+
+
+
+
+
+<hr noshade>
+<br />
+
+
+{# ========== Section M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M M  ========== #}
+
+<p><strong>Section M - Pensions</strong></p>
+
+	<p class="indent"><i>[see clause (T26)]</i></p>
+
+	<p>Equity Personal Pension Scheme Number: <strong>{{ deal_memo.meta['equity_pension_no'] or 'No Equity Pension Scheme Number supplied.' }}</strong></p>
+
+
+		<p>Producer Contribution: <strong>£......</strong></p>
+
+		<p>Artist’s contribution: <strong>£......</strong></p>
+
+		<p>Total: <strong>£......</strong></p>
+
+
+
+
+
+<p><br /></p><hr />
+
+{# ========== Section N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N N  ========== #}
+
+<h3>Section N - Holidays</h3>
+
+<p>
+	Holiday will be accrued at the rate of 5.6 weeks per year pro rata. If at the end of the engagement it has not been possible for the Artist to have taken the holiday accrued under this contract then payment shall be made in lieu of untaken holiday. Payment for untaken holiday shall be at the rate of £15.50 for each day contracted and/or rendering services. 
+</p>
+
+<p><br /></p><hr />
+
+
+{# The standard default terms and conditions #}
+
+<p>An engagement made on the date and between the parties in Section A & B of the contract.</p>
+
+<p>This contract shall incorporate all the terms of the Agreement together with any amendment or revision thereof so far as the same are applicable hereto and this engagement shall not contain any terms or provisions additional to those herein except as provided for in the Agreement.</p>
+
+<p>A copy of the Agreement is available at the production office and at the offices of the Union and Pact</p>
+
+<table class="top terms">
+	<tbody>
+	 	<tr>
+	 		<td>1.</td>
+	 		<td>
+	 			The Producer hereby engages the Artist to perform in the production and in the part specified in Section D in the contract.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>2.</td>
+	 		<td>
+	 			The Artist shall be under no obligation to render services to the Producer except on the terms specified herein or under the provision of (T18) of the Agreement.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>3.</td>
+	 		<td>
+	 			The Producer may not vary or add to the days specified in Section E except with the consent of the Artist in writing.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>4.</td>
+	 		<td>
+	 			In consideration of payment of the Artist's earnings the Producer shall be entitled to the rights as provided for in the Agreement including the Additional Uses in accordance with the provisions under Clause (T23) and to any subsequent uses subject to the payments in accordance with Appendix TA of the Agreement. The Artist hereby authorises the Producer to pay the pension contribution specified in Section M direct to Hencilla Canworth First Act Insurance administrators of the Equity Personal Pension Scheme, such sum to be credited to the relevant personal pension fund by Hencilla Canworth First Act Insurance, and declares that the receipt of Hencilla Canworth First Act Insurance shall be good and valid discharge of all persons paying such monies to them.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>5.</td>
+	 		<td>
+	 			The Artist hereby authorises and empowers his/her Agent as designated in Section C to collect and receive all sums of money payable to the Artist under the terms of the Agreement including any future payments which may become due under Appendix TA and declares that the receipt of the said Agent shall be a good and valid discharge of all persons save the pension fund contribution, if any, specified in Section M, paying such moneys to them. The Artist also authorises and empowers the Producer to deal with the said Agent on the Artist's behalf on all matters arising out of this engagement. At any time after the signing of this contract the Artist may authorise in writing a change in person and/or address from that set out in the contract.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>6.</td>
+	 		<td>
+	 			In the event that it is not possible to make payments to the Artist’s Agent as described in clause 5 above the Artist hereby authorises and empowers Equity to collect and receive the sums mentioned in Appendix TA where appropriate which have not been pre-purchased if and when the same shall become payable to the Artist and declares that the receipt of Equity shall be a good and valid discharge of all persons paying such moneys to it. The Artist also authorises Equity to negotiate on the Artist's behalf amendments of the Agreement in relation to the production. Any such amendments agreed by Equity and the Producers shall be deemed incorporated in this contract.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>7.</td>
+	 		<td>
+	 			The Artist authorises Equity to, on the Artist’s behalf, negotiate amendments to and settle any claims or disputes arising from the PACT/ Equity Television Production Agreements in relation to subsequent amendments to existing provisions and/or additional rights of use that the form of engagement is the subject of. All amendments negotiated under this clause shall be deemed incorporated into the form of engagement The Producer acknowledges that Equity has been appointed by the Artist to act on his/her behalf as set out in this clause.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>8.</td>
+	 		<td>
+	 			All notices to be served by either party under this contract or the Agreement shall, unless otherwise agreed between the parties, be given in writing and sent to the address given in Section B in the contract in the case of a notice served on the Artist; a copy of the notice shall be sent to the Artist's Agent. Subject to the requirements of the Agreement, notices may be given verbally and subsequently confirmed in writing. Notices in writing shall be deemed to have been delivered 24 hours after posting. The party sending notice shall retain proof in writing.
+	 		</td>
+	 	</tr>
+	</tbody>
+</table>
+
+
+<table class="top terms">
+	<tbody>
+	 	<tr>
+	 		<td>9.</td>
+	 		<td></td>
+	 	</tr>
+	 	<tr>
+	 		<td>a)</td>
+	 		<td>
+	 			the Artist grants to the Producer all consents required under the Copyright Designs and Patents Act 1988 or any modification or re-enactment thereof to enable the Producer to make the fullest use of the Artist’s services and the products thereof in perpetuity. The Artist assigns to the Producer, with full title guarantee free from all third party rights, all present and future copyright and performer’s property rights in and to the performances and services of the Artist and the products thereof throughout the world for the full period of copyright and thereafter insofar as is possible in perpetuity;
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>b)</td>
+	 		<td>
+	 			the Artist is and shall throughout the term of his/her engagement remain a "qualifying person" within the meaning of the Copyright, Designs and Patents Act 1988;
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>c)</td>
+	 		<td>
+	 			the sums payable to the Artist pursuant to this Form of Engagement and the Agreement include consideration for the assignment and exercise by the Producer, its licensees, assignees and successors in title of the rental rights in and to the products of the Artist's services and that, without prejudice to the Artist's rights at law, such payment constitutes an equitable consideration for the grant and/or exercise of all such rights. Nothing in this Form of Engagement nor the Agreement shall prevent the Artist from being entitled to receive income in respect of the exercise of rental and lending rights under collective agreements negotiated by recognised collecting societies under the laws of any jurisdiction but nothing in this Form of Engagement and the Agreement shall constitute an admission or acknowledgement that the Producer or any of its licensees, assignees or successors is obliged to make any payment to any such society under the laws of any jurisdiction.
+	 		</td>
+	 	</tr>	 	
+	</tbody>
+</table>
+
+
+<table class="top terms">
+	<tbody>
+	 	<tr>
+	 		<td>10.</td>
+	 		<td>
+	 			The Artist grants all necessary consents for all and any rights and additional uses to be exercised in accordance with the appropriate clauses of the Agreement, or any modification thereof in any successor PACT Equity Television Agreement, subject to the appropriate payment being made for such rights as specified in that Agreement.
+	 		</td>
+	 	</tr> 	
+	</tbody>
+</table>
+
+
+<table class="top terms">
+	<tbody>
+	 	<tr>
+	 		<td>11.</td>
+	 		<td>
+	 			The Artist warrants that:
+	 		</td>
+	 	</tr> 	
+	</tbody>
+</table>
+
+<table class="indent top terms">
+	<tbody>
+	 	<tr>
+	 		<td>(i)</td>
+	 		<td>
+	 			The Artist is not a minor
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>(ii)</td>
+	 		<td>
+	 			The Artist will not incur any liabilities on behalf of the Producer nor pledge the Producer's credit.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>(iii)</td>
+	 		<td>
+	 			The Artist is, to the best of the Artist's knowledge and belief, in such a state of health that the Producer will be able to effect insurance under normal conditions upon the Artist against loss, howsoever caused, arising from the Artist's inability to perform the services required hereunder and upon the conditions as to medical examination provided in Clause (CT39) and (T43) of the Agreement.
+	 		</td>
+	 	</tr>
+	</tbody>
+</table>
+
+
+<table class="top terms">
+	<tbody>
+	 	<tr>
+	 		<td><strong>12.</strong></td>
+	 		<td>
+	 			<p><strong>Data Protection</strong></p>
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>12.1</td>
+	 		<td>
+	 			The Producer shall process the Artist’s personal data in accordance with the General Data Protection Regulation EU 2016/679, the Data Protection Act 2018 and any other UK or EU laws and regulations relating to personal data and privacy as may be in force in the UK from time to time.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>12.2</td>
+	 		<td>
+	 			The Artist acknowledges that the Producer shall collect, use and otherwise process certain personal data of the Artist for purposes connected with the relationship under this engagement, including the Producer fulfilling its obligations under this engagement and complying with legal and regulatory obligations.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>12.3</td>
+	 		<td>
+	 			The Artist acknowledges that special category personal data (including the Artist’s membership of Equity), and personal data relating to criminal convictions and offences (if any), of the Artist is processed by the Producer for the purposes connected with the relationship under this engagement, including where permitted under employment legislation or to determine occupational suitability.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>12.4</td>
+	 		<td>
+	 			The Producer may share the Artist's data with members of the production team, the distributor, legal and regulatory authorities, future employers and potential purchasers of the Producer (or any of its assets or business), affiliates, group companies, professional advisors and other parties which provide products or services to the Producer. If the Producer transfers the Artist’s data outside of the European Economic Area, it shall take reasonable steps to ensure its security and confidentiality. The Producer may also share the Artist’s data with the Union and the Artist acknowledges that the Union shall collect, use and process certain personal data of Artist for purposes connected with the Artist’s engagement.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>12.5</td>
+	 		<td>
+	 			The Producer is required to maintain personal data that is accurate and may ask the Artist to update their personal data at any time. The Artist shall, in any event, inform the Producer as soon as reasonably practicable of any changes to their personal data.
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>12.6</td>
+	 		<td>
+	 			The Artist has certain rights in respect of their personal data (such as access, rectification and portability) and further information about those rights and the processing of personal data by the Producer/ Company generally can be found by visiting the Producer ‘s data protection/privacy policy at: [insert URL] or can otherwise be obtained from the Producer/ Company upon reasonable written request.
+	 		</td>
+	 	</tr>	 	
+	</tbody>
+</table>
+
+<table class="top terms">
+	<tbody>
+	 	<tr>
+	 		<td><p><strong>13.</strong></p></td>
+	 		<td><p><strong>Diamond Notice</strong></p></td>
+	 	</tr>
+	 	<tr>
+	 		<td></td>	
+	 		<td>
+	 			UK broadcasters are researching diversity on their productions. This covers diversity characteristics you choose to tell the broadcasters about and also how viewers might perceive diversity on screen. If you provide the Company with your e-mail address they will enter this in a system called Silvermouse. You will be invited to provide, and may do so at your option, your diversity characteristics – gender, ethnicity, disability, age, gender identity and sexual orientation. The broadcaster, as data controller, is responsible for this data and will have access to reports compiled from it for purposes of the research. If you would prefer not to be involved in Diamond please let your production contact know within 7 days of the issue date of this contract. Further information can be found here: <a href ="https://creativediversitynetwork.com/diamond/diamond-faq/contributors/">https://creativediversitynetwork.com/diamond/diamond-faq/contributors/</a>.
+	 		</td>
+	 	</tr>	 	
+	</tbody>
+</table>
+
+
+
+<table class="top terms">
+	<tbody>
+	 	<tr>
+	 		<td><p><strong>14.</strong></p></td>
+	 		<td><p><strong>Bribery</strong></p></td>
+	 	</tr>
+	 	<tr>
+	 		<td>14.1</td>	
+	 		<td>
+	 			You shall:
+	 		</td>
+	 	</tr>	 	
+	</tbody>
+</table>
+
+
+<table class="indent top terms">
+	<tbody>
+	 	<tr>
+	 		<td>14.1.1</td>	
+	 		<td>
+	 			comply with all applicable laws, statutes, regulations, and codes relating to anti- bribery and anti corruption including, but not limited to, the Bribery Act 2010;
+	 		</td>
+	 	</tr>
+	 	<tr>
+	 		<td>14.1.2</td>	
+	 		<td>
+	 			not engage in any activity, practice or conduct whether in the UK or elsewhere which would constitute an offence under sections 1, 2 or 6 of the Bribery Act 2010 if such activity, practice or conduct had been carried out in the UK;
+	 		</td>
+	 	</tr>	
+	 	<tr>
+	 		<td>14.1.3</td>	
+	 		<td>
+	 			comply with the Company's Ethics, Anti-bribery and Anti-corruption Policies.
+	 		</td>
+	 	</tr>
+	</tbody>
+</table>
+
+
+<table class="top terms">
+	<tbody>
+	 	<tr>
+	 		<td>14.2</td>	
+	 		<td>
+	 			Breach of this clause by you shall be deemed a material breach of this Agreement.
+	 		</td>
+	 	</tr>
+	</tbody>
+</table>
+
+<hr>
+<p><strong>SPECIAL STIPULATIONS</strong> - where appropriate must be specified on a separate sheet attached to this contract and initialled by both parties.</p>
+
+<p><br /></p>
+
+{# ========== SIGNATURES ========== #}
+
+
+<p><strong><u>SIGNATORIES:</u></strong></p>
+
+<p>Both parties to this contract recognise that the engagement includes all the foregoing, and is subject to the details above and overleaf and any special stipulations attached (where applicable) provided that such are initialled by both Parties.</p>
+
+<p>As WITNESS the hands of the Parties hereto the day and year first before written</p>
+
+
+<table class="signature-block">
+    <tbody>
+        {% if deal_memo.meta.profile_type == 'service_company' %}
+            {% if deal_memo and deal_memo.meta['lender_signatory_email'] %}
+                <tr>
+                        <td>Artist:</td>
+                        <td>{{signature_block(user_email=deal_memo.lender_signatory_email, role="worker", routing_order=1, show_name=False, fullname='{} for and on behalf of {}'.format(deal_memo.meta.lender_signatory_name, deal_memo.meta.company_name))}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{ deal_memo.meta.lender_signatory_name }} for and on behalf of {{ deal_memo.meta['company_name'] or '<span class="warning">Missing information - Company name</span>' }}</td>
+                </tr>
+                <tr class="spacing">
+                </tr>
+                <tr>
+                        <td>Artist:</td>
+                        <td>{{signature_block(show_name=False, role="worker", routing_order=2)}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{ deal_memo.meta['firstname'] or '<span class="warning">[Missing information - First name]'}} {{ deal_memo.meta['lastname'] or '<span class="warning">[Missing information - Last name]</span>' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                        <td>Artist:</td>
+                        <td>{{signature_block(show_name=False, role="worker", routing_order=2, fullname='{} {} for and on behalf of {}'.format(deal_memo.meta.firstname if deal_memo.meta.firstname else 'MISSING - First name', deal_memo.meta.lastname if deal_memo.meta.lastname else 'MISSING - Surname', deal_memo.meta.company_name ) )}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{ deal_memo.meta['firstname'] or '<span class="warning">[Missing information - First name]'}} {{ deal_memo.meta['lastname'] or '<span class="warning">[Missing information - Last name]</span>' }} for and on behalf of {{ deal_memo.meta['company_name'] or '<span class="warning">Missing information - Company name</span>' }} </td>
+                </tr>
+            {% endif %}
+
+        {% else %}
+                <tr>
+                        <td>Artist:</td>
+                        <td>{{signature_block(show_name=False, role="worker", routing_order=2)}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{ deal_memo.meta['firstname'] or '<span class="warning">[Missing information - First name]'}} {{ deal_memo.meta['lastname'] or '<span class="warning">[Missing information - Last name]</span>' }}</td>
+                </tr>
+        {% endif %}
+                <tr class="spacing">
+                </tr>
+        {% if deal_memo.meta.contract_signer == 'second_countersigner' %}
+
+                <tr>
+                        <td>{{ deal_memo.project_record.project.settings.get('second_countersigner_role') }}:</td>
+                        <td>{{signature_block(user_email=deal_memo.project_record.project.settings.get('second_countersigner_email'), show_name=False, role='producer', routing_order=3, fullname=deal_memo.project_record.project.settings.get('second_countersigner_name'))}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{deal_memo.project_record.project.settings.get('second_countersigner_name')}} ({{deal_memo.project_record.project.settings.get('second_countersigner_role')}}) for and on behalf of {{deal_memo.project_record.project.production_company.name}}</td>
+                </tr>              
+
+        {% else %}
+
+                <tr>
+                        <td>{{ deal_memo.project_record.project.settings.get('default_countersigner_role') }}:</td>
+                        <td>{{signature_block(user_email=deal_memo.project_record.project.settings.get('default_countersigner_email'), show_name=False, role='producer', routing_order=3, fullname=deal_memo.project_record.project.settings.get('default_countersigner_name'))}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{deal_memo.project_record.project.settings.get('default_countersigner_name')}} ({{deal_memo.project_record.project.settings.get('default_countersigner_role')}}) for and on behalf of {{deal_memo.project_record.project.production_company.name}}</td>
+                </tr>
+
+        {% endif %}
+    </tbody>
+</table>
+
+<p><br /></p>
+
+{% if deal_memo.meta['vat_regno'] %}
+	<p>VAT No: {{ deal_memo.meta['vat_regno'] }}</p>
+{% endif %}
+
+{% if deal_memo.meta['nino']%}
+<p>N. I. Number {{ deal_memo.meta['nino'] }}</p>
+{% endif %}
+
+
+<p>Please sign and return the duplicate of this Standard Form of Engagement to the Production Company</p>
+
+
+
+

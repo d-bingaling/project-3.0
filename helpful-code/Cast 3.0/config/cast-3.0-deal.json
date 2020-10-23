@@ -1,0 +1,4007 @@
+{
+    "configuration": [{
+            "legend": "Digital Casting Advice Note",
+            "open": true,
+            "widgets": [{
+                    "ready_info": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<p>Use the following toggles to determine what is included when this deal is sent to the agent / cast member.</p>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "pact_ready": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "pact_not_ready",
+                                    "No, the PACT contract is not ready to be reviewed"
+                                ],
+                                [
+                                    "pact_is_ready",
+                                    "Yes, the PACT contract is ready to be reviewed"
+                                ]
+                            ],
+                            "show_comments": true
+                        },
+                        "label": "Include PACT contract for review?",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "special_stips_ready": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "stips_not_ready",
+                                    "No, the special stipulations are not ready to be reviewed"
+                                ],
+                                [
+                                    "stips_is_ready",
+                                    "Yes, the special stipulations are ready to be reviewed"
+                                ]
+                            ],
+                            "show_comments": true
+                        },
+                        "label": "Include special stipulations for review? ",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "can_upload": {
+                        "acl": "only_internal",
+                        "args": {
+                            "context_name": "deal_memo",
+                            "help_text": "Please use this field to upload a CAN if it has been agreed off platform.",
+                            "max_count": 999,
+                            "tags": [
+                                "cast_advice_note"
+                            ],
+                            "upload_tag": "cast_advice_note"
+                        },
+                        "label": "Casting Advice Note upload",
+                        "widget_type": "file_upload"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "default",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "contract_signer": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true,
+                            "options": [
+                                [
+                                    "default_countersigner",
+                                    "XXXX - Production Manager"
+                                ],
+                                [
+                                    "second_countersigner",
+                                    "XXXX - Line Producer"
+                                ],
+                                [
+                                    "third_countersigner",
+                                    "XXXX - Head of Production"
+                                ]
+                            ]
+                        },
+                        "label": "Contract signer",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "default",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_b": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h2>Artist information</h2>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "profile_type": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "sole_trader",
+                                    "Self-employed / Schedule D"
+                                ],
+                                [
+                                    "service_company",
+                                    "Loan-out company"
+                                ]
+                            ]
+                        },
+                        "label": "Tax status",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "profile_type_info": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<p>If you are hiring this role as a Schedule D then please refer to revised <a href=\"http://www.hmrc.gov.uk/gds/esm/attachments/roles_normally_treated_as_self_employed_formerly_appendix_1.pdf\" target=\"_blank\">HMRC guidance</a> for applicable grades."
+                        },
+                        "read_condition": {
+                            "meta.profile_type": "sole_trader"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "firstname": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true,
+                            "placeholder": "Enter forenames"
+                        },
+                        "label": "Forenames",
+                        "validators": [{
+                            "args": {
+                                "allow_multiple": true
+                            },
+                            "validator": "uk_hmrc_name"
+                        }],
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "lastname": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true,
+                            "placeholder": "Enter surname"
+                        },
+                        "label": "Surname",
+                        "validators": [{
+                            "args": {
+                                "allow_multiple": true
+                            },
+                            "validator": "uk_hmrc_name"
+                        }],
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "crew_phone": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Phone number",
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "email": {
+                        "acl": "contact",
+                        "args": {
+                            "debounce": false,
+                            "dynamic": true
+                        },
+                        "label": "Email address",
+                        "widget_type": "email"
+                    }
+                },
+                {
+                    "email_payslip": {
+                        "acl": "contact",
+                        "args": {
+                            "column_id": "email_payslip",
+                            "debounce": false,
+                            "dynamic": true
+                        },
+                        "label": "Email address for payslip",
+                        "widget_type": "email"
+                    }
+                },
+                "pop_uk_address",
+                "pop_address1",
+                "pop_address2",
+                "pop_address3",
+                "pop_address_county",
+                "pop_postcode",
+                "pop_postcode_non_uk",
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "lender_title": {
+                        "acl": "default",
+                        "args": {
+                            "document": "<h2>Lender</h2>"
+                        },
+                        "label": "  ",
+                        "read_condition": {
+                            "meta.profile_type": "service_company"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                "pop_company_name",
+                "pop_company_jurisdiction",
+                "pop_company_regno",
+                "pop_company_reg_office",
+                {
+                    "lender_reg_certificate": {
+                        "acl": "edit_payments",
+                        "args": {
+                            "context_name": "deal_memo",
+                            "large_photos": true,
+                            "tag": "lender_reg_certificate"
+                        },
+                        "label": "Lender Company registration certificate",
+                        "read_condition": {
+                            "meta.profile_type": "service_company"
+                        },
+                        "widget_type": "file_upload"
+                    }
+                },
+                {
+                    "lender_signatory_toggle": {
+                        "acl": "default",
+                        "args": {
+                            "controls": [
+                                "lender_signatory_email",
+                                "lender_signatory_name",
+                                "lender_signatory_text"
+                            ],
+                            "dynamic": true,
+                            "nullable": true,
+                            "help_text": "As a Loan Out, we require a signature on your contract from a representative of the lender company. If you are authorised to sign on behalf of the lender, then set your answer to 'No'.",
+                            "options": [
+                                [
+                                    "yes",
+                                    "Yes"
+                                ],
+                                [
+                                    "no",
+                                    "No"
+                                ]
+                            ]
+                        },
+                        "label": "Add a Lender Company signatory?",
+                        "read_condition": {
+                            "meta.profile_type": "service_company"
+                        },
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "lender_signatory_text": {
+                        "acl": "default",
+                        "args": {
+                            "template": "<strong>PLEASE NOTE</strong>: You only need to fill in this section if you are NOT authorised to sign as both lender and individual."
+                        },
+                        "label": "",
+                        "read_condition": {
+                            "meta.lender_signatory_toggle": "yes",
+                            "meta.profile_type": "service_company"
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "lender_signatory_name": {
+                        "acl": "default",
+                        "args": {
+                            "controls": [
+                                "lender_signatory_toggle"
+                            ],
+                            "dynamic": true
+                        },
+                        "label": "Lender signatory name",
+                        "read_condition": {
+                            "meta.lender_signatory_toggle": "yes",
+                            "meta.profile_type": "service_company"
+                        },
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "lender_signatory_email": {
+                        "acl": "default",
+                        "args": {
+                            "controls": [
+                                "lender_signatory_toggle"
+                            ],
+                            "dynamic": true,
+                            "help_text": "Input the lender signatory's email address here. (They will be sent a copy of your contract to sign.)"
+                        },
+                        "label": "Lender signatory email",
+                        "read_condition": {
+                            "meta.lender_signatory_toggle": "yes",
+                            "meta.profile_type": "service_company"
+                        },
+                        "widget_type": "email"
+                    }
+                },
+                {
+                    "hr_service": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.profile_type": "service_company"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "nino": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "National Insurance number",
+                        "validators": [{
+                            "validator": "uk_nino"
+                        }],
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "sched_d_no": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Schedule D no/UTR",
+                        "read_condition": {
+                            "meta.profile_type": [
+                                "sole_trader"
+                            ]
+                        },
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "vat_regno": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true,
+                            "placeholder": "Only enter if VAT registered"
+                        },
+                        "label": "VAT number",
+                        "read_condition": {
+                            "meta.profile_type": [
+                                "service_company",
+                                "sole_trader"
+                            ]
+                        },
+                        "validators": [{
+                            "validator": "uk_vat_number"
+                        }],
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.profile_type": [
+                                "service_company",
+                                "sole_trader"
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+
+
+
+
+
+
+                {
+                    "section_c": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h2>Agent information</h2>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "agency_name": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Agency name",
+                        "read_condition": {
+                            "meta.agent_toggle": "agent_yes"
+                        },
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "agent_name": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Agent name",
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "agent_email": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Agent email",
+                        "widget_type": "email"
+                    }
+                },
+                {
+                    "agent_phone": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Agent phone",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "agent_address": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Agent address",
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_d": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h2>Part</h2>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "character_name": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Character / Part",
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "character_number": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Character number",
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_e": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h2>Engagement</h2>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "clause_t8_1_and_2",
+                                    "First call (Clause T8 1 and 2)"
+                                ],
+                                [
+                                    "clause_t8_3",
+                                    "Eight weeks or more continuous (Clause T8 3)"
+                                ],
+                                [
+                                    "clause_t8_4",
+                                    "One day network engagement (Clause T8 4)"
+                                ]
+                            ]
+                        },
+                        "label": "Engagement period",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "number_engagement_period": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": false,
+                            "options": [
+                                [
+                                    1,
+                                    "1"
+                                ],
+                                [
+                                    2,
+                                    "2"
+                                ],
+                                [
+                                    3,
+                                    "3"
+                                ],
+                                [
+                                    4,
+                                    "4"
+                                ],
+                                [
+                                    5,
+                                    "5"
+                                ],
+                                [
+                                    6,
+                                    "6"
+                                ],
+                                [
+                                    7,
+                                    "7"
+                                ],
+                                [
+                                    8,
+                                    "8"
+                                ],
+                                [
+                                    9,
+                                    "9"
+                                ],
+                                [
+                                    10,
+                                    "10"
+                                ]
+                            ]
+                        },
+                        "label": "Number of engagement periods",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2"
+                        },
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "hr_engagement_1": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_1_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period i</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_1_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "start_date",
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period i - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2"
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_1_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "leaving_date",
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period i - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2"
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_1_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period i - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e1": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_2_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period ii</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                2,
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_2_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period ii - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                2,
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_2_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period ii - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                2,
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_2_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period ii - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                2,
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e2": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                2,
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_3_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period iii</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_3_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period iii - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_3_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period iii - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_3_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period iii - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e3": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                3,
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_4_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period iv</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_4_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period iv - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_4_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period iv - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_4_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period iv - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e4": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                4,
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_5_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period v</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_5_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period v - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_5_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period v - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_5_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period v - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e5": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                5,
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_6_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period vi</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_6_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period vi - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_6_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period vi - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_6_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period vi - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e6": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                6,
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_7_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period vii</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_7_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period vii - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_7_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period vii - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_7_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period vii - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e7": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                7,
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_8_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period viii</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_8_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period viii - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_8_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period viii - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_8_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period viii - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e8": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                8,
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_9_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period ix</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_9_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period ix - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_9_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period ix - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_9_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period ix - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e9": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                9,
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_10_title": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h5>Engagement period x</h5>"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_period_10_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period x - Start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_10_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period x - End date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                10
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "engagement_period_10_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Engagement period x - Number of days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                10
+                            ]
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_e10": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_1_and_2",
+                            "meta.number_engagement_period": [
+                                10
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "start_date_overall": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "start_date",
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Overall start date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_3"
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "end_date_overall": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "leaving_date",
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Overall end date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_3"
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "guaranteed_day_fees": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Number of guaranteed engagement day fees",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_3"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "guaranteed_production_days": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Number of guaranteed production days",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_3"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_et3": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_3"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "start_date_one_day": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "start_date",
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "One day engagement date",
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_4"
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_et4": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.engagement_period": "clause_t8_4"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_f": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h2>Episodes and engagements</h2>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "number_of_episodes": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Number of episodes",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "number_engagement_fees": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "engagement_production_total_jinja"
+                            ],
+                            "dynamic": true
+                        },
+                        "label": "Number of engagement fees payable",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "additional_multi_episodic": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "engagement_production_total_jinja",
+                                "total_guaranteed_minimum",
+                                "row_can",
+                                "usa_basic",
+                                "uk_video",
+                                "us_video",
+                                "row_video",
+                                "uk_dto_dtr",
+                                "us_dto_dtr",
+                                "row_dto_dtr",
+                                "uk_svod_7_yrs",
+                                "usa_svod_7_yrs"
+                            ],
+                            "dynamic": true
+                        },
+                        "label": "Additional multi-episodic engagement fees payable",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_fee": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "engagement_production_total_jinja",
+                                "total_guaranteed_minimum",
+                                "row_can",
+                                "usa_basic",
+                                "uk_video",
+                                "us_video",
+                                "row_video",
+                                "uk_dto_dtr",
+                                "us_dto_dtr",
+                                "row_dto_dtr",
+                                "uk_svod_7_yrs",
+                                "usa_svod_7_yrs"
+                            ],
+                            "dynamic": true,
+                            "placeholder": "--.--"
+                        },
+                        "label": "Engagement fee ",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "production_day_payments": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "engagement_production_total_jinja",
+                                "total_guaranteed_minimum",
+                                "row_can",
+                                "usa_basic",
+                                "uk_video",
+                                "us_video",
+                                "row_video",
+                                "uk_dto_dtr",
+                                "us_dto_dtr",
+                                "row_dto_dtr",
+                                "uk_svod_7_yrs",
+                                "usa_svod_7_yrs"
+                            ],
+                            "dynamic": true,
+                            "placeholder": "--.--"
+                        },
+                        "label": "Number of production day payments",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_g": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h2>Engagement fee</h2>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_production_total_jinja": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "controls": [
+                                "total_guaranteed_minimum",
+                                "row_can",
+                                "usa_basic",
+                                "uk_video",
+                                "us_video",
+                                "row_video",
+                                "uk_dto_dtr",
+                                "us_dto_dtr",
+                                "row_dto_dtr",
+                                "uk_svod_7_yrs",
+                                "usa_svod_7_yrs"
+                            ],
+                            "template": "\u00a3{{ (deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0')) * decimal.Decimal(\"61.50\")) }}"
+                        },
+                        "label": "Total of engagement and production fees",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_h": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h2>Nominated additional uses</h2>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "nominated_add_uses_info": {
+                        "acl": "only_internal",
+                        "args": {
+                            "hide_empty": true,
+                            "static": "Rest of World (ex UK and US) TV (Option A) - 35%"
+                        },
+                        "label": " ",
+                        "widget_type": "info"
+                    }
+                },
+                {
+                    "section_h_info": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<p><strong>Please note:</strong> The options for Nominated US TV Uses (Option B) have been removed for this production.</p>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "row_can": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Pre-Purchase of Rest of World (ex UK and US) TV",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_i": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h2>Other additional uses</h2>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "usa_basic": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA Basic Cable 10%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "uk_video": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "UK Video 5%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "us_video": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "US Video 4%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "row_video": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Rest of World Video 4%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "uk_dto_dtr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "UK DTO/DTR 2%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "us_dto_dtr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "US DTO/DTR 2%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "row_dto_dtr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "ROW DTO/DTR 2%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "pre_purch_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h4>SVOD Pre-Purchases</h4>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "uk_svod_7_yrs": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.08\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Primary Window: UK-SVOD 7yrs 8%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "usa_svod_7_yrs": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.16\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Primary Window: USA-SVOD 7yrs 16%",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_j": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h2>Rehearsal</h2>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "cast_rehearsal_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Rehearsal period start",
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "cast_rehearsal_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Rehearsal period end",
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "cast_additional_rehearsal_toggle": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "no",
+                                    "No"
+                                ],
+                                [
+                                    "yes",
+                                    "Yes"
+                                ]
+                            ]
+                        },
+                        "label": "Do you want to specify an additional rehearsal period?",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "cast_rehearsal_start_date_2": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "read_condition": {
+                            "meta.cast_additional_rehearsal_toggle": "yes"
+                        },
+                        "label": "Second rehearsal period start",
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "cast_rehearsal_end_date_2": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "read_condition": {
+                            "meta.cast_additional_rehearsal_toggle": "yes"
+                        },
+                        "label": "Second rehearsal period end",
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "cast_rehearsal_days_weeks": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "days",
+                                    "Rehearsal days"
+                                ],
+                                [
+                                    "weeks",
+                                    "Rehearsal weeks"
+                                ]
+                            ]
+                        },
+                        "label": "Rehearsal days or weeks",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "cast_rehearsal_weeks": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "controls": [
+                                "rehearsal_total",
+                                "total_guaranteed_minimum"
+                            ],
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Rehearsal weeks",
+                        "read_condition": {
+                            "meta.cast_rehearsal_days_weeks": "weeks"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "cast_rehearsal_weeks_fee": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "controls": [
+                                "rehearsal_total",
+                                "total_guaranteed_minimum"
+                            ],
+                            "dynamic": true,
+                            "hide_empty": true,
+                            "placeholder": "--.--"
+                        },
+                        "label": "Weekly rehearsal fee ",
+                        "read_condition": {
+                            "meta.cast_rehearsal_days_weeks": "weeks"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "cast_rehearsal_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "cast_rehearsal_weeks",
+                            "controls": [
+                                "rehearsal_total"
+                            ],
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Rehearsal days",
+                        "read_condition": {
+                            "meta.cast_rehearsal_days_weeks": "days"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "cast_rehearsal_day_fee": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "cast_rehearsal_weeks_fee",
+                            "controls": [
+                                "rehearsal_total",
+                                "total_guaranteed_minimum"
+                            ],
+                            "dynamic": true,
+                            "hide_empty": true,
+                            "placeholder": "--.--"
+                        },
+                        "label": "Daily rehearsal fee",
+                        "read_condition": {
+                            "meta.cast_rehearsal_days_weeks": "days"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "rehearsal_total": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "controls": [
+                                "total_guaranteed_minimum"
+                            ],
+                            "template": "\u00a3{{deal_memo.calculators.cast.rehearsal_fee(deal_memo)}}"
+                        },
+                        "label": "Total rehearsal fee",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_j_b": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h2>Pre-filming self-isolation</h2>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "cast_self_isolation_toggle": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "yes",
+                                    "Yes"
+                                ],
+                                [
+                                    "no",
+                                    "No"
+                                ]
+                            ]
+                        },
+                        "label": "Do you wish to add a Pre-filming self-isolation period?",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "self_iso_period": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": false,
+                            "options": [
+                                [
+                                    1,
+                                    "One"
+                                ],
+                                [
+                                    2,
+                                    "Two"
+                                ],
+                                [
+                                    3,
+                                    "Three"
+                                ],
+                                [
+                                    4,
+                                    "Four"
+                                ],
+                                [
+                                    5,
+                                    "Five"
+                                ]
+                            ]
+                        },
+                        "label": "Total number of pre-filming self-isolation dates",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "iso_date_1_start": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation start date 1",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "iso_date_1_end": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation end date 1",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_iso_1": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+
+                        },
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "prt"
+
+                    }
+                },
+
+                {
+                    "iso_date_2": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation start date 2",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "iso_date_2_end": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation end date 2",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_iso_2": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+
+                        },
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                3, 4, 5
+                            ]
+                        },
+                        "widget_type": "prt"
+
+                    }
+                },
+
+                {
+                    "iso_date_3_start": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation start date 3",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "iso_date_3_end": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation end date 3",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_iso_3": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+
+                        },
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                4, 5
+                            ]
+                        },
+                        "widget_type": "prt"
+
+                    }
+                },
+
+                {
+                    "iso_date_4_start": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation start date 4",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "iso_date_4_end": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation end date 4",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_iso_5": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+
+                        },
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                5
+                            ]
+                        },
+                        "widget_type": "prt"
+
+                    }
+                },
+
+                {
+                    "iso_date_5_start": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation start date 5",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "iso_date_5_end": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation end date 5",
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes",
+                            "meta.self_iso_period": [
+                                5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+
+                        },
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "widget_type": "prt"
+
+                    }
+                },
+                {
+                    "cast_self_isolation_days_weeks": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "days",
+                                    "Pre-filming self-isolation days"
+                                ],
+                                [
+                                    "weeks",
+                                    "Pre-filming self-isolation weeks"
+                                ]
+                            ]
+                        },
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "label": "Pre-filming self-isolation days or weeks",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "cast_self_isolation_weeks": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "controls": [
+                                "self_isolation_total"
+                            ],
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation weeks",
+                        "read_condition": {
+                            "meta.cast_self_isolation_days_weeks": "weeks",
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "cast_self_isolation_weeks_fee": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "controls": [
+                                "self_isolation_total"
+                            ],
+                            "dynamic": true,
+                            "hide_empty": true,
+                            "placeholder": "--.--"
+                        },
+                        "label": "Weekly pre-filming self-isolation fee ",
+                        "read_condition": {
+                            "meta.cast_self_isolation_days_weeks": "weeks",
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "cast_self_isolation_days": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "cast_self_isolation_weeks",
+                            "controls": [
+                                "self_isolation_total"
+                            ],
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Pre-filming self-isolation days",
+                        "read_condition": {
+                            "meta.cast_self_isolation_days_weeks": "days",
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "cast_self_isolation_day_fee": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "column_id": "cast_self_isolation_weeks_fee",
+                            "controls": [
+                                "self_isolation_total"
+                            ],
+                            "dynamic": true,
+                            "hide_empty": true,
+                            "placeholder": "--.--"
+                        },
+                        "label": "Daily pre-filming self-isolation fee",
+                        "read_condition": {
+                            "meta.cast_self_isolation_days_weeks": "days",
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "self_isolation_total": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "controls": [
+                                "total_guaranteed_minimum"
+                            ],
+                            "template": "\u00a3{{ (deal_memo.meta.get('cast_self_isolation_weeks_fee', decimal.Decimal(\"0\")) * deal_memo.meta.get('cast_self_isolation_weeks', decimal.Decimal(\"0\")).quantize(decimal.Decimal(\"1\"))) }}"
+                        },
+                        "read_condition": {
+                            "meta.cast_self_isolation_toggle": "yes"
+                        },
+                        "label": "Total pre-filming self-isolation fee",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_k": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h2>Total guaranteed minimum payment</h2>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "additional_nominal_sum": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "controls": [
+                                "total_guaranteed_minimum"
+                            ],
+                            "hide_empty": true,
+                            "dynamic": true,
+                            "help_text": "Anything entered in the box above will be added to the total guaranteed minimum payment but will not attract residuals.",
+                            "placeholder": "--.--"
+                        },
+                        "label": "Additional nominal sum ",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "total_guaranteed_minimum": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "template": "\u00a3{{ ((((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0')) * decimal.Decimal(\"61.50\")) + (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\"))) + (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.53\"))) + (deal_memo.calculators.cast.rehearsal_fee(deal_memo) + (deal_memo.meta.get('cast_self_isolation_weeks_fee', decimal.Decimal(\"0\")) * deal_memo.meta.get('cast_self_isolation_weeks', decimal.Decimal(\"0\"))) + deal_memo.meta.get('additional_nominal_sum', decimal.Decimal('0')))).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Total guaranteed minimum payment",
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_l": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h2>Dubbing</h2>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "voice_over": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "yes_vo",
+                                    "Yes, the Producer shall have the right to dub the Artist's voice"
+                                ],
+                                [
+                                    "no_vo",
+                                    "No, the Producer shall not have the right to dub the Artist's voice"
+                                ],
+                                [
+                                    "custom_vo",
+                                    "Include a custom voice over clause"
+                                ]
+                            ]
+                        },
+                        "label": "Does the producer have the right to dub over the artist's voice?",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "custom_voice_over_clause": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "help_text": "Please note: Anything entered in the box above will overwrite the entirety of section L and clause 12.1 of the contract.",
+                            "hide_empty": true
+                        },
+                        "label": "Custom voice over clause",
+                        "read_condition": {
+                            "meta.voice_over": "custom_vo"
+                        },
+                        "widget_type": "text"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_m": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<h2>Pension</h2>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "pension_section_info": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<p>If applicable, please enter your Equity Personal Pension Scheme Number in the Personal Information section below.</p>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "email_pension": {
+                        "acl": "contact",
+                        "args": {
+                            "column_id": "email_pension",
+                            "debounce": false,
+                            "dynamic": true
+                        },
+                        "label": "Email address for pension",
+                        "widget_type": "email"
+                    }
+                },
+                {
+                    "equity_pension_no": {
+                        "acl": "default",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Equity Personal Pension Scheme No.",
+                        "widget_type": "string"
+                    }
+                },
+
+                {
+                    "hr": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "basic_stips_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h1>Special stipulations</h1>"
+                        },
+                        "label": " ",
+                        "widget_type": "prt"
+                    }
+                },
+
+                {
+                    "00_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h4>Example clause Title</h4>"
+                        },
+                        "label": " ",
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "00_clause": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "options": [
+                                [
+                                    "default",
+                                    "Include default example clause"
+                                ],
+                                [
+                                    "custom",
+                                    "Overwrite example clause"
+                                ]
+                            ]
+                        },
+                        "label": "Overwrite - example clause 1",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "00_text": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "help_text": "Please note: Anything entered in the box above will overwrite the entirety of example clause 1.",
+                            "hide_empty": true
+                        },
+                        "label": "Example clause - custom clause",
+                        "read_condition": {
+                            "meta.00_clause": "custom"
+                        },
+                        "widget_type": "text"
+                    }
+                },
+                {
+                    "00_clause_info": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+                        },
+                        "read_condition": {
+                            "meta.00_clause": {
+                                "not": "custom"
+                            }
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+
+
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "photo_approval_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h4>Photograph approval</h4>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "photo_approval": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "options": [
+                                [
+                                    "yes",
+                                    "Yes, the Artist has photograph approval"
+                                ],
+                                [
+                                    "no",
+                                    "No, the Artist does not have photograph approval"
+                                ]
+                            ]
+                        },
+                        "label": "Does the Artist have photograph approval?",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "extent_of_photo_approval": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "options": [
+                                [
+                                    "image_approval",
+                                    "Approval over all images"
+                                ],
+                                [
+                                    "percentage_approval",
+                                    "Percentage approval"
+                                ]
+                            ]
+                        },
+                        "label": "Extent of photograph approval",
+                        "read_condition": {
+                            "meta.photo_approval": "yes"
+                        },
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "percentage_amount": {
+                        "acl": "only_internal",
+                        "args": {
+                            "placeholder": "%",
+                            "dynamic": true
+                        },
+                        "label": "Approval percentage",
+                        "read_condition": {
+                            "meta.photo_approval": "yes",
+                            "meta.extent_of_photo_approval": "percentage_approval"
+                        },
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr_internal_acl": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "option_title": {
+                        "acl": "default",
+                        "args": {
+                            "document": "<h4>Series options</h4>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "option_number": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "hide_empty": true,
+                            "options": [
+                                [
+                                    1,
+                                    "One"
+                                ],
+                                [
+                                    2,
+                                    "Two"
+                                ],
+                                [
+                                    3,
+                                    "Three"
+                                ],
+                                [
+                                    4,
+                                    "Four"
+                                ],
+                                [
+                                    5,
+                                    "Five"
+                                ]
+                            ]
+                        },
+                        "label": "Total number of series options",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "option_1_name": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 1 name",
+                        "read_condition": {
+                            "meta.option_number": [
+                                1, 2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "option_1_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 1 exercise date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                1, 2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_1_shoot_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 1 filming start date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                1, 2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_1_shoot_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 1 filming end date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                1, 2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_op_2": {
+                        "acl": "default",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.option_number": [
+                                2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "option_2_name": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 2 name",
+                        "read_condition": {
+                            "meta.option_number": [
+                                2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "option_2_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 2 exercise date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_2_shoot_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 2 filming start date:",
+                        "read_condition": {
+                            "meta.option_number": [
+                                2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_2_shoot_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 2 filming end date:",
+                        "read_condition": {
+                            "meta.option_number": [
+                                2, 3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_op_3": {
+                        "acl": "default",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.option_number": [
+                                3, 4, 5
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "option_3_name": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 3 name",
+                        "read_condition": {
+                            "meta.option_number": [
+                                3, 4, 5
+                            ]
+                        },
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "option_3_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 3 exercise date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_3_shoot_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 3 filming start date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_3_shoot_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 3 filming end date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                3, 4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_op_4": {
+                        "acl": "default",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.option_number": [
+                                4, 5
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "option_4_name": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 4 name",
+                        "read_condition": {
+                            "meta.option_number": [
+                                4, 5
+                            ]
+                        },
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "option_4_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 4 exercise date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_4_shoot_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 4 filming start date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_4_shoot_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 4 filming end date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                4, 5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr_op_5": {
+                        "acl": "default",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.option_number": [
+                                5
+                            ]
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "option_5_name": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 5 name",
+                        "read_condition": {
+                            "meta.option_number": [
+                                5
+                            ]
+                        },
+                        "widget_type": "string"
+                    }
+                },
+                {
+                    "option_5_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 5 exercise date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_5_shoot_start_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 5 filming start date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "option_5_shoot_end_date": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "dynamic": true
+                        },
+                        "label": "Option 5 filming end date",
+                        "read_condition": {
+                            "meta.option_number": [
+                                5
+                            ]
+                        },
+                        "widget_type": "date"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "credit_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h4>Credit</h4>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "credit_position": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "credit_single",
+                                    "Artist shall be accorded credit on a single card"
+                                ],
+                                [
+                                    "credit_main",
+                                    "Artist shall be accorded credit in the main title sequence"
+                                ],
+                                [
+                                    "credit_end",
+                                    "Artist shall be accorded credit in the end title sequence"
+                                ],
+                                [
+                                    "credit_single_main",
+                                    "Artist shall be accorded credit on a single card in the main title sequence"
+                                ],
+                                [
+                                    "custom_credit_clause",
+                                    "Custom credit clause"
+                                ]
+                            ]
+                        },
+                        "label": "Example clause 2 - position of artist credit",
+                        "widget_type": "enum"
+                    }
+                },
+                {
+                    "custom_credit_clause_text": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "help_text": "Please note: Anything entered in the box above will overwrite the entirety of example clause 2.",
+                            "hide_empty": true
+                        },
+                        "label": "Example clause 2 - custom credit clause",
+                        "read_condition": {
+                            "meta.credit_position": "custom_credit_clause"
+                        },
+                        "widget_type": "text"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "deal_memo",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "deal_memo_acceptance": {
+                        "acl": "crew_member_write_only",
+                        "args": {
+                            "dynamic": true,
+                            "show_user": true,
+                            "text": "I have read and understood the deal terms as outlined above, and the terms and stipulations of the contract (reviewed using the Preview contract button below). I confirm that the contract can be sent to my client for signing."
+                        },
+                        "label": "Agent confirmation",
+                        "write_condition": {
+                            "meta.pact_ready": "pact_is_ready",
+                            "meta.special_stips_ready": "stips_is_ready"
+                        },
+                        "widget_type": "confirmation"
+                    }
+                }
+            ],
+            "write_condition": {
+                "status.value": [
+                    "new",
+                    "pre_approved",
+                    "signed_off",
+                    "crew_review",
+                    "amend"
+                ]
+            }
+        },
+
+        {
+            "legend": "Internal information",
+            "open": false,
+            "widgets": [{
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "internal_codes_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h3>Account codes</h3>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_fee_code": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "show_comments": true
+                        },
+                        "label": "Engagement fee code",
+
+                        "widget_type": "string"
+                    }
+                },
+                "pop_daily_rate_code",
+                "pop_holiday_pay_code",
+                "pop_pension_code",
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "internal_nationality_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<h3>Nationality</h3>"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                "pop_nationality_region_flag"
+
+            ]
+        }
+    ],
+    "pre_approval": [{
+        "legend": "Payment Review",
+        "open": true,
+        "widgets": [
+            "pop_dm_profile_type",
+            "pop_firstname",
+            "pop_lastname",
+            {
+                "department_id": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "controls": [
+                            "project_role_id"
+                        ],
+                        "dynamic": true,
+                        "hide_empty": true,
+                        "link_id": "department_id",
+                        "link_table": "Department"
+                    },
+                    "label": "Department",
+                    "widget_type": "link"
+                }
+            },
+            {
+                "project_role_id": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "column_id": "project_role_id",
+                        "dynamic": true,
+                        "link_id": "project_role_id",
+                        "link_table": "ProjectRole"
+                    },
+                    "label": "Grade",
+                    "read_condition": {
+                        "meta.project_role_title": null
+                    },
+                    "widget_type": "project_role"
+                }
+            },
+            {
+                "project_role_title": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "debounce": false,
+                        "dynamic": true,
+                        "hide_empty": true,
+                        "placeholder": "Type here to override the grade"
+                    },
+                    "label": "Grade override",
+                    "widget_type": "string"
+                }
+            },
+            {
+                "start_date_production": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "column_id": "start_date",
+                        "controls": [
+                            "weeks"
+                        ],
+                        "dynamic": true,
+                        "hide_empty": true
+                    },
+                    "label": "Start date",
+                    "read_condition": {
+                        "meta.engagement_period": "start_date_end_date"
+                    },
+                    "widget_type": "date"
+                }
+            },
+            {
+                "end_date_production": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "column_id": "leaving_date",
+                        "controls": [
+                            "weeks"
+                        ],
+                        "dynamic": true,
+                        "hide_empty": true
+                    },
+                    "label": "End date",
+                    "read_condition": {
+                        "meta.engagement_period": "start_date_end_date"
+                    },
+                    "widget_type": "date"
+                }
+            },
+            {
+                "pre_prep_start_date": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true,
+                        "hide_empty": true
+                    },
+                    "label": "Pre-prep - Start date",
+                    "read_condition": {
+                        "meta.engagement_period": "filming_period"
+                    },
+                    "widget_type": "date"
+                }
+            },
+            {
+                "pre_prep_end_date": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true,
+                        "hide_empty": true
+                    },
+                    "label": "Pre-prep - End date",
+                    "read_condition": {
+                        "meta.engagement_period": "filming_period"
+                    },
+                    "widget_type": "date"
+                }
+            },
+            {
+                "weekly_rate_loan_out": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "column_id": "weekly_rate_inc_holiday",
+                        "controls": [
+                            "daily_rate_loan_out"
+                        ],
+                        "dynamic": true,
+                        "hide_empty": true,
+                        "placeholder": "-.-"
+                    },
+                    "label": "Weekly rate (Loan-out)",
+                    "read_condition": {
+                        "meta.profile_type": [
+                            "service_company"
+                        ]
+                    },
+                    "widget_type": "numeric"
+                }
+            },
+            {
+                "weekly_rate_inc_holiday": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true,
+                        "hide_empty": true,
+                        "placeholder": "--.--"
+                    },
+                    "label": "Weekly rate inc. holiday pay",
+                    "read_condition": {
+                        "meta.profile_type": [
+                            "employee",
+                            "sole_trader",
+                            null
+                        ]
+                    },
+                    "widget_type": "numeric"
+                }
+            },
+            {
+                "daily_rate_loan_out": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "key": "daily_rate_inc_holiday"
+                    },
+                    "label": "Daily rate (Loan-out)",
+                    "read_condition": {
+                        "meta.profile_type": [
+                            "service_company"
+                        ]
+                    },
+                    "widget_type": "info"
+                }
+            },
+            {
+                "daily_rate_inc_holiday": {
+                    "acl": "deal_memo",
+                    "label": "Daily rate inc. holiday pay",
+                    "read_condition": {
+                        "meta.profile_type": [
+                            "employee",
+                            "sole_trader",
+                            null
+                        ],
+                        "meta.weekly_rate_inc_holiday": {
+                            "not": null
+                        }
+                    },
+                    "widget_type": "info"
+                }
+            }
+        ]
+    }],
+    "pre_population": [{
+            "destination": "meta.department_id",
+            "source": "project_record.department_id"
+        },
+        {
+            "destination": "meta.mobile",
+            "source": "project_record.meta.mobile"
+        },
+        {
+            "destination": "meta.project_role_id",
+            "source": "project_record.project_role_id"
+        },
+        {
+            "destination": "meta.project_role_title",
+            "source": "project_record.project_role_title"
+        },
+        {
+            "destination": "meta.firstname",
+            "source": "project_record.meta.firstname"
+        },
+        {
+            "destination": "meta.lastname",
+            "source": "project_record.meta.lastname"
+        },
+        {
+            "destination": "meta.email",
+            "source": "project_record.meta.email"
+        },
+        {
+            "destination": "meta.address1",
+            "source": "engagement.start_form.meta.address1"
+        },
+        {
+            "destination": "meta.address2",
+            "source": "engagement.start_form.meta.address2"
+        },
+        {
+            "destination": "meta.address3",
+            "source": "engagement.start_form.meta.address3"
+        },
+        {
+            "destination": "meta.postcode",
+            "source": "engagement.start_form.meta.postcode"
+        },
+        {
+            "destination": "meta.county_id",
+            "source": "engagement.start_form.meta.county_id"
+        },
+        {
+            "destination": "meta.email_payslip",
+            "source": "project_record.meta.email"
+        },
+        {
+            "destination": "meta.email_pension",
+            "source": "project_record.meta.email"
+        }
+    ],
+    "duplicate_engagement": [
+        "deal_memo.meta.pact_ready",
+        "deal_memo.meta.special_stips_ready",
+        "deal_memo.meta.contract_signer",
+        "deal_memo.meta.profile_type",
+        "deal_memo.meta.firstname",
+        "deal_memo.meta.lastname",
+        "deal_memo.meta.crew_phone",
+        "deal_memo.meta.email_payslip",
+        "deal_memo.meta.uk_address",
+        "deal_memo.meta.address1",
+        "deal_memo.meta.address2",
+        "deal_memo.meta.address3",
+        "deal_memo.meta.county_id",
+        "deal_memo.meta.postcode",
+        "deal_memo.meta.company_name",
+        "deal_memo.meta.company_jurisdiction",
+        "deal_memo.meta.company_reg_office",
+        "deal_memo.meta.company_regno",
+        "deal_memo.meta.lender_signatory_toggle",
+        "deal_memo.meta.lender_signatory_name",
+        "deal_memo.meta.lender_signatory_email",
+        "deal_memo.meta.nino",
+        "deal_memo.meta.sched_d_no",
+        "deal_memo.meta.vat_regno",
+        "deal_memo.attachments",
+        "deal_memo.meta.agency_name",
+        "deal_memo.meta.agent_name",
+        "deal_memo.meta.agent_address",
+        "deal_memo.meta.agent_email",
+        "deal_memo.meta.character_name",
+        "deal_memo.meta.character_number",
+        "deal_memo.meta.number_of_episodes",
+        "deal_memo.meta.number_engagement_fees",
+        "deal_memo.meta.additional_multi_episodic",
+        "deal_memo.meta.engagement_fee",
+        "deal_memo.meta.production_day_payments",
+        "deal_memo.meta.cast_rehearsal_start_date",
+        "deal_memo.meta.cast_rehearsal_end_date",
+        "deal_memo.meta.cast_additional_rehearsal_toggle",
+        "deal_memo.meta.cast_rehearsal_start_date_2",
+        "deal_memo.meta.cast_rehearsal_end_date_2",
+        "deal_memo.meta.cast_rehearsal_days_weeks",
+        "deal_memo.meta.cast_rehearsal_weeks",
+        "deal_memo.meta.cast_rehearsal_weeks_fee",
+        "deal_memo.meta.additional_nominal_sum",
+        "deal_memo.meta.voice_over",
+        "deal_memo.meta.custom_voice_over_clause",
+        "deal_memo.meta.email_pension",
+        "deal_memo.meta.equity_pension_no",
+        "deal_memo.meta.photo_approval",
+        "deal_memo.meta.extent_of_photo_approval",
+        "deal_memo.meta.percentage_amount",
+        "deal_memo.meta.credit_position",
+        "deal_memo.meta.custom_credit_clause_text",
+        "deal_memo.meta.engagement_fee_code",
+        "deal_memo.meta.daily_rate_code",
+        "deal_memo.meta.holiday_pay_code",
+        "deal_memo.meta.pension_code",
+        "deal_memo.meta.nationality_region_flag"
+
+    ],
+    "required": [
+        "firstname",
+        "lastname",
+        "crew_phone",
+        "email_payslip",
+        "pop_uk_address",
+        "pop_address1",
+        "pop_address_county",
+        "pop_postcode",
+        "pop_postcode_non_uk",
+        "pop_company_name",
+        "pop_company_jurisdiction",
+        "pop_company_regno",
+        "pop_company_reg_office",
+        "lender_certificate",
+        "lender_reg_certificate",
+        "lender_signatory_email",
+        "lender_signatory_name",
+        "vat_reg_certificate",
+        "agent_name",
+        "agent_address",
+        "agent_phone",
+        "deal_memo_acceptance"
+    ],
+    "required_to_send": [
+        "pact_ready",
+        "special_stips_ready",
+        "contract_signer",
+        "profile_type",
+        "character_name",
+        "engagement_period",
+        "number_engagement_period",
+        "engagement_period_1_start_date",
+        "start_date_overall",
+        "start_date_one_day",
+        "number_engagement_fees",
+        "number_of_episodes",
+        "additional_multi_episodic",
+        "engagement_fee",
+        "production_day_payments",
+        "voice_over",
+        "custom_voice_over_clause",
+        "00_clause",
+        "00_text",
+        "artist_engagement_fee_percentage",
+        "engagement_period_1_start_date",
+        "engagement_period_1_end_date",
+        "engagement_period_1_days",
+        "engagement_period_2_start_date",
+        "engagement_period_2_end_date",
+        "engagement_period_2_days",
+        "engagement_period_3_start_date",
+        "engagement_period_3_end_date",
+        "engagement_period_3_days",
+        "engagement_period_4_start_date",
+        "engagement_period_4_end_date",
+        "engagement_period_4_days",
+        "engagement_period_5_start_date",
+        "engagement_period_5_end_date",
+        "engagement_period_5_days",
+        "engagement_period_6_start_date",
+        "engagement_period_6_end_date",
+        "engagement_period_6_days",
+        "engagement_period_7_start_date",
+        "engagement_period_7_end_date",
+        "engagement_period_7_days",
+        "engagement_period_8_start_date",
+        "engagement_period_8_end_date",
+        "engagement_period_8_days",
+        "engagement_period_9_start_date",
+        "engagement_period_9_end_date",
+        "engagement_period_9_days",
+        "engagement_period_10_start_date",
+        "engagement_period_10_end_date",
+        "engagement_period_10_days",
+        "start_date_overall",
+        "end_date_overall",
+        "guaranteed_day_fees",
+        "guaranteed_production_days",
+        "start_date_one_day",
+        "option_1_name",
+        "option_1_date",
+        "option_2_name",
+        "option_2_date",
+        "option_3_name",
+        "option_3_date",
+        "option_4_name",
+        "option_4_date",
+        "option_5_name",
+        "option_5_date"
+    ]
+}

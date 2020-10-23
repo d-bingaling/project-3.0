@@ -1,0 +1,108 @@
+{
+    "configuration": [{
+        "legend": "Default Cast Project Variables",
+        "open": true,
+        "widgets": [{
+                "cast_title": {
+                    "acl": "only_internal",
+                    "args": {
+                        "document": "<h4>Cast Variables</h4>"
+                    },
+                    "widget_type": "prt"
+                }
+            },
+            {
+                "prod_company_phone": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true
+                    },
+                    "label": "Production company phone",
+                    "widget_type": "string"
+                }
+            },
+            {
+                "designated_base_phone": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true
+                    },
+                    "label": "Designated base phone",
+                    "widget_type": "string"
+                }
+            },
+            {
+                "production_number": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true
+                    },
+                    "label": "Production number",
+                    "widget_type": "string"
+                }
+            },
+            {
+                "production_email": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true
+                    },
+                    "label": "Production email",
+                    "widget_type": "string"
+                }
+            },
+            {
+                "hr": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "document": "<hr />"
+                    },
+                    "widget_type": "prt"
+                }
+            },
+
+            {
+                "stunts": {
+                    "acl": "only_internal",
+                    "args": {
+                        "document": "<h4>Stunts Variables</h4>"
+                    },
+                    "widget_type": "prt"
+                }
+            },
+            {
+                "stunts_production_company_phone_var": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true
+                    },
+                    "label": "Production company phone number",
+                    "widget_type": "string"
+                }
+            },
+            {
+                "stunts_designated_base_phone_var": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true
+                    },
+                    "label": "Designated base phone number",
+                    "widget_type": "string"
+                }
+            },
+            {
+                "stunts_prod_number": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true
+                    },
+                    "label": "Production number",
+                    "widget_type": "numeric"
+                }
+            }
+
+
+
+        ]
+    }]
+}
