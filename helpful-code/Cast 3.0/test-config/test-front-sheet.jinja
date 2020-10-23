@@ -5,11 +5,9 @@
 {# Total production day payments #}
 {% set total_production_payments = (deal_memo.meta.get('production_day_payments', decimal.Decimal("0")) * decimal.Decimal("61.50")).quantize(decimal.Decimal(".01")) %}
 
+
 {# Engagement fee payment - Section G total #}
 {% set engagement_fee_payment = (total_engagement_fee + total_production_payments).quantize(decimal.Decimal(".01")) %}
-
-
-
 
 
 <table>
