@@ -17,8 +17,25 @@
             <td>10%</td>
             <td>{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.10")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
         </tr>
+        <tr>
+            <td>UK Video 5%</td>
+            <td>5%</td>
+            <td>{% if 2 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.05")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
+        <tr>
+            <td>US Video 4%</td>
+            <td>4%</td>
+            <td>{% if 3 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.04")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
     </tbody>
 </table>
 
 
+if 1
+{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.10")).quantize(decimal.Decimal(".01")) }}{% else %}0{% endif %}
 
+if 2 
+{% if 1 and 2 in deal_memo.project_record.project.settings['percentages_additional_uses']%}£{{ (engagement_fee_payment * decimal.Decimal("0.15")).quantize(decimal.Decimal(".01")) }}{% else %}0{% endif %}
+
+if 3
+{% if 1 and 2 and 3 in deal_memo.project_record.project.settings['percentages_additional_uses']%}£{{ (engagement_fee_payment * decimal.Decimal("0.19")).quantize(decimal.Decimal(".01")) }}{% else %}0{% endif %}
