@@ -16,26 +16,580 @@
                 "percentages_additional_uses": {
                     "acl": "deal_memo",
                     "args": {
+                        "dynamic": true,
+                        "nullable": true,
+                        "options": [
+                            [
+                                1,
+                                "Rest of World TV rights - 7 years 35%"
+                            ],
+                            [
+                                2,
+                                "1st USA Prime Time Network TX 75%"
+                            ],
+                            [
+                                3,
+                                "2nd USA Prime Time Network TX 25%"
+                            ],
+                            [
+                                4,
+                                "Thereafter per TX 15%"
+                            ],
+                            [
+                                5,
+                                "1st USA non PrimeTime Network TX 35%"
+                            ],
+                            [
+                                6,
+                                "2nd & each subsequent non Prime Time TX 7.5%"
+                            ],
+                            [
+                                7,
+                                "USA PBS Network 15%"
+                            ],
+                            [
+                                8,
+                                "USA Full Syndication 25%"
+                            ],
+                            [
+                                9,
+                                "USA Basic Cable 10%"
+                            ],
+                            [
+                                10,
+                                "USA Major Pay 30%"
+                            ],
+                            [
+                                11,
+                                "USA OTT VOD Rights 3%"
+                            ],
+                            [
+                                12,
+                                "Limited Theatric (UK) 14%"
+                            ],
+                            [
+                                13,
+                                "Limited Theatric (USA) 14%"
+                            ],
+                            [
+                                14,
+                                "Full Theatric (Rest of World) 14%"
+                            ],
+                            [
+                                15,
+                                "UK Video 5%"
+                            ],
+                            [
+                                16,
+                                "US Video 4%"
+                            ],
+                            [
+                                17,
+                                "Rest of World Video 4%"
+                            ],
+                            [
+                                18,
+                                "UK DTO/DTR 2%"
+                            ],
+                            [
+                                19,
+                                "US DTO/DTR 2%"
+                            ],
+                            [
+                                20,
+                                "ROW DTO/DTR 2%"
+                            ]
+
+                        ]
+                    },
+                    "label": "Percentages for additional uses",
+                    "widget_type": "multiselect"
+                }
+            },
+
+
+
+
+
+
+
+
+
+
+            {
+                "svod_pre_purchases": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "controls": [
+                            "uk_primary",
+                            "usa_primary",
+                            "row_svod_only",
+                            "pre_purchased_svod",
+                            "na_can_second_svod",
+                            "usa_second_svod",
+                            "uk_second_svod",
+                            "na_can_second_holdback",
+                            "us_second_holdback",
+                            "uk_second_holdback",
+                            "na_can_primary"
+                        ],
+                        "dynamic": true,
+                        "nullable": true,
+                        "options": [
+                            [
+                                1,
+                                "Primary Window: UK-SVOD"
+                            ],
+                            [
+                                2,
+                                "Primary Window: USA-SVOD"
+                            ],
+                            [
+                                3,
+                                "Primary Window: North America (US & Canada)"
+                            ],
+                            [
+                                4,
+                                "Second Window Holdback - UK"
+                            ],
+                            [
+                                5,
+                                "Second Window Holdback - US"
+                            ],
+                            [
+                                6,
+                                "Second Window Holdback - North America (US and Canada)"
+                            ],
+                            [
+                                7,
+                                "Second Window - UK SVoD"
+                            ],
+                            [
+                                8,
+                                "Second Window - USA SVoD (including OTT SVOD Rights)"
+                            ],
+                            [
+                                9,
+                                "Second Window - North America (US & Canada) SvoD (including OTT SVOD Rights)"
+                            ],
+                            [
+                                10,
+                                "ROW SVOD only"
+                            ],
+                            [
+                                11,
+                                "SVOD Rights Pre-Purchased"
+                            ]
+
+                        ]
+                    },
+                    "label": "SVOD Pre-Purchases",
+                    "widget_type": "multiselect"
+                }
+            },
+            {
+                "uk_primary": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "5 yrs - 7%"
+                            ],
+                            [
+                                2,
+                                "7 yrs - 8%"
+                            ],
+                            [
+                                3,
+                                "10 yrs - 9%"
+                            ],
+                            [
+                                4,
+                                "15 yrs - 11%"
+                            ]
+
+                        ]
+                    },
+                    "label": "Primary Window: UK-SVOD",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                1
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "usa_primary": {
+                    "acl": "deal_memo",
+                    "args": {
 
                         "dynamic": true,
                         "nullable": false,
                         "options": [
                             [
                                 1,
-                                "USA Basic Cable 10%"
+                                "5 yrs - 15%"
                             ],
                             [
                                 2,
-                                "UK Video 5%"
+                                "7 yrs - 16%"
                             ],
                             [
                                 3,
-                                "US Video 4%"
+                                "10 yrs - 18%"
+                            ],
+                            [
+                                4,
+                                "15 yrs - 21%"
                             ]
+
                         ]
                     },
-                    "label": "Percentages for additional uses",
-                    "widget_type": "multiselect"
+                    "label": "Primary Window: USA-SVOD",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                2
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "na_can_primary": {
+                    "acl": "deal_memo",
+                    "args": {
+
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "5 yrs - 16%"
+                            ],
+                            [
+                                2,
+                                "7 yrs - 17%"
+                            ],
+                            [
+                                3,
+                                "10 yrs - 19%"
+                            ],
+                            [
+                                4,
+                                "15 yrs - 22%"
+                            ]
+
+                        ]
+                    },
+                    "label": "Primary Window: North America (US & Canada)",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                3
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "uk_second_holdback": {
+                    "acl": "deal_memo",
+                    "args": {
+
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "7 yrs - (6 months: 6%)"
+                            ],
+                            [
+                                2,
+                                "7 yrs - (12 months: 4%)"
+                            ],
+                            [
+                                3,
+                                "10 yrs - (6 months: 7%)"
+                            ],
+                            [
+                                4,
+                                "10 yrs - (12 months: 5%)"
+                            ]
+
+                        ]
+                    },
+                    "label": "Second Window Holdback UK",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                4
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "us_second_holdback": {
+                    "acl": "deal_memo",
+                    "args": {
+
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "7 yrs - (6 months: 10%)"
+                            ],
+                            [
+                                2,
+                                "7 yrs - (12 months: 8%)"
+                            ],
+                            [
+                                3,
+                                "10 yrs - (6 months: 12%)"
+                            ],
+                            [
+                                4,
+                                "10 yrs - (12 months: 10%)"
+                            ]
+
+                        ]
+                    },
+                    "label": "Second Window Holdback US",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                5
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "na_can_second_holdback": {
+                    "acl": "deal_memo",
+                    "args": {
+
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "7 yrs - (6 months: 11%)"
+                            ],
+                            [
+                                2,
+                                "7 yrs - (12 months: 9%)"
+                            ],
+                            [
+                                3,
+                                "10 yrs - (6 months: 13.5%)"
+                            ],
+                            [
+                                4,
+                                "10 yrs - (12 months: 11.5%)"
+                            ]
+
+                        ]
+                    },
+                    "label": "Second Window Holdback North America (US and Canada)",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                6
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "uk_second_svod": {
+                    "acl": "deal_memo",
+                    "args": {
+
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "5 yrs - 6%"
+                            ],
+                            [
+                                2,
+                                "7 yrs - 7%"
+                            ],
+                            [
+                                3,
+                                "10 yrs - 8%"
+                            ],
+                            [
+                                4,
+                                "15 yrs - 10%"
+                            ]
+
+                        ]
+                    },
+                    "label": "Second Window UK SVoD",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                7
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "usa_second_svod": {
+                    "acl": "deal_memo",
+                    "args": {
+
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "5 yrs - 13%"
+                            ],
+                            [
+                                2,
+                                "7 yrs - 14%"
+                            ],
+                            [
+                                3,
+                                "10 yrs - 16%"
+                            ],
+                            [
+                                4,
+                                "15 yrs - 19%"
+                            ]
+
+                        ]
+                    },
+                    "label": "Second Window USA SVoD (including OTT SVOD Rights)",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                8
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "na_can_second_svod": {
+                    "acl": "deal_memo",
+                    "args": {
+
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "5 yrs - 14%"
+                            ],
+                            [
+                                2,
+                                "7 yrs - 15%"
+                            ],
+                            [
+                                3,
+                                "10 yrs - 17%"
+                            ],
+                            [
+                                4,
+                                "15 yrs - 20%"
+                            ]
+
+                        ]
+                    },
+                    "label": "Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights)",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                9
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "row_svod_only": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "help_text": "(where ROW has been pre-purchased as a Nominated Additional Use for a period of 7 years SVOD rights only)",
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                1,
+                                "7-10 yrs - 2%"
+                            ],
+                            [
+                                2,
+                                "7-15 yrs - 5%"
+                            ]
+
+                        ]
+                    },
+                    "label": "ROW SVOD only",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                10
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "pre_purchased_svod": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "help_text": "for each additional year beyond 15 yrs",
+                        "dynamic": true,
+                        "nullable": false,
+                        "options": [
+                            [
+                                "uk",
+                                "UK - 0.25%"
+                            ],
+                            [
+                                "us",
+                                "US - 0.5%"
+                            ],
+                            [
+                                "row",
+                                "ROW - 0.25%"
+                            ]
+
+                        ]
+                    },
+                    "label": "SVOD Rights Pre-Purchased",
+                    "read_condition": {
+                        "settings.svod_pre_purchases": {
+                            "includes": [
+                                11
+                            ]
+                        }
+                    },
+                    "widget_type": "enum"
                 }
             }
 
