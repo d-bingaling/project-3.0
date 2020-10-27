@@ -1,0 +1,1340 @@
+{# MACROS START #}
+
+{% macro warning(field) -%} {# To handle warnings #}
+
+	<span class="warning">Missing information - {{ field.capitalize() }}</span>
+
+{%- endmacro %}
+
+
+
+{% macro dmif(widget_id, warning) %} {# Convert decimal into human readable - do not input as a string % #}
+
+	{% if deal_memo.meta[widget_id] %}{{ deal_memo.meta[widget_id] }}{% else %}<span class="warning">Missing information - {{warning}}</span>{% endif %}
+
+{% endmacro %}
+
+
+{% macro percent(value) -%} {# Convert decimal into human readable - do not input as a string % #}
+
+	{{ (((value * 100)|string).rstrip('0')).rstrip('.') }}{# This strips out any trailing [0] If there is a leftover [.] it will remove that as well (75.00% = 75% and 7.2500% = 7.25%) #}
+
+{%- endmacro %}
+
+{% macro date(date_widget_id) -%} {# insert a date with formatting dd/mm/yyyy #}
+
+    {% if deal_memo.meta[date_widget_id] %}
+        {{ deal_memo.meta[date_widget_id].strftime('%d/%m/%Y') }}
+    {% else %}
+        {{ warning(date_widget_id).replace('_', ' ') }}
+    {% endif %}
+
+{%- endmacro %}
+
+
+{% macro comm_num(number) -%} {# Format number with commas every 1000s #}
+	{{ "£{:,}".format(number) }}
+{%- endmacro %}
+
+{# MACROS END #}
+
+{# VARIABLES START #}
+
+{# DO NOT EDIT #} {% set tick = '<strong class=\"large_tick\">&#10004;</strong>' %} {# To make ticks simpler #}
+
+{# DO NOT EDIT #} {% set box = '<strong class=\"large_tick\">□</strong>' %} {# To make empty tick box simpler #}
+
+{# DO NOT EDIT #} {% set zero = decimal.Decimal("0") %}
+
+
+
+
+{# SECTION E - Dates #}
+
+		{# Settings for Section E - Part A #}
+
+			{# Total number of days for T8(1) and T8(2) #}
+			{# DO NOT EDIT #}
+				{% set eng_1 = deal_memo.meta.get('engagement_period_1_days', zero) %}
+				{% set eng_2 = deal_memo.meta.get('engagement_period_2_days', zero) %}
+				{% set eng_3 = deal_memo.meta.get('engagement_period_3_days', zero) %}
+				{% set eng_4 = deal_memo.meta.get('engagement_period_4_days', zero) %}
+				{% set eng_5 = deal_memo.meta.get('engagement_period_5_days', zero) %}
+				{% set eng_6 = deal_memo.meta.get('engagement_period_6_days', zero) %}
+				{% set eng_7 = deal_memo.meta.get('engagement_period_7_days', zero) %}
+				{% set eng_8 = deal_memo.meta.get('engagement_period_8_days', zero) %}
+				{% set eng_9 = deal_memo.meta.get('engagement_period_9_days', zero) %}
+				{% set eng_10 = deal_memo.meta.get('engagement_period_10_days', zero) %}
+
+			{# Total number of days #}
+			{# DO NOT EDIT #}
+				{% if deal_memo.meta.get('number_engagement_period') == 1 %}			{% set total_days = (eng_1) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 2 %}			{% set total_days = (eng_1 + eng_2) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 3 %}			{% set total_days = (eng_1 + eng_2 + eng_3) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 4 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 5 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 6 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 7 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 8 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7 + eng_8) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 9 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7 + eng_8 + eng_9) %}
+				{% elif deal_memo.meta.get('number_engagement_period') == 10 %}			{% set total_days = (eng_1 + eng_2 + eng_3 + eng_4 + eng_5 + eng_6 + eng_7 + eng_8 + eng_9 + eng_10) %}
+				{% endif %}
+
+
+{# SECTION F - Engagements #}
+
+		{# SECTION F - PART A #}
+			{% set episode_category = 'category_a' %} {# Set the episode category (SECTION F - PART A) --- SET BY - SET DATE  #}
+				{# Category A = category_a  #}
+				{# Category B = category_b  #}
+
+		{# SECTION F - PART D #}
+			{# Total engagement fee payable #}
+				{# DO NOT EDIT #} {# XXXXXX #} {% set total_engagement_payable = deal_memo.meta.get('number_engagement_fees', zero) + deal_memo.meta.get('additional_multi_episodic', zero) %}
+
+			{# Total engagement fee #}
+				{# DO NOT EDIT #} {# XXXXXX #} {% set total_engagement_fee = ((deal_memo.meta.get('number_engagement_fees', zero) + deal_memo.meta.get('additional_multi_episodic', zero)) * deal_memo.meta.get('engagement_fee', zero)).quantize(decimal.Decimal(".01")) %}
+
+		{# SECTION F - PART E #}
+			{% set prod_day_payment_rate = decimal.Decimal("61.50") %} {# PROBABLY DOESNT NEED TO CHANGE Set the production day payment rate (section F) This is £61.50 (as of 2020) #}
+
+			{# Total production day payments #}
+				{# DO NOT EDIT #} {# XXXXXX #} {% set total_production_payments = (deal_memo.meta.get('production_day_payments', zero) * prod_day_payment_rate).quantize(decimal.Decimal(".01")) %}
+
+
+	{# SECTION G - Production payments #}
+
+		{# Engagement fee payment - Section G total #}
+			{# DO NOT EDIT #} {# XXXXXX #} {% set engagement_fee_payment = (total_engagement_fee + total_production_payments).quantize(decimal.Decimal(".01")) %}
+
+	{# SECTION H - Nominated additional uses #}
+
+		{% set nom_add_uses_option = 'option_a' %} {# Set the nominated additional uses (section H) --- SET BY - SET DATE  #}
+			{# Option A = option_a  #}
+			{# Option B = option_b  #}
+
+		{% set nom_add_uses_base_percent = decimal.Decimal("0.35") %} {# PROBABLY DOESNT NEED TO CHANGE Set the nominated additional uses percent (section H) This is 35% (as of 2019) #}
+
+{# VARIABLES END #}
+
+
+
+
+
+
+
+
+{# START OF CONTRACT - START OF CONTRACT - START OF CONTRACT #}
+
+
+<p class='center'><span class='uppercase'><strong>standard form of engagement for artists in television production<br />
+in accordance with the</span></strong><br />
+PACT/Equity Television Production Agreement<br />
+(hereinafter referred to as the Agreement)<br />
+effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 January 2019.</p>
+
+
+
+<table class='top'>
+    <tbody>
+        <tr>
+            <td><p><strong class='uppercase'>this contract made on</strong> {{ datetime.today().strftime('%d/%m/%Y') }}<br />incorporating the terms and conditions of the Agreement</p></td>
+            <td><strong><span class='uppercase'>production</span> No: {{ deal_memo.project_record.project.settings.get('production_number', warning('production number')) }}</strong></td>
+        </tr>
+    </tbody>
+</table> 
+
+<hr noshade>
+
+
+
+{# SECTION A - SECTION A - SECTION A - SECTION A - SECTION A #}
+
+
+<p><strong>Section A</strong></p>
+
+<table>
+    <tbody>
+        <tr>   
+            <td>Production Company: </td>
+            <td>{% if deal_memo.project_record.project.production_company.name %}{{ deal_memo.project_record.project.production_company.name }}{% else %}{{ warning('production company name') }}{% endif %}</td>
+            <td>Phone No: {{ deal_memo.project_record.project.settings['prod_company_phone'] or  warning('prod company phone') }}</td>
+        </tr>
+        <tr>   
+            <td>Address:</td>
+            <td>{% if deal_memo.project_record.project.production_company.address %}{{ deal_memo.project_record.project.production_company.address.replace('/n', ',') }}{% else %}{{ warning('production company address')}}{% endif %}</td>
+        </tr>
+        <tr>   
+            <td>Designated Base:</td>
+            <td>{{ deal_memo.project_record.project.settings['production_base'] or warning('designated base') }}</td>
+            <td>Phone No: {{ deal_memo.project_record.project.settings['designated_base_phone'] or warning('designated base phone') }}</td>
+        </tr>
+        <tr>   
+            <td>Email Address: </td>
+            <td>{{ deal_memo.project_record.project.settings['production_email'] or warning('prod company email') }}</td>
+        </tr>
+    <tbody>
+</table>
+
+
+<hr noshade>
+
+
+
+
+{# SECTION B - SECTION B - SECTION B - SECTION B - SECTION B #}
+
+
+<p><strong>Section B<strong></p>
+
+<table>
+    <tbody>
+        <tr>
+            <td>Artist:</td>
+            <td>{{ deal_memo.meta['firstname'] or warning('first name')}} {{ deal_memo.meta['lastname'] or warning('last name')}}</td>
+            <td>Phone No: {{ deal_memo.meta['crew_phone'] or warning('phone number') }}</td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td>{{ deal_memo.meta['address1'] or warning('address') }}, {% if deal_memo.meta['address2'] %}{{ deal_memo.meta.get('address2') }}, {% endif %}{% if deal_memo.meta['address3'] %}{{ deal_memo.meta.get('address3') }}, {% endif %}{% if deal_memo.meta['uk_address'] == 'uk' %}{{ deal_memo['address_county'] or warning('county')}}, {% endif %}{{ deal_memo.meta['postcode'] or warning('postcode') }}</td>
+        </tr>
+        <tr>
+            <td>Email Address:</td>
+            <td>{{ deal_memo.meta['email'] or warning('email') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+
+
+<p><strong>Section C</strong></p>
+
+
+<table>
+    <tbody>
+        <tr>
+            <td>Agent:</td>
+            <td>{{ deal_memo.meta['agency_name'] or warning('agency name')}} (attention: {{ deal_memo.meta['agent_name'] or warning('agent name') }})</td>
+            <td>Phone No: {{ deal_memo.meta['agent_phone'] or warning('agent phone') }}</td>
+        </tr>
+        <tr>
+            <td>Address:</td>
+            <td>{{ deal_memo.meta['agent_address'] or warning('agent address') }}</td>
+        </tr>
+        <tr>
+            <td>Email Address:</td>
+            <td>{{ deal_memo.meta['agent_email'] or warning('agent email') }}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+<hr noshade>
+
+
+{# SECTION D - SECTION D - SECTION D - SECTION D - SECTION D #}
+
+
+
+<p><strong>Section D</strong></p>
+
+<table>
+    <tbody>
+        <tr>
+            <td>Part:</td>
+            <td>{{ deal_memo.meta['character_name'] or warning('character name') }}</td>
+        </tr>
+        <tr>
+            <td>Production:</td>
+            <td>{% if deal_memo.project_record.project.name %}{{ deal_memo.project_record.project.name }}{% else %}{{ warning('project name')}}{% endif %}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<hr noshade>
+
+{# SECTION E - SECTION E - SECTION E - SECTION E - SECTION E #}
+
+
+<p><strong>Section E</strong></p>
+
+
+
+	<p>The Producer shall have first call on the Artist's services for a period beginning on the first day on which the Artist shall, following a call from the Producer, attend to render services in the filming/recording of the Artist's part for the following nominated and/or unspecified period(s) in accordance with the provisions of Clause (T8)1 and 2:</p>
+
+	<table class="indent top table_j">
+		<tbody>
+			<tr>
+				<td></td>
+				<td><strong>Dates of engagement</strong></td>
+				<td></td>
+				<td><strong>Number of days</strong></td>
+			</tr>
+
+<!-- ONE ENGAGEMENT -->
+
+			<tr>
+				<td>i)</td>
+				<td>From: {{ date('start_date') }}</td>
+				<td>To: {{ date('leaving_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_1_days', warning("Engagement i - Days")) }}</td>
+			</tr>
+
+	{% if 'number_engagement_period' in deal_memo.meta %}
+
+<!-- TWO ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 2 %}
+
+			<tr>
+				<td>ii)</td>
+				<td>From: {{ date('engagement_period_2_start_date') }}</td>
+				<td>To: {{ date('engagement_period_2_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_2_days', warning("Engagement ii - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- THREE ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 3 %}
+
+			<tr>
+				<td>iii)</td>
+				<td>From: {{ date('engagement_period_3_start_date') }}</td>
+				<td>To: {{ date('engagement_period_3_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_3_days', warning("Engagement iii - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- FOUR ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 4 %}
+
+			<tr>
+				<td>iv)</td>
+				<td>From: {{ date('engagement_period_4_start_date') }}</td>
+				<td>To: {{ date('engagement_period_4_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_4_days', warning("Engagement iv - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- FIVE ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 5 %}
+
+			<tr>
+				<td>v)</td>
+				<td>From: {{ date('engagement_period_5_start_date') }}</td>
+				<td>To: {{ date('engagement_period_5_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_5_days', warning("Engagement v - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- SIX ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 6 %}
+
+			<tr>
+				<td>vi)</td>
+				<td>From: {{ date('engagement_period_6_start_date') }}</td>
+				<td>To: {{ date('engagement_period_6_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_6_days', warning("Engagement vi - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- SEVEN ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 7 %}
+
+			<tr>
+				<td>vii)</td>
+				<td>From: {{ date('engagement_period_7_start_date') }}</td>
+				<td>To: {{ date('engagement_period_7_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_7_days', warning("Engagement vii - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- EIGHT ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 8 %}
+
+			<tr>
+				<td>viii)</td>
+				<td>From: {{ date('engagement_period_8_start_date') }}</td>
+				<td>To: {{ date('engagement_period_8_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_8_days', warning("Engagement viii - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- NINE ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 9 %}
+
+			<tr>
+				<td>ix)</td>
+				<td>From: {{ date('engagement_period_9_start_date') }}</td>
+				<td>To: {{ date('engagement_period_9_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_9_days', warning("Engagement ix - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+<!-- TEN ENGAGEMENTS -->
+
+		{% if deal_memo.meta['number_engagement_period'] >= 10 %}
+
+			<tr>
+				<td>x)</td>
+				<td>From: {{ date('engagement_period_10_start_date') }}</td>
+				<td>To: {{ date('engagement_period_10_end_date') }}</td>
+				<td>{{ deal_memo.meta.get('engagement_period_10_days', warning("Engagement x - Days")) }}</td>
+			</tr>
+
+		{% endif %}
+
+			<tr>
+				<td></td>
+				<td></td>
+				<td><strong><strong>Total number of days:</strong></strong></td>
+				<td><strong>{{ total_days }}</strong></td>
+			</tr>
+
+	{% else %}
+
+		{{ warning('Number of engagement periods') }}
+
+	{% endif %}
+
+		</tbody>
+	</table>
+
+{% elif deal_memo.meta['engagement_period'] == 'clause_t8_3' %}
+
+	<p><strong>Eight Weeks or more continuous engagement (Clause (T8) 3)</strong></p>
+
+	<p>Overall period from <strong>{{ date('start_date') }}</strong> to <strong>{{ date('leaving_date') }}</strong></p>
+
+	<p>Guaranteed number of engagement day fees <strong>{{ deal_memo.meta.get('guaranteed_day_fees', warning("Engagement day fees")) }}</strong>, Guaranteed number of production days <strong>{{ deal_memo.meta.get('guaranteed_production_days', warning("No. of production days")) }}</strong></p>
+
+	<p>The period of engagement may be extended subject to Clause (T17) of the Agreement.</p>
+
+
+
+{% elif deal_memo.meta['engagement_period'] == 'clause_t8_4' %}
+
+	<p>One Day Network Engagement (Clause (T8) 4)</p>
+
+	<p>Date of Engagement: <strong>{% if deal_memo.meta['start_date'] %}{{ deal_memo.meta.get('start_date').strftime('%d/%m/%Y') }}{% else %}{{ warning('date of engagement') }}{% endif %}</strong></p>
+
+
+
+{% else %}
+
+	<p>{{ warning("Engagement period has not been defined") }}</p>
+
+{% endif %}
+
+
+<hr noshade>
+
+{# SECTION F - SECTION F - SECTION F - SECTION F - SECTION F #}
+
+
+<p><strong>Section F</strong></p>
+
+<table>
+    <tbody>
+        <tr>
+            <td>(i)  Number of episodes:</td>
+            <td>{{ deal_memo.meta.get('number_of_episodes', zero) }}</td>
+            <td>Category A {% if episode_category == 'category_a' %} {{ tick }}{% else %} {{ box }}{% endif %}</td>
+            <td>Category B {% if episode_category == 'category_b' %} {{ tick }}{% else %} {{ box }}{% endif %}</td>
+        </tr>        
+    </tbody>
+</table>
+
+
+<p>(ii) Number of Engagement Fees payable: <strong>{{ deal_memo.meta.get('number_engagement_fees', zero) }}</strong></p>
+
+
+
+<p>(iii) Number of additional multi-episodic Engagement Fees payable: <strong>{{ deal_memo.meta.get('additional_multi_episodic', zero) }}</strong></p>
+
+
+
+<p>
+	(iv) Total Engagement Fees payable [(ii) + (iii)]: <strong>{{ total_engagement_payable }}</strong> multiplied by Engagement Fee: <strong>£{{ (deal_memo.meta.get('engagement_fee', zero)).quantize(decimal.Decimal(".01")) }}</strong> = <strong>{{ comm_num(total_engagement_fee) }}</strong>
+</p>
+
+<p>
+    (v) Number of Production Day payments: <strong>{{ deal_memo.meta.get('production_day_payments', zero) }}</strong> multiplied by <strong>£{{ prod_day_payment_rate }}</strong> = <strong>{{ comm_num(total_production_payments) }}</strong>
+</p>
+
+
+<p>The Producer has the right to incorporate the Artist's performance into more than one separately transmitted episode, segment or instalment of the production.</p>
+
+
+<hr noshade>
+
+
+
+{# SECTION G - SECTION G - SECTION G - SECTION G - SECTION G #}
+
+<p><strong>Section G</strong></p>
+
+<p>The Producer shall pay the Artist £{{ comm_num(engagement_fee_payment) }} for the period(s) specified in Section E above calculated by adding Section F(iv) and F(v) whether or not the Artist is called to render services. This payment shall acquire one transmission on one of the main UK channels as well as non theatric rights throughout the world.  Other payments under the Agreement may form part of the Artist's aggregate earnings upon which additional uses are calculated.</p>
+
+
+
+
+<hr noshade>
+
+
+
+
+{# SECTION H - SECTION H - SECTION H - SECTION H - SECTION H #}
+
+
+<p><strong>Section H Nominated Additional Uses</strong></p>
+
+<p>The Producer must acquire a Nominated Additional Use and undertakes to pay this use in accordance with the provisions of (T6) 3 and (T23) 2 and 6 of the Agreement. This payment shall not be compulsory for ITV regional, schools and adult education, compilations, recordings of live performances and engagements under Clause (T8)4a - for such programmes it shall only become due when the first Additional Use takes place.</p>
+
+
+<p>Use Fees are calculated as percentages of Artists Earnings as specified in Section G.</p>
+
+<table class='table_f_a indent'>
+	<tbody>
+        <tr>
+            <td>(a) Rest of World (ex UK and US) TV</td>
+            <td>{% if nom_add_uses_option == 'option_a' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
+        </tr>
+        <tr>
+            <td>(b) Nominated US TV Uses</td>
+            <td>{% if nom_add_uses_option == 'option_b' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
+        </tr>
+	</tbody>
+</table>
+
+
+<p><strong>(a) Rest of World (ex UK and US) Television</strong></p>
+
+
+<p>Pre-Purchase of Rest of World (ex UK and US) TV:  35% times £………. (total Artist Earnings) = £……….</p>
+
+
+<p><strong>(b) Nominated US TV Uses</strong></p>
+
+
+<p>Pre-Purchase of Nominated US TV Uses:    35% times £……….. (total Artist Earnings) = £……….</p>
+
+
+<p>This pre-purchase will be applied to the Uses ticked below:</p>
+
+
+<table>
+<tbody>
+<tr>
+<td> <p>1st USA Prime Time Network TX</p>
+</td>
+<td> <p>75   %</p>
+</td>
+<td> </td>
+</tr>
+<tr>
+<td> <p>1st USA non PrimeTime Network TX</p>
+
+</td> <td> <p>35   %</p>
+
+</td> <td> 
+</td> </tr> <tr> <td> <p>USA PBS Network</p>
+
+</td> <td> <p>15   %</p>
+
+</td> <td> 
+</td> </tr> <tr> <td> <p>USA Full Syndication</p>
+
+</td> <td> <p>25   %</p>
+
+</td> <td> 
+</td> </tr> <tr> <td> <p>USA Basic Cable</p>
+
+</td> <td> <p>10   %</p>
+
+</td> <td> 
+</td> </tr> <tr> <td> <p>USA Major Pay</p>
+
+</td> <td> <p>30   %</p>
+
+</td> <td> 
+</td> </tr> </tbody></table>
+
+
+
+
+<p>If the Total % of Nominated Uses is greater than 35%, then an additional payment equivalent to the difference in the percentages multiplied by the Artist’s total Earnings must also be made:</p>
+
+
+<p>Total % of Nominated Uses: %</p>
+
+<p>LESS: <u>35 %</u></p>
+
+<p>Difference % times £………. (total Artist Earnings) = £……….</p>
+
+
+<p>If the Total % of Nominated Uses is less than 35%, then the unused difference may be applied at a later date to any US Television Use as set out in the above table.</p>
+
+
+<p>A Producer may switch to a different choice from (a) or (b) above at any time up to 12 months from first UK transmission or prior to the first sale of the production whichever is the earlier. A Producer must notify an Artist in writing in advance of any such switch.  Where notice in writing in advance is not given, the original choice between (a) and (b) shall be binding.</p>
+
+
+<hr noshade>
+
+{# SECTION I - SECTION I - SECTION I - SECTION I - SECTION I #}
+
+<p><strong>Section I Other Additional Uses</strong></p>
+
+<p>The Producer undertakes to pre-purchase, where indicated, the additional uses shown below:</p>
+
+
+<p><strong>2nd and each subsequent UK Primary TX *</strong></p>
+
+<p>Peak Time 55%  <u>times £..</u> (total Artist Earnings) = £...............</p>
+
+<p>Day Time off Peak 27.5% <u>times £</u> (total Artist Earnings) = £................</p>
+
+<p>Night Time off Peak 13.75% <u>times £</u> (total Artist Earnings) = £................</p>
+
+<p>* If the programme is to be repeated within a week of first TX, the repeat payments shall be 75% of the rates set out above.</p>
+
+<p><strong>Showcase Premieres</strong></p>
+
+<p>3 Showcase Premieres 25% £</p>
+
+<p>1 Showcase Premiere 10% £ <i>[minimum £50]</i></p>
+
+
+<p>In the event that the royalty provisions as detailed in Appendix TA are not applied (and if not already pre-purchased as set out in Section H above), the percentages for purchasing Additional Uses, as detailed below, shall be payable:</p>
+
+
+<table> 
+    <tbody>
+        <tr>
+            <td><p>Rest of World TV rights – 7 years </p></td>
+            <td><p>35%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>1st USA Prime Time Network TX</p></td>
+            <td><p>75%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>2nd USA Prime Time Network TX</p></td>
+            <td><p>25%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Thereafter per TX</p></td> <td> <p>15%</p></td> <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>1st USA non PrimeTime Network TX</p></td>
+            <td><p>35%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>2nd &amp; each subsequent non Prime Time TX</p></td>
+            <td><p>7.5%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>USA PBS Network</p></td>
+            <td><p>15%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>USA Full Syndication</p></td>
+            <td><p>25%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>USA Basic Cable</p></td>
+            <td><p>10%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>USA Major Pay</p></td>
+            <td><p>30%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr> <td><p>USA OTT VOD Rights</p></td>
+             <td><p>3%</p></td>
+             <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Limited Theatric (UK)</p></td>
+            <td><p>14%</p></td>
+            <td><p>£</p></td> 
+        </tr>
+        <tr> 
+            <td><p>Limited Theatric (USA)</p></td>
+            <td><p>14%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Full Theatric (Rest of World)</p></td>
+            <td><p>14%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr> 
+            <td><p>*UK Video</p></td>
+            <td><p>5%</p></td><td> <p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>*US Video</p></td>
+            <td><p>4%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>*Rest of World Video</p></td>
+            <td><p>4%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p> UK DTO/DTR</p></td>
+            <td><p>2%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p> US DTO/DTR</p></td>
+            <td><p>2%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p> ROW DTO/DTR</p></td>
+            <td><p>2%</p></td>
+            <td><p>£</p></td>
+        </tr> 
+    </tbody>
+</table>
+
+<p>*A minimum of two markets must be acquired at any one time.   If a UK Broadcaster, or any of its subsidiaries, retain the video rights for distribution, then the royalty must be applied.</p>
+
+
+<p><u><strong>SVOD Pre-Purchases</strong></u></p>
+
+
+<table>
+    <tbody> 
+        <tr>
+            <td>
+                <p>Primary Window: UK-SVOD </p>
+                <p>(5 yrs 7%; 7 yrs 8%; 10 yrs 9%; 15 yrs. 11%)</p>
+            </td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td>
+                <p>Primary Window: USA – SVOD </p>
+                <p>(5 yrs 15%; 7 yrs 16%; 10 yrs 18%; 15 yrs 21%)</p>
+            </td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td>
+                <p>Primary Window: North America (US &amp; Canada)</p>
+                <p>(5 yrs 16%; 7 yrs 17%; 10 yrs 19%; 15 yrs 22%)</p>
+            </td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Second Window Holdback UK: 7 yrs (6 m: 6%, 12 m: 4%) / 10 yrs (6 m: 7%, 12 m: 5%).</p></td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Second Window Holdback US: 7 yrs (6 m: 10%, 12 m: 8%)/ 10 yrs (6 m: 12%, 12 m: 10%).</p></td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Second Window Holdback North America (US and Canada): 7 yrs (6 m: 11%, 12 m: 9%) / 10 yrs (6 m: 13.5%, 12m: 11.5%).</p></td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Second Window UK SVoD: (5 yrs: 6%, 7 yrs: 7%, 10 yrs: 8%, 15 yrs: 10%)</p></td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Second Window USA SVoD (including OTT SVOD Rights): (5 yrs: 13%, 7 yrs: 14%, 10 yrs: 16%, 15 yrs: 19%)</p></td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>Second Window North America (US &amp; Canada) – SvoD (including OTT SVOD Rights): (5 yrs: 14%, 7 yrs: 15%, 10 yrs: 17%, 15 yrs: 20%). </p></td>
+            <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>ROW SVOD only (where ROW has been pre-purchased as a Nominated Additional Use for a period of 7 years SVOD rights only): 7-10 y: 2%, 7-15 y: 5%</p></td>
+        <td><p>%</p></td>
+        <td><p>£</p></td>
+        </tr>
+        <tr>
+            <td><p>SVOD Rights Pre-Purchased: for each additional year beyond 15 yrs (UK: 0.25%, US: 0.5%, ROW: 0.25%).</p></td> <td><p>%</p></td>
+            <td><p>£</p></td>
+        </tr>
+    </tbody>
+</table>
+
+
+<hr noshade>
+
+{# SECTION J - SECTION J - SECTION J - SECTION J - SECTION J #}
+
+
+
+<p><strong>Section J</strong></p>
+
+<p>The Artist shall be required to render services for rehearsal of their part prior to their first day of principal photography specified in Section E.</p>
+
+
+<table class="table_j">
+	<tbody>
+		<tr>
+			<td>Rehearsal Period</td>
+			<td>
+				From: <strong>{% if deal_memo.meta['cast_rehearsal_start_date'] %}{{ date('cast_rehearsal_start_date') }}{% else %} - {% endif %}</strong>
+			</td> 
+			<td>
+				To: <strong>{% if deal_memo.meta['cast_rehearsal_end_date'] %}{{ date('cast_rehearsal_end_date') }}{% else %} - {% endif %}</strong>
+			</td>
+			<td>
+				{% if deal_memo.meta['cast_rehearsal_days_weeks'] == 'days' %}Number of days: <strong>{{ deal_memo.meta.get('cast_rehearsal_weeks', zero) }}</strong>{% else %}Number of weeks: <strong>{{ deal_memo.meta.get('cast_rehearsal_weeks', zero) }}</strong>{% endif %}
+			</td>
+		</tr>
+		{% if deal_memo.meta['cast_additional_rehearsal_toggle'] == 'yes' %}
+			<tr>
+				<td>Second Rehearsal Period</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['cast_rehearsal_start_date_2'] %}{{ date('cast_rehearsal_start_date_2') }}{% else %} - {% endif %}</strong>
+				</td>
+				<td>
+					To: <strong>{% if deal_memo.meta['cast_rehearsal_end_date_2'] %}{{ date('cast_rehearsal_end_date_2') }}{% else %} - {% endif %}</strong>
+				</td>
+				<td>
+				</td>
+			</tr>
+		{% endif %}
+		<tr>
+			<td colspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Rehearsal Fee(s) </td>
+			<td colspan="3">
+				<strong>£{{ deal_memo.meta.get('cast_rehearsal_weeks_fee', zero).quantize(decimal.Decimal(".01")) }}</strong>{% if deal_memo.meta['cast_rehearsal_days_weeks'] == 'days' %} per day{% else %} per week{% endif %}
+			</td>
+		</tr>
+		<tr>
+			<td colspan="4">&nbsp;</td>
+		</tr>
+		<tr>
+			<td>Total Rehearsal payments</td>
+			<td colspan="3">
+				<strong>£{{deal_memo.calculators.cast.rehearsal_fee(deal_memo)}}</strong>
+			</td>
+		</tr>		
+	</tbody>
+</table>
+
+
+<p>The Artist shall be required to self-isolate prior to their first day of principal photography specified in Section E.</p>
+
+
+{% if deal_memo.meta['self_iso_period'] != null %}
+	<table class="table_j">
+		<tbody>
+			<tr>
+				<td>Isolation Period</td>
+				<td>Dates of isolation periods</td>
+			</tr>
+			<tr>
+				<td>i)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_1_start'] != null %}{{ date('iso_date_1_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_1_end'] != null %}{{ date('iso_date_1_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% if deal_memo.meta['self_iso_period'] >= 2 %}
+			<tr>
+			<td>ii)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_2_start'] %}{{ date('iso_date_2_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_2_end'] %}{{ date('iso_date_2_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% endif %}
+			{% if deal_memo.meta['self_iso_period'] >= 3 %}
+			<tr>
+			<td>iii)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_3_start'] %}{{ date('iso_date_3_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_3_end'] %}{{ date('iso_date_3_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% endif %}
+			{% if deal_memo.meta['self_iso_period'] >= 4 %}
+			<tr>
+			<td>iv)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_4_start'] %}{{ date('iso_date_4_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_4_end'] %}{{ date('iso_date_4_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% endif %}
+			{% if deal_memo.meta['self_iso_period'] >= 5 %}
+			<tr>
+			<td>v)</td>
+				<td>
+					From: <strong>{% if deal_memo.meta['iso_date_5_start'] %}{{ date('iso_date_5_start') }}{% else %} - {% endif %}</strong>
+				</td> 
+				<td>
+					To: <strong>{% if deal_memo.meta['iso_date_5_end'] %}{{ date('iso_date_5_end') }}{% else %} - {% endif %}</strong>
+				</td>
+			</tr>
+			{% endif %}
+			<tr>
+			{% if deal_memo.meta['cast_self_isolation_days_weeks'] == 'days' %}
+				<td>
+					Number of days:
+				</td>
+				<td><strong>{{ deal_memo.meta.get('cast_self_isolation_weeks', zero) }}</strong></td>
+			{% else %}
+				<td>
+					Number of weeks: 
+				</td>
+				<td><strong>{{ deal_memo.meta.get('cast_self_isolation_weeks', zero) }}</strong></td>
+			{% endif %}
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Isolation Fee(s) </td>
+				<td colspan="3">
+					<strong>£{{ deal_memo.meta.get('cast_self_isolation_weeks_fee', zero).quantize(decimal.Decimal(".01")) }}</strong>{% if deal_memo.meta['cast_self_isolation_days_weeks'] == 'days' %} per day{% else %} per week{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Total Isolation payments</td>
+				<td colspan="3">
+					<strong>
+					£{{ (deal_memo.meta.get('cast_self_isolation_weeks_fee', zero)) *
+					(deal_memo.meta.get('cast_self_isolation_weeks', zero)).quantize(decimal.Decimal("1")) }}
+					</strong>      
+				</td>
+			</tr>		
+		</tbody>
+	</table>
+
+{% else %}
+
+		<table class="table_j">
+		<tbody>
+			<tr>
+				<td>Isolation Period</td>
+				<td>Dates of isolation periods</td>
+			</tr>
+			<tr>
+				<td>i)</td>
+				<td>
+					From: <strong>-</strong>
+				</td> 
+				<td>
+					To: <strong>-</strong>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Number of weeks:
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Isolation Fee(s) </td>
+				<td colspan="3">
+					<strong>£.........</strong> per week 
+				</td>
+			</tr>
+			<tr>
+				<td colspan="4">&nbsp;</td>
+			</tr>
+			<tr>
+				<td>Total Isolation payments</td>
+				<td colspan="3">
+					<strong>£...........</strong>     
+				</td>
+			</tr>		
+		</tbody>
+	</table>
+{% endif %}
+
+
+
+<hr noshade>
+
+{# SECTION K - SECTION K - SECTION K - SECTION K - SECTION K #}
+
+<p><strong>Section K</strong></p>
+
+<p>Total Guaranteed Minimum Payment (Section G+H+*I+*J) =     £............................</p>
+
+<p>    <i>[*I and J where applicable]</i></p>
+
+
+
+
+
+
+<hr noshade>
+
+
+
+{# SECTION L - SECTION L - SECTION L - SECTION L - SECTION L #}
+
+
+
+
+<p><strong>Section L</strong></p>
+
+
+<p>Subject always to Clause (T5) 11 of the Agreement the Producer shall/shall not* have the right to dub the Artist's voice <i>[*delete as required].</i></p>
+
+
+<hr noshade>
+
+
+
+{# SECTION M - SECTION M - SECTION M - SECTION M - SECTION M #}
+
+
+
+<p><strong>Section M Pensions</strong> <i>[see clause (T26)]</i></p>
+
+<p>Equity Personal Pension Scheme Number..............................................</p>
+
+<p>Producer Contribution £....................  Artist’s contribution £....................  Total = £..................</p>
+
+
+
+
+<hr noshade>
+
+
+
+{# SECTION N - SECTION N - SECTION N - SECTION N - SECTION N #}
+
+<p><strong>Section N Holidays</strong></p>
+
+<p>Holiday will be accrued at the rate of 5.6 weeks per year pro rata. If at the end of the engagement it has not been possible for the Artist to have taken the holiday accrued under this contract then payment shall be made in lieu of untaken holiday. Payment for untaken holiday shall be at the rate of £15.50 for each day contracted and/or rendering services. </p>
+
+<hr noshade>
+
+
+<p>An engagement made on the date and between the parties in Section A &amp; B of the contract.</p>
+
+
+<p>This contract shall incorporate all the terms of the Agreement together with any amendment or revision thereof so far as the same are applicable hereto and this engagement shall not contain any terms or provisions additional to those herein except as provided for in the Agreement.</p>
+
+
+<p>A copy of the Agreement is available at the production office and at the offices of the Union and Pact</p>
+
+<div class='indent'>
+
+    <p>1. The Producer hereby engages the Artist to perform in the production and in the part specified in Section D in the contract.</p>
+
+
+    <p>2. The Artist shall be under no obligation to render services to the Producer except on the terms specified herein or under the provision of (T18) of the Agreement.</p>
+
+
+    <p>3. The Producer may not vary or add to the days specified in Section E except with the consent of the Artist in writing.</p>
+
+
+    <p>4. In consideration of payment of the Artist's earnings the Producer shall be entitled to the rights as provided for in the Agreement including the Additional Uses in accordance with the provisions under Clause (T23) and to any subsequent uses subject to the payments in accordance with Appendix TA of the Agreement.  The Artist hereby authorises the Producer to pay the pension contribution specified in Section M direct to Hencilla Canworth First Act Insurance administrators of the Equity Personal Pension Scheme, such sum to be credited to the relevant personal pension fund by Hencilla Canworth First Act Insurance, and declares that the receipt of Hencilla Canworth First Act Insurance shall be good and valid discharge of all persons paying such monies to them.</p>
+
+
+    <p>5. The Artist hereby authorises and empowers his/her Agent as designated in Section C to collect and receive all sums of money payable to the Artist under the terms of the Agreement including any future payments which may become due under Appendix TA and declares that the receipt of the said Agent shall be a good and valid discharge of all persons save the pension fund contribution, if any, specified in Section M, paying such moneys to them.  The Artist also authorises and empowers the Producer to deal with the said Agent on the Artist's behalf on all matters arising out of this engagement.  At any time after the signing of this contract the Artist may authorise in writing a change in person , address and/or email address from that set out in the contract.</p>
+
+
+    <p>6. In the event that it is not possible to make payments to the Artist’s Agent as described in clause 5 above the Artist hereby authorises and empowers Equity to collect and receive the sums mentioned in Appendix TA where appropriate which have not been pre-purchased if and when the same shall become payable to the Artist and declares that the receipt of Equity shall be a good and valid discharge of all persons paying such moneys to it.  The Artist also authorises Equity to negotiate on the Artist's behalf amendments of the Agreement in relation to the production. Any such amendments agreed by Equity and the Producers shall be deemed incorporated in this contract.</p>
+
+
+    <p>7. The Artist authorises Equity to, on the Artist’s behalf, negotiate amendments to and settle any claims or disputes arising from the PACT/Equity Television Production Agreements in relation to subsequent amendments to existing provisions and/or additional rights of use that the form of engagement is the subject of. All amendments negotiated under this clause shall be deemed incorporated into the form of engagement The Producer acknowledges that Equity has been appointed by the Artist to act on his/her behalf as set out in this clause.</p>
+
+
+    <p>8. All notices to be served by either party under this contract or the Agreement shall, unless otherwise agreed between the parties, be given in writing and sent to the address and/or email address given in Section B in the contract in the case of a notice served on the Artist; a copy of the notice shall be sent to the Artist's Agent. Subject to the requirements of the Agreement, notices may be given verbally and subsequently confirmed in writing.  Notices in writing shall be deemed to have been delivered 24 hours after posting. The party sending notice shall retain proof in writing.</p>
+
+
+    <p>9.</p>
+
+    <div class='indent'>
+
+        <p>a) the Artist grants to the Producer all consents required under the Copyright Designs and Patents Act 1988 or any modification or re-enactment thereof to enable the Producer to make the fullest use of the Artist’s services and the products thereof in perpetuity. The Artist assigns to the Producer, with full title guarantee free from all third party rights, all present and future copyright and performer’s property rights in and to the performances and services of the Artist and the products thereof throughout the world for the full period of copyright and thereafter insofar as is possible in perpetuity;</p>
+
+
+        <p>b) the Artist is and shall throughout the term of his/her engagement remain a "qualifying person" within the meaning of the Copyright, Designs and Patents Act 1988;</p>
+
+
+        <p>c) the sums payable to the Artist pursuant to this Form of Engagement and the Agreement include consideration for the assignment and exercise by the Producer, its licensees, assignees and successors in title of the rental rights in and to the products of the Artist's services and that, without prejudice to the Artist's rights at law, such payment constitutes an equitable consideration for the grant and/or exercise of all such rights.  Nothing in this Form of Engagement nor the Agreement shall prevent the Artist from being entitled to receive income in respect of the exercise of rental and lending rights under collective agreements negotiated by recognised collecting societies under the laws of any jurisdiction but nothing in this Form of Engagement and the Agreement shall constitute an admission or acknowledgement that the Producer or any of its licensees, assignees or successors is obliged to make any payment to any such society under the laws of any jurisdiction.</p>
+
+    </div>
+
+
+    <p>10. The Artist grants all necessary consents for all and any rights and additional uses to be exercised in accordance with the appropriate clauses of the Agreement, or any modification thereof in any successor PACT Equity Television Agreement, subject to the appropriate payment being made for such rights as specified in that Agreement.</p>
+
+
+    <p>11. The Artist warrants that:</p>
+
+    <div class='indent'>
+
+        <p>(i) The Artist is not a minor</p>
+
+        <p>(ii) The Artist will not incur any liabilities on behalf of the Producer nor pledge the Producer's credit.</p>
+
+        <p>(iii) The Artist is, to the best of the Artist's knowledge and belief, in such a state of health that the Producer will be able to effect insurance under normal conditions upon the Artist against loss, howsoever caused, arising from the Artist's inability to perform the services required hereunder and upon the conditions as to medical examination provided in Clause (CT39) and (T43) of the Agreement.</p>
+
+    </div>
+
+    <p>12. Data Protection </p>
+
+
+    <p>12.1 The Producer shall process the Artist’s personal data in accordance with the General Data Protection Regulation EU 2016/679, the Data Protection Act 2018 and any other UK or EU laws and regulations relating to personal data and privacy as may be in force in the UK from time to time.</p>
+
+    <p>12.2 The Artist acknowledges that the Producer shall collect, use and otherwise process certain personal data of the Artist for purposes connected with the relationship under this engagement, including the Producer fulfilling its obligations under this engagement and complying with legal and regulatory obligations.</p>
+
+    <p>12.3  The Artist acknowledges that special category personal data (including the Artist’s membership of Equity), and personal data relating to criminal convictions and offences (if any), of the Artist is processed by the Producer for the purposes connected with the relationship under this engagement, including where permitted under employment legislation or to determine occupational suitability.</p>
+
+    <p>12.4 The Producer may share the Artist's data with members of the production team, the distributor, legal and regulatory authorities, future employers and potential purchasers of the Producer (or any of its assets or business), affiliates, group companies, professional advisors and other parties which provide products or services to the Producer. If the Producer transfers the Artist’s data outside of the European Economic Area, it shall take reasonable steps to ensure its security and confidentiality. The Producer may also share the Artist’s data with the Union and the Artist acknowledges that the Union shall collect, use and process certain personal data of Artist for purposes connected with the Artist’s engagement.</p>
+
+    <p>12.5 The Producer is required to maintain personal data that is accurate and may ask the Artist to update their personal data at any time. The Artist shall, in any event, inform the Producer as soon as reasonably practicable of any changes to their personal data.</p>
+
+    <p>12.6 The Artist has certain rights in respect of their personal data (such as access, rectification and portability) and further information about those rights and the processing of personal data by the Producer/ Company generally can be found by visiting the Producer ‘s data protection/privacy policy at: [insert URL] or can otherwise be obtained from the Producer/ Company upon reasonable written request.</p>
+
+    <p>13.  [Diamond Notice</p>
+
+
+    <p> UK broadcasters are researching diversity on their productions. This covers diversity characteristics you choose to tell the broadcasters about and also how viewers might perceive diversity on screen. If you provide the Company with your e-mail address they will enter this in a system called Silvermouse. You will be invited to provide, and may do so at your option, your diversity characteristics – gender, ethnicity, disability, age, gender identity and sexual orientation. The broadcaster, as data controller, is responsible for this data and will have access to reports compiled from it for purposes of the research. If you would prefer not to be involved in Diamond please let your production contact know within 7 days of the issue date of this contract. Further information can be found here: <a href="http://creativediversitynetwork.com/diamond-contributors/"><u>http://creativediversitynetwork.com/diamond-contributors/</u></a>.] </p>
+
+
+    <p>14.  Bribery </p>
+
+
+    <p>14.1 You shall:</p>
+
+    <div class='indent'>
+
+        <p>14.1.1 comply with all applicable laws, statutes, regulations, and codes relating to anti- bribery and anti corruption including, but not limited to, the Bribery Act 2010;</p>
+
+
+        <p>14.1.2 not engage in any activity, practice or conduct whether in the UK or elsewhere  which would constitute an offence under sections 1, 2 or 6 of the Bribery Act 2010 if such activity, practice or conduct had been carried out in the UK;</p>
+
+
+        <p>14.1.3 comply with the Company's Ethics, Anti-bribery and Anti-corruption Policies.</p>
+
+    </div>
+
+    <p>14.2 Breach of this clause by you shall be deemed a material breach of this Agreement.</p>
+
+</div>
+
+
+
+<p>SPECIAL STIPULATIONS - where appropriate must be specified on a separate sheet attached to this contract and initialled by both parties.</p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p><u>SIGNATORIES:</u> </p>
+
+
+<p>Both parties to this contract recognise that the engagement includes all the foregoing, and is subject to the details above and overleaf and any special stipulations attached (where applicable) provided that such are initialled by both Parties.</p>
+
+
+<p>As WITNESS the hands of the Parties hereto the day and year first before written</p>
+
+
+<p>.....................................................  Producer </p>
+
+
+<p>............................................................ Artist   </p>
+
+
+<p>VAT No (if applicable) .............................</p>
+
+
+<p>N. I. Number ..................................................</p>
+
+
+<p>Please sign and return the duplicate of this Standard Form of Engagement to the Production Company</p>
+
+
+
+
+
+
+
+<p></p>
+
+<p>IMPORTANT GUIDANCE NOTES FOR PRODUCERS</p>
+
+
+
+<p>WORKING TIME REGULATIONS – SPECIAL STIPULATION</p>
+
+<p><u></u><br/></p>
+
+<p><u></u><br/></p>
+
+<p>The terms of the PACT/Equity agreement allow for the possibility of working hours in excess of 48 per week, so it is essential that you add the following special stipulation to the Form of Engagement;</p>
+
+
+
+<p>‘The Artist agrees that he/she will work such hours as are necessary to fulfil his/her obligations under this agreement, and accepts that this may involve working an average of more than 48 hours per week. The Artist agrees that the maximum weekly working time specified in Regulation 4 of The Working Time Regulations 1998 (‘The Regulations’) shall not apply to this contract. This clause shall constitute an agreement in writing for the purposes of Regulation 5 of the Regulations. If the Artist wishes to terminate the agreement contained in this clause he must give the Producer three months’ notice in writing.’</p>
+
+
+<p>SECTION F</p>
+
+
+<p><i>Note (a)</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>The Artist shall be paid an Engagement Fee for the first day worked in each consecutive seven day period.  See Clause T8(1) of the Agreement.</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>Examples:</i></p>
+
+<p><i>1 Artist is engaged to work for 6 days in both weeks 1 and 2.  That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p>
+
+<p><i>2 Artist works for 2 days in both weeks 1 and 5.  That represents two consecutive seven day periods (even though they are separated by several weeks), and two Engagement Fees are payable.</i></p>
+
+<p><i>3 Artist works for 2 days in both weeks 1 and 2.  That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p>
+
+<p><i>4 Artist works from Wednesday in week 1 to Monday in week 2.  Even though that crosses from one calendar week to another, it still represents one consecutive seven day period, and one Engagement Fee is payable.</i></p>
+
+<p><i>5 Artist works from Wednesday in week 1 to Friday in week 2. That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>NB If you re-engage an Artist, an engagement fee or fees will be payable even if the new engagement falls within the same consecutive seven day period as a previous engagement.</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>Note (b)</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>UK Network Production</i></p>
+
+<p><i>For Category A productions the Artist shall be guaranteed their Engagement Fee per episode, segment or instalment into which their performance is incorporated.  Therefore, if the number of episodes into which their performance is incorporated is greater than the number of consecutive seven day periods for which they are engaged, then you will need to pay additional Engagement Fees to bring them up to the total number of episodes.</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>Category A programmes are: adult and children’s productions in the following categories:- drama productions, series and serials - including "soaps", situation comedy, light entertainment productions, broken comedy, fully dramatised documentary and schools/adult education productions documentary and schools/adult education productions that contain a significant drama element. All other productions are Category B.</i></p>
+
+<p><i>Note (c)</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>For Category B productions, the aggregate of the Artist's engagement fee(s) shall not amount to less than £144.00 per episode, segment or installment.</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>ITV Regional Production </i></p>
+
+<p><i>The aggregate of the Artist's engagement fee(s) shall not amount to less than £129.00 per episode, segment or installment.</i></p>
+
+<p><u><i></i></u><br/></p>
+
+<p><i>Note (d)</i></p>
+
+<p><i></i><br/></p>
+
+<p><i>If you are unsure how many episodes will include the Artist’s performance, insert the same answer in (i) as for (ii).  At the end of the production you will need to provide the Artist with a statement showing their total earnings and any pension contributions.  If the Artist appears in a greater number of episodes than originally set out in this form of Engagement, the Producer will need to pay an additional multi-episodic engagement fee for each additional episode (see note (b) unless otherwise provided for in another contract.</i></p>
+
+<p><u></u><br/></p>
+
+
+<p><u>MORAL RIGHTS WAIVER</u></p>
+
+
+<p>The Artist hereby irrevocably, unconditionally, in perpetuity and in favour of the Producer waives all rights arising under Section 77-85 (inclusive) of the Copyright Designs and Patents Act 1988 and all moral and authors rights and all other rights of a similar nature whether now existing or hereinafter arising under any jurisdiction in connection with the production and hereby agrees not to institute, support, maintain, pursue or permit any action, lawsuit or proceeding on the grounds that the production in any way constitutes an infringement of any moral rights, authors rights or rights of a similar nature of the Artist.</p>
+
+
+
+
+

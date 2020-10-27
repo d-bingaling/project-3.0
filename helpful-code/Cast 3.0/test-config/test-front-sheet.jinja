@@ -1,0 +1,62 @@
+
+{# Total engagement fee #}
+{% set total_engagement_fee = ((deal_memo.meta.get('number_engagement_fees', decimal.Decimal("0")) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal("0"))) * deal_memo.meta.get('engagement_fee', decimal.Decimal("0"))).quantize(decimal.Decimal(".01")) %}
+
+{# Total production day payments #}
+{% set total_production_payments = (deal_memo.meta.get('production_day_payments', decimal.Decimal("0")) * decimal.Decimal("61.50")).quantize(decimal.Decimal(".01")) %}
+
+
+{# Engagement fee payment - Section G total #}
+{% set engagement_fee_payment = (total_engagement_fee + total_production_payments).quantize(decimal.Decimal(".01")) %}
+
+<table>
+    <tbody>
+        <tr>
+            <td>USA Basic Cable</td>
+            <td>10%</td>
+            <td>{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.10")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
+        <tr>
+            <td>UK Video 5%</td>
+            <td>5%</td>
+            <td>{% if 2 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.05")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
+        <tr>
+            <td>US Video 4%</td>
+            <td>4%</td>
+            <td>{% if 3 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.04")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
+    {% set additional_1 = decimal.Decimal("0.10") %}
+{% else %}
+    {% set additional_1 = decimal.Decimal("0") %}
+{% endif %}
+
+{{ additional_1 }}
+
+{% if 2 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
+    {% set additional_2 = decimal.Decimal("0.05") %}
+{% else %}
+    {% set additional_2 = decimal.Decimal("0") %}
+{% endif %}
+
+{{ additional_2 }}
+
+{% if 3 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
+    {% set additional_3 = decimal.Decimal("0.04") %}
+{% else %}
+    {% set additional_3 = decimal.Decimal("0") %}
+{% endif %}
+
+{{ additional_3 }}
+
+{% set additional_uses_total = ((additional_1 + additional_2 + additional_3) * engagement_fee_payment).quantize(decimal.Decimal(".01")) %}
+
+IF THIS WORKS I'M EXPECTING TO SEE A TOTAL OF 201.68 
+
+THE TOTAL FROM MY CALC: {{ additional_uses_total }}

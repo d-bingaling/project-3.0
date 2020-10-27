@@ -5,43 +5,149 @@
             "legend": "Cast 3.0",
             "open": true,
             "widgets": [{
-                    "section_h": {
+                    "number_engagement_fees": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "engagement_production_total_jinja"
+                            ],
+                            "dynamic": true
+                        },
+                        "label": "Number of engagement fees payable",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "additional_multi_episodic": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "engagement_production_total_jinja",
+                                "total_guaranteed_minimum",
+                                "row_can",
+                                "usa_basic",
+                                "uk_video",
+                                "us_video",
+                                "row_video",
+                                "uk_dto_dtr",
+                                "us_dto_dtr",
+                                "row_dto_dtr",
+                                "uk_svod_7_yrs",
+                                "usa_svod_7_yrs"
+                            ],
+                            "dynamic": true
+                        },
+                        "label": "Additional multi-episodic engagement fees payable",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "engagement_fee": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "engagement_production_total_jinja",
+                                "total_guaranteed_minimum",
+                                "row_can",
+                                "usa_basic",
+                                "uk_video",
+                                "us_video",
+                                "row_video",
+                                "uk_dto_dtr",
+                                "us_dto_dtr",
+                                "row_dto_dtr",
+                                "uk_svod_7_yrs",
+                                "usa_svod_7_yrs"
+                            ],
+                            "dynamic": true,
+                            "placeholder": "--.--"
+                        },
+                        "label": "Engagement fee ",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "production_day_payments": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "engagement_production_total_jinja",
+                                "total_guaranteed_minimum",
+                                "row_can",
+                                "usa_basic",
+                                "uk_video",
+                                "us_video",
+                                "row_video",
+                                "uk_dto_dtr",
+                                "us_dto_dtr",
+                                "row_dto_dtr",
+                                "uk_svod_7_yrs",
+                                "usa_svod_7_yrs"
+                            ],
+                            "dynamic": true,
+                            "placeholder": "--.--"
+                        },
+                        "label": "Number of production day payments",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "section_g": {
                         "acl": "deal_memo",
                         "args": {
-                            "document": "<h2>Nominated additional uses</h2>"
+                            "document": "<h2>Engagement fee</h2>"
                         },
                         "label": "",
                         "widget_type": "prt"
                     }
                 },
                 {
-                    "nominated_add_uses_info": {
-                        "acl": "only_internal",
-                        "args": {
-                            "hide_empty": true,
-                            "static": "Rest of World (ex UK and US) TV (Option A) - 35%"
-                        },
-                        "label": " ",
-                        "widget_type": "info"
-                    }
-                },
-                {
-                    "section_h_info": {
-                        "acl": "only_internal",
-                        "args": {
-                            "document": "<p><strong>Please note:</strong> The options for Nominated US TV Uses (Option B) have been removed for this production.</p>"
-                        },
-                        "label": "",
-                        "widget_type": "prt"
-                    }
-                },
-                {
-                    "row_can": {
+                    "engagement_production_total_jinja": {
                         "acl": "deal_memo",
                         "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}"
+                            "controls": [
+                                "total_guaranteed_minimum",
+                                "row_can",
+                                "usa_basic",
+                                "uk_video",
+                                "us_video",
+                                "row_video",
+                                "uk_dto_dtr",
+                                "us_dto_dtr",
+                                "row_dto_dtr",
+                                "uk_svod_7_yrs",
+                                "usa_svod_7_yrs"
+                            ],
+                            "template": "\u00a3{{ (deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0')) * decimal.Decimal(\"61.50\")) }}"
                         },
-                        "label": "Pre-Purchase of Rest of World (ex UK and US) TV",
+                        "label": "Total of engagement and production fees",
                         "widget_type": "jinja2"
                     }
                 },
@@ -54,6 +160,7 @@
                         "widget_type": "prt"
                     }
                 },
+
                 {
                     "section_i": {
                         "acl": "only_internal",
@@ -65,11 +172,11 @@
                 },
                 {
                     "usa_basic": {
-                        "acl": "only_internal",
+                        "acl": "default",
                         "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}"
+                            "template": "{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}<p>USA Basic Cable 10%</p> <strong>{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}</strong>{% endif %}"
                         },
-                        "label": "USA Basic Cable 10%",
+
                         "widget_type": "jinja2"
                     }
                 },
@@ -77,9 +184,8 @@
                     "uk_video": {
                         "acl": "only_internal",
                         "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}"
+                            "template": "{% if 2 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}<p>UK Video 5%</p>{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}"
                         },
-                        "label": "UK Video 5%",
                         "widget_type": "jinja2"
                     }
                 },
@@ -87,78 +193,8 @@
                     "us_video": {
                         "acl": "only_internal",
                         "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}"
+                            "template": "{% if 3 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}<p>US Video 4%</p>{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}"
                         },
-                        "label": "US Video 4%",
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "row_video": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "Rest of World Video 4%",
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "uk_dto_dtr": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "UK DTO/DTR 2%",
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "us_dto_dtr": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "US DTO/DTR 2%",
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "row_dto_dtr": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "ROW DTO/DTR 2%",
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "pre_purch_title": {
-                        "acl": "only_internal",
-                        "args": {
-                            "document": "<h4>SVOD Pre-Purchases</h4>"
-                        },
-                        "widget_type": "prt"
-                    }
-                },
-                {
-                    "uk_svod_7_yrs": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.08\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "Primary Window: UK-SVOD 7yrs 8%",
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "usa_svod_7_yrs": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.16\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "Primary Window: USA-SVOD 7yrs 16%",
                         "widget_type": "jinja2"
                     }
                 }
