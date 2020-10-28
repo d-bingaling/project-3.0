@@ -1,0 +1,23 @@
+<table>
+    <tbody>
+        <tr>
+            <td>Rest of World TV rights - 7 years</td>
+            <td>35%</td>
+            <td>{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.10")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
+        <tr>
+            <td>1st USA Prime Time Network TX</td>
+            <td>75%</td>
+            <td>{% if 2 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.05")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
+        <tr>
+            <td>2nd USA Prime Time Network TX</td>
+            <td>25%</td>
+            <td>{% if 3 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}£{{ (engagement_fee_payment * decimal.Decimal("0.04")).quantize(decimal.Decimal(".01")) }}{% else %} £ - {% endif %}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+
+
