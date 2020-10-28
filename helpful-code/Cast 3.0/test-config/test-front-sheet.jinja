@@ -552,6 +552,89 @@ US DTO/DTR - {{ additional_19 }}
 
 
 
+{# 2nd and each subsequent UK Primary TX #}
+
+<p><strong>2nd and each subsequent UK Primary TX</strong></p>
+<table>
+	<tbody>
+		<tr>
+			<td>Peak Time</td>
+            <td>55%</td>
+            {% if "peak_time" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}
+			<td>times £{{ engagement_fee_payment }}</td>
+			<td>(total Artist Earnings) = £{{ ( engagement_fee_payment * decimal.Decimal("0.55")).quantize(decimal.Decimal(".01")) }}</td>
+            {% else %}
+            <td>times £.....</td>
+			<td>(total Artist Earnings) = £.....</td>
+            {% endif %}
+		</tr>
+		<tr>
+			<td>Day Time off Peak</td>
+            <td>27.5%</td>
+            {% if "day_time_op" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}
+			<td>times £{{ engagement_fee_payment }}</td>
+			<td>(total Artist Earnings) = £{{ ( engagement_fee_payment * decimal.Decimal("0.275")).quantize(decimal.Decimal(".01")) }}</td>
+            {% else %}
+            <td>times £</td>
+			<td>(total Artist Earnings) = £.....</td>
+            {% endif %}
+		</tr>
+		<tr>
+			<td>Night Time off Peak</td>
+            <td>13.75%</td>
+            {% if "night_time_op" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}
+			<td>times £{{ engagement_fee_payment }}</td>
+			<td>(total Artist Earnings) = £{{ ( engagement_fee_payment * decimal.Decimal("0.1375")).quantize(decimal.Decimal(".01")) }}</td>
+            {% else %}
+            <td>times £</td>
+			<td>(total Artist Earnings) = £.....</td>
+            {% endif %}
+		</tr>
+	</tbody>
+</table>
+
+<p><br /></p>
+
+
+
+<table>
+    <tbody>
+        <tr>
+            
+            <td>3 Showcase Premieres</td>
+            {% if "3_showcase_prem" in deal_memo.project_record.project.settings['showcase_premieres'] %}
+            <td>25%</td>
+            <td>£{{ (engagement_fee_payment * decimal.Decimal("0.25")).quantize(decimal.Decimal(".01")) }}</td>
+            {% else %}
+            <td>25%</td>
+            <td>£.....</td>
+            {% endif %}
+        </tr>
+        
+        {% if (engagement_fee_payment * decimal.Decimal("0.10").quantize(decimal.Decimal(".01"))) < decimal.Decimal("50") %}
+            {% set showcase_1 = decimal.Decimal("50") %}
+        {% else %}
+            {% set showcase_1 = (engagement_fee_payment * decimal.Decimal("0.10")).quantize(decimal.Decimal(".01")) %}
+        {% endif %}
+        <tr>
+            
+            <td>1 Showcase Premieres</td>
+            {% if "1_showcase_prem" in deal_memo.project_record.project.settings['showcase_premieres'] %}
+            <td>10%</td>
+            <td>£{{ showcase_1 }} <i>[minimum £50]</i></td>
+            {% else %}
+            <td>10%</td>
+            <td>£.....  <i>[minimum £50]</i></td>
+            {% endif %}
+        </tr>
+    </tbody>
+</table>
+
+
+
+
+
+<p><br /></p>
 
 {# SECTION H ADDITIONAL USES PERCENTAGE TABLE - SECTION H ADDITIONAL USES PERCENTAGE TABLE #}
 <p><strong><u>Additional Uses</u></strong></p>
