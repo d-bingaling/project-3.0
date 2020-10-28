@@ -782,21 +782,86 @@ US DTO/DTR - {{ additional_19 }}
 
 
 
-{# SECOND WINDOW US SVOD #}
+{# SECOND WINDOW USA SVOD #}
 
     {% if deal_memo.project_record.project.settings['usa_second_svod'] == 1 %}
-        {% set second_svod_us = decimal.Decimal("0.13") %}
+        {% set second_svod_usa = decimal.Decimal("0.13") %}
     {% elif deal_memo.project_record.project.settings['usa_second_svod'] == 2 %}
-        {% set second_svod_us = decimal.Decimal("0.14") %}
+        {% set second_svod_usa = decimal.Decimal("0.14") %}
     {% elif deal_memo.project_record.project.settings['usa_second_svod'] == 3 %}
-        {% set second_svod_us = decimal.Decimal("0.16") %}
+        {% set second_svod_usa = decimal.Decimal("0.16") %}
     {% elif deal_memo.project_record.project.settings['usa_second_svod'] == 4 %}
-        {% set second_svod_us = decimal.Decimal("0.19") %}
+        {% set second_svod_usa = decimal.Decimal("0.19") %}
     {% else %}
-        {% set second_svod_us = decimal.Decimal("0") %}
+        {% set second_svod_usa = decimal.Decimal("0") %}
     {% endif %}
 
 
-<p>SECOND WINDOW - US SVOD: {{ second_svod_us }}</p> 
+<p>SECOND WINDOW - USA SVOD: {{ second_svod_usa }}</p> 
 
-{# SECOND WINDOW - US SVOD #}
+{# SECOND WINDOW - USA SVOD #}
+
+
+
+
+
+
+{# SECOND WINDOW NA & CAN SVOD #}
+
+    {% if deal_memo.project_record.project.settings['na_can_second_svod'] == 1 %}
+        {% set second_svod_na_can = decimal.Decimal("0.13") %}
+    {% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 2 %}
+        {% set second_svod_na_can = decimal.Decimal("0.14") %}
+    {% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 3 %}
+        {% set second_svod_na_can = decimal.Decimal("0.16") %}
+    {% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 4 %}
+        {% set second_svod_na_can = decimal.Decimal("0.19") %}
+    {% else %}
+        {% set second_svod_na_can = decimal.Decimal("0") %}
+    {% endif %}
+
+
+<p>SECOND WINDOW - NA & CANADA SVOD: {{ second_svod_na_can }}</p> 
+
+{# SECOND WINDOW - NA & CAN SVOD #}
+
+
+
+
+{# ROW SVOD - only #}
+
+    {% if deal_memo.project_record.project.settings['row_svod_only'] == 1 %}
+        {% set svod_row = decimal.Decimal("0.13") %}
+    {% elif deal_memo.project_record.project.settings['row_svod_only'] == 2 %}
+        {% set svod_row = decimal.Decimal("0.14") %}
+    {% elif deal_memo.project_record.project.settings['row_svod_only'] == 3 %}
+        {% set svod_row = decimal.Decimal("0.16") %}
+    {% elif deal_memo.project_record.project.settings['row_svod_only'] == 4 %}
+        {% set svod_row = decimal.Decimal("0.19") %}
+    {% else %}
+        {% set svod_row = decimal.Decimal("0") %}
+    {% endif %}
+
+
+<p>REST OF WORLD SVOD only: {{ svod_row }}</p> 
+
+{# ROW SVOD - only #}
+
+
+
+{# SVOD PRE PURCHASES #}
+
+    {% if deal_memo.project_record.project.settings['pre_purchased_svod'] == "uk" %}
+        {% set pre_purch_svod = decimal.Decimal("0.0025") %}
+    {% elif deal_memo.project_record.project.settings['pre_purchased_svod'] == "us" %}
+        {% set pre_purch_svod = decimal.Decimal("0.005") %}
+    {% elif deal_memo.project_record.project.settings['pre_purchased_svod'] == "row" %}
+        {% set pre_purch_svod = decimal.Decimal("0.0025") %}
+    {% else %}
+        {% set pre_purch_svod = decimal.Decimal("0") %}
+    {% endif %}
+
+
+<p> SVOD PRE PURCHASES: {{ pre_purch_svod }}</p> 
+
+{#  SVOD PRE PURCHASES #}
