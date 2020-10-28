@@ -1,0 +1,145 @@
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /><style>
+/*  */
+
+
+/* Default settings for the page */
+
+body {
+    font-size: 14px;
+    line-height: 1.4em;
+    font-family: 'Open Sans', sans-serif;
+}
+
+
+/* Adds a border to the main table  */
+
+table {
+    border: 1px solid #A9A9A9;
+}
+
+
+/* Adds borders to the rows and columns */
+
+table tr td {
+    border: 1px solid #A9A9A9;
+}
+
+
+/* Adds padding to each cell */
+
+table td {
+    padding: 10px 0 10px 5px;
+}
+
+
+/* Forces the table to break if it is split between two pages */
+
+table tr {
+    page-break-inside: avoid !important;
+}
+
+
+/* Signature block - Probably best not to edit this */
+
+
+/* Removes the border for the signature block */
+
+table.signature-block {
+    border: none;
+}
+
+
+/* Removes the border for the signature block rows  */
+
+table.signature-block tr {
+    border: none;
+}
+
+
+/* Adds in padding to the signature block cells */
+
+table.signature-block td {
+    padding: 7px;
+}
+
+
+/* Section H - Additional Uses Table */
+
+table.section-h-add {
+    border: 1px solid black;
+    width: 100%
+}
+
+table.section-h-add td {
+    padding: 7px 7px 7px 7px;
+}
+
+table.section-h-add td:first-child {
+    width: 50%
+}
+
+table.section-h-add td:nth-child(2) {
+    width: 25%
+}
+
+table.section-h-add td:nth-child(3) {
+    width: 25%
+}
+
+
+/* Frequently used CSS across all contract types */
+
+
+/* When using the pre tage this wraps the text */
+
+pre {
+    white-space: pre-wrap;
+}
+
+
+/*  */
+
+.indent {
+    margin: 0 0 0 20px;
+}
+
+
+/*  */
+
+.warning {
+    font-weight: bold;
+    color: #ff0000;
+}
+
+
+/*  */
+
+.center {
+    text-align: center;
+}
+
+
+/*  */
+
+.right {
+    text-align: right;
+}
+
+
+/*  */
+
+.no-border {
+    border: 0;
+}
+
+
+/*  */
+
+.uppercase {
+    text-transform: uppercase;
+}
+
+
+/* P */
+
+</style>

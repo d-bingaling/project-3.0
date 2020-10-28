@@ -1,4 +1,8 @@
 
+
+{% include 'cast_style' %}
+
+
 {# Total engagement fee #}
 {% set total_engagement_fee = ((deal_memo.meta.get('number_engagement_fees', decimal.Decimal("0")) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal("0"))) * deal_memo.meta.get('engagement_fee', decimal.Decimal("0"))).quantize(decimal.Decimal(".01")) %}
 
@@ -10,7 +14,11 @@
 {% set engagement_fee_payment = (total_engagement_fee + total_production_payments).quantize(decimal.Decimal(".01")) %}
 
 
+{% macro percent(value) -%} {# Convert decimal into human readable - do not input as a string % #}
 
+	{{ (((value * 100)|string).rstrip('0')).rstrip('.') }}{# This strips out any trailing [0] If there is a leftover [.] it will remove that as well (75.00% = 75% and 7.2500% = 7.25%) #}
+
+{%- endmacro %}
 
 
 
@@ -279,351 +287,25 @@ US DTO/DTR - {{ additional_19 }}
 
 
 
-{# PRIMARY WINDOW - UK-SVOD #}
 
-{% if 1 in deal_memo.project_record.project.settings['svod_pre_purchases'] %}
-    {% if deal_memo.project_record.project.settings['uk_primary'] == 1 %}
-        {% set svod_uk_primary = decimal.Decimal("0.07") %}
-    {% elif deal_memo.project_record.project.settings['uk_primary'] == 2%}
-        {% set svod_uk_primary = decimal.Decimal("0.08") %}
-    {% elif deal_memo.project_record.project.settings['uk_primary'] == 3 %}
-        {% set svod_uk_primary = decimal.Decimal("0.09") %}
-    {% elif deal_memo.project_record.project.settings['uk_primary'] == 4 %}
-        {% set svod_uk_primary = decimal.Decimal("0.11") %}
-    {% else %}
-        {% set svod_uk_primary = decimal.Decimal("0") %}
-    {% endif %}
-{% endif %}
 
-<p>PRIMARY WINDOW - UK SVOD: {{ svod_uk_primary }}</p> 
 
-{# PRIMARY WINDOW - UK-SVOD #}
 
 
 
 
-{# PRIMARY WINDOW - USA-SVOD #}
 
-{% if 2 in deal_memo.project_record.project.settings['svod_pre_purchases'] %}
-    {% if deal_memo.project_record.project.settings['usa_primary'] == 1 %}
-        {% set svod_usa_primary = decimal.Decimal("0.15") %}
-    {% elif deal_memo.project_record.project.settings['usa_primary'] == 2%}
-        {% set svod_usa_primary = decimal.Decimal("0.16") %}
-    {% elif deal_memo.project_record.project.settings['usa_primary'] == 3 %}
-        {% set svod_usa_primary = decimal.Decimal("0.18") %}
-    {% elif deal_memo.project_record.project.settings['usa_primary'] == 4 %}
-        {% set svod_usa_primary = decimal.Decimal("0.21") %}
-    {% else %}
-        {% set svod_usa_primary = decimal.Decimal("0") %}
-    {% endif %}
-{% endif %}
 
-<p>PRIMARY WINDOW - USA SVOD: {{ svod_usa_primary }}</p> 
 
-{# PRIMARY WINDOW - USA-SVOD #}
 
 
-{# PRIMARY WINDOW - NA & CAN-SVOD #}
 
-{% if 3 in deal_memo.project_record.project.settings['svod_pre_purchases'] %}
-    {% if deal_memo.project_record.project.settings['na_can_primary'] == 1 %}
-        {% set svod_na_primary = decimal.Decimal("0.15") %}
-    {% elif deal_memo.project_record.project.settings['na_can_primary'] == 2%}
-        {% set svod_na_primary = decimal.Decimal("0.16") %}
-    {% elif deal_memo.project_record.project.settings['na_can_primary'] == 3 %}
-        {% set svod_na_primary = decimal.Decimal("0.18") %}
-    {% elif deal_memo.project_record.project.settings['na_can_primary'] == 4 %}
-        {% set svod_na_primary = decimal.Decimal("0.21") %}
-    {% else %}
-        {% set svod_na_primary = decimal.Decimal("0") %}
-    {% endif %}
-{% endif %}
 
-<p>PRIMARY WINDOW - North America & Canada SVOD: {{ svod_na_primary }}</p> 
 
-{# PRIMARY WINDOW - NA & CAN-SVOD #}
 
 
 
 
-
-
-{# Total engagement fee #}
-{% set total_engagement_fee = ((deal_memo.meta.get('number_engagement_fees', decimal.Decimal("0")) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal("0"))) * deal_memo.meta.get('engagement_fee', decimal.Decimal("0"))).quantize(decimal.Decimal(".01")) %}
-
-{# Total production day payments #}
-{% set total_production_payments = (deal_memo.meta.get('production_day_payments', decimal.Decimal("0")) * decimal.Decimal("61.50")).quantize(decimal.Decimal(".01")) %}
-
-
-{# Engagement fee payment - Section G total #}
-{% set engagement_fee_payment = (total_engagement_fee + total_production_payments).quantize(decimal.Decimal(".01")) %}
-
-
-
-
-
-
-
-
-
-
-
-{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_1 = decimal.Decimal("0.35") %}
-{% else %}
-    {% set additional_1 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>Rest of World TV rights - {{ additional_1 }}</p>
-
-
-
-
-{% if 2 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_2 = decimal.Decimal("0.75") %}
-{% else %}
-    {% set additional_2 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>1st USA Prime Time Network TX - {{ additional_2 }}</p>
-
-
-
-{% if 3 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_3 = decimal.Decimal("0.25") %}
-{% else %}
-    {% set additional_3 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>2nd USA Prime Time Network TX - {{ additional_3 }}</p>
-
-
-
-
-{% if 4 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_4 = decimal.Decimal("0.15") %}
-{% else %}
-    {% set additional_4 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>Thereafter per TX - {{ additional_4 }}</p>
-
-
-
-
-{% if 5 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_5 = decimal.Decimal("0.35") %}
-{% else %}
-    {% set additional_5 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>1st USA non PrimeTime Network TX - {{ additional_5 }}</p>
-
-
-
-
-{% if 6 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_6 = decimal.Decimal("0.075") %}
-{% else %}
-    {% set additional_6 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>2nd & each subsequent non Prime Time TX - {{ additional_6 }}</p>
-
-
-
-
-
-{% if 7 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_7 = decimal.Decimal("0.15") %}
-{% else %}
-    {% set additional_7 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>USA PBS Network - {{ additional_7 }}</p>
-
-
-
-
-
-{% if 8 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_8 = decimal.Decimal("0.25") %}
-{% else %}
-    {% set additional_8 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>USA Full Syndication - {{ additional_8 }}</p>
-
-
-
-
-
-{% if 9 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_9 = decimal.Decimal("0.10") %}
-{% else %}
-    {% set additional_9 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>USA Basic Cable - {{ additional_9 }}</p>
-
-
-
-
-
-{% if 10 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_10 = decimal.Decimal("0.30") %}
-{% else %}
-    {% set additional_10 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>USA Major Pay - {{ additional_10 }}</p>
-
-
-
-
-
-
-
-
-{% if 11 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_11 = decimal.Decimal("0.03") %}
-{% else %}
-    {% set additional_11 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>USA OTT VOD Rights - {{ additional_11 }}</p>
-
-
-
-
-
-
-
-{% if 12 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_12 = decimal.Decimal("0.14") %}
-{% else %}
-    {% set additional_12 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>Limited Theatric (UK) - {{ additional_12 }}</p>
-
-
-
-
-
-
-
-{% if 13 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_13 = decimal.Decimal("0.14") %}
-{% else %}
-    {% set additional_13 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>Limited Theatric (USA) - {{ additional_13 }}</p>
-
-
-
-
-
-
-{% if 14 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_14 = decimal.Decimal("0.14") %}
-{% else %}
-    {% set additional_14 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>Full Theatric (Rest of World) - {{ additional_14 }}</p>
-
-
-
-
-
-
-
-{% if 15 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_15 = decimal.Decimal("0.05") %}
-{% else %}
-    {% set additional_15 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>UK Video - {{ additional_15 }}</p>
-
-
-
-
-
-{% if 16 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_16 = decimal.Decimal("0.04") %}
-{% else %}
-    {% set additional_16 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>US Video - {{ additional_16 }}</p>
-
-
-
-
-
-
-{% if 17 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_17 = decimal.Decimal("0.04") %}
-{% else %}
-    {% set additional_17 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>Rest of World Video - {{ additional_17 }}</p>
-
-
-
-
-
-
-{% if 18 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_18 = decimal.Decimal("0.02") %}
-{% else %}
-    {% set additional_18 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>UK DTO/DTR - {{ additional_18 }}</p>
-
-
-
-
-
-
-{% if 19 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_19 = decimal.Decimal("0.02") %}
-{% else %}
-    {% set additional_19 = decimal.Decimal("0") %}
-{% endif %}
-
-US DTO/DTR - {{ additional_19 }}
-
-
-
-
-
-
-
-{% if 20 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
-    {% set additional_20 = decimal.Decimal("0.02") %}
-{% else %}
-    {% set additional_20 = decimal.Decimal("0") %}
-{% endif %}
-
-<p>ROW DTO/DTR - {{ additional_20 }}</p>
-
-
-
-
-
-
-
-{% set additional_uses_total = ((additional_1 + additional_2 + additional_3 + additional_4 + additional_5 + additional_6 + additional_7 + additional_8 + additional_9 + additional_10 + additional_11 + additional_12 + additional_13 + additional_14 + additional_15 + additional_16 + additional_17 + additional_18 + additional_19 + additional_20) * engagement_fee_payment).quantize(decimal.Decimal(".01")) %}
-
-
-
-<p>THE TOTAL FROM MY CALC - ADDITIONAL USES: {{ additional_uses_total }}</p>
 
 
 
@@ -865,3 +547,241 @@ US DTO/DTR - {{ additional_19 }}
 <p> SVOD PRE PURCHASES: {{ pre_purch_svod }}</p> 
 
 {#  SVOD PRE PURCHASES #}
+
+
+
+
+
+
+{# SECTION H ADDITIONAL USES PERCENTAGE TABLE - SECTION H ADDITIONAL USES PERCENTAGE TABLE #}
+<p><strong><u>Additional Uses</u></strong></p>
+<table class='section-h-add'> 
+    <tbody>
+        <tr>
+            <td><p>Rest of World TV rights – 7 years </p></td>
+            <td><p>35%</p></td>
+            <td><p>£{% if 1 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_1 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif%}</p></td>
+        </tr>
+        <tr>
+            <td><p>1st USA Prime Time Network TX</p></td>
+            <td><p>75%</p></td>
+            <td><p>£{% if 2 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_2 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>2nd USA Prime Time Network TX</p></td>
+            <td><p>25%</p></td>
+            <td><p>£{% if 3 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_3 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>Thereafter per TX</p></td>
+            <td><p>15%</p></td>
+            <td><p>£{% if 4 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_4 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>1st USA non PrimeTime Network TX</p></td>
+            <td><p>35%</p></td>
+            <td><p>£{% if 5 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_5 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>2nd &amp; each subsequent non Prime Time TX</p></td>
+            <td><p>7.5%</p></td>
+            <td><p>£{% if 6 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_6 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>USA PBS Network</p></td>
+            <td><p>15%</p></td>
+            <td><p>£{% if 7 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_7 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>USA Full Syndication</p></td>
+            <td><p>25%</p></td>
+            <td><p>£{% if 8 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_8 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>USA Basic Cable</p></td>
+            <td><p>10%</p></td>
+            <td><p>£{% if 9 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_9 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>USA Major Pay</p></td>
+            <td><p>30%</p></td>
+            <td><p>£{% if 10 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_10 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr> <td><p>USA OTT VOD Rights</p></td>
+             <td><p>3%</p></td>
+             <td><p>£{% if 11 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_11 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>Limited Theatric (UK)</p></td>
+            <td><p>14%</p></td>
+            <td><p>£{% if 12 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_12 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td> 
+        </tr>
+        <tr> 
+            <td><p>Limited Theatric (USA)</p></td>
+            <td><p>14%</p></td>
+            <td><p>£{% if 13 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_13 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>Full Theatric (Rest of World)</p></td>
+            <td><p>14%</p></td>
+            <td><p>£{% if 14 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_14 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr> 
+            <td><p>*UK Video</p></td>
+            <td><p>5%</p></td>
+            <td><p>£{% if 15 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_15 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>*US Video</p></td>
+            <td><p>4%</p></td>
+            <td><p>£{% if 16 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_16 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p>*Rest of World Video</p></td>
+            <td><p>4%</p></td>
+            <td><p>£{% if 17 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_17 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p> UK DTO/DTR</p></td>
+            <td><p>2%</p></td>
+            <td><p>£{% if 18 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_18 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p> US DTO/DTR</p></td>
+            <td><p>2%</p></td>
+            <td><p>£{% if 19 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_19 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr>
+        <tr>
+            <td><p> ROW DTO/DTR</p></td>
+            <td><p>2%</p></td>
+            <td><p>£{% if 20 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}{{(additional_20 * engagement_fee_payment).quantize(decimal.Decimal(".01"))}}{% else %}-{% endif %}</p></td>
+        </tr> 
+    </tbody>
+</table>
+
+
+
+<p><br /></p>
+
+{# SECTION H SVOD PRE-PURCHASES PERCENTAGE TABLE - SECTION H SVOD PRE-PURCHASES PERCENTAGE TABLE #}
+<p><strong><u>SVOD Pre-Purchases</u></strong></p>
+<table class='section-h-add'>
+    <tbody> 
+        <tr>
+            <td>
+                <p>Primary Window: UK-SVOD (5 yrs 7%; 7 yrs 8%; 10 yrs 9%; 15 yrs. 11%)</p>
+            </td>
+            {% if deal_memo.project_record.project.settings['uk_primary'] != null %}
+            <td><p>{{ percent(svod_uk_primary) }}%</p></td>
+            <td><p>£{{ (svod_uk_primary * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>
+                <p>Primary Window: USA – SVOD (5 yrs 15%; 7 yrs 16%; 10 yrs 18%; 15 yrs 21%)</p>
+            </td>
+            {% if deal_memo.project_record.project.settings['usa_primary'] != null %}
+            <td><p>{{ percent(svod_usa_primary) }}%</p></td>
+            <td><p>£ {{ (svod_usa_primary * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td>
+                <p>Primary Window: North America (US &amp; Canada) (5 yrs 16%; 7 yrs 17%; 10 yrs 19%; 15 yrs 22%)</p>
+            </td>
+            {% if deal_memo.project_record.project.settings['na_can_primary'] != null %}
+            <td><p>{{ percent(svod_na_primary) }}%</p></td>
+            <td><p>£{{ (svod_na_primary * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><p>Second Window Holdback UK: 7 yrs (6 m: 6%, 12 m: 4%) / 10 yrs (6 m: 7%, 12 m: 5%).</p></td>
+            {% if deal_memo.project_record.project.settings['uk_second_holdback'] != null %}
+            <td><p>{{ percent(uk_second_hold) }}%</p></td>
+            <td><p>£ {{ (uk_second_hold * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><p>Second Window Holdback US: 7 yrs (6 m: 10%, 12 m: 8%)/ 10 yrs (6 m: 12%, 12 m: 10%).</p></td>
+            {% if deal_memo.project_record.project.settings['us_second_holdback'] != null %}
+            <td><p>{{ percent(us_second_hold) }}%</p></td>
+            <td><p>£{{ (us_second_hold * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><p>Second Window Holdback North America (US and Canada): 7 yrs (6 m: 11%, 12 m: 9%) / 10 yrs (6 m: 13.5%, 12m: 11.5%).</p></td>
+            {% if deal_memo.project_record.project.settings['na_can_second_holdback'] != null %}
+            <td><p>{{ percent(na_second_hold) }}%</p></td>
+            <td><p>£{{ (na_second_hold * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><p>Second Window UK SVoD: (5 yrs: 6%, 7 yrs: 7%, 10 yrs: 8%, 15 yrs: 10%)</p></td>
+            {% if deal_memo.project_record.project.settings['uk_second_svod'] != null %}
+            <td><p>{{ percent(second_svod_uk) }}%</p></td>
+            <td><p>£{{ (second_svod_uk * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><p>Second Window USA SVoD (including OTT SVOD Rights): (5 yrs: 13%, 7 yrs: 14%, 10 yrs: 16%, 15 yrs: 19%)</p></td>
+            {% if deal_memo.project_record.project.settings['usa_second_svod'] != null %}
+            <td><p>{{ percent(second_svod_usa) }}%</p></td>
+            <td><p>£{{ (second_svod_usa * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><p>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights): (5 yrs: 14%, 7 yrs: 15%, 10 yrs: 17%, 15 yrs: 20%). </p></td>
+            {% if deal_memo.project_record.project.settings['na_can_second_svod'] != null %}
+            <td><p>{{ percent(second_svod_na_can) }}%</p></td>
+            <td><p>£{{ (second_svod_na_can * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><p>ROW SVOD only (where ROW has been pre-purchased as a Nominated Additional Use for a period of 7 years SVOD rights only): 7-10 y: 2%, 7-15 y: 5%</p></td>
+            {% if deal_memo.project_record.project.settings['row_svod_only'] != null %}
+            <td><p>{{ percent(svod_row) }}%</p></td>
+            <td><p>£{{ (svod_row * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+        <tr>
+            <td><p>SVOD Rights Pre-Purchased: for each additional year beyond 15 yrs (UK: 0.25%, US: 0.5%, ROW: 0.25%).</p></td>
+            {% if deal_memo.project_record.project.settings['pre_purchased_svod'] != null %}
+            <td><p>{{ percent(pre_purch_svod) }}%</p></td>
+            <td><p>£{{ (pre_purch_svod * engagement_fee_payment).quantize(decimal.Decimal(".01")) }}</p></td>
+            {% else %}
+            <td>%</td>
+            <td>£-</td>
+            {% endif %}
+        </tr>
+    </tbody>
+</table>

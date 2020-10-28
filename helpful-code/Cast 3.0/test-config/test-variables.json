@@ -192,7 +192,7 @@
                     "acl": "deal_memo",
                     "args": {
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -230,7 +230,7 @@
                     "args": {
 
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -268,7 +268,7 @@
                     "args": {
 
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -306,7 +306,7 @@
                     "args": {
 
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -344,7 +344,7 @@
                     "args": {
 
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -382,7 +382,7 @@
                     "args": {
 
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -420,7 +420,7 @@
                     "args": {
 
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -458,7 +458,7 @@
                     "args": {
 
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -496,7 +496,7 @@
                     "args": {
 
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -534,7 +534,7 @@
                     "args": {
                         "help_text": "(where ROW has been pre-purchased as a Nominated Additional Use for a period of 7 years SVOD rights only)",
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 1,
@@ -564,7 +564,7 @@
                     "args": {
                         "help_text": "for each additional year beyond 15 yrs",
                         "dynamic": true,
-                        "nullable": false,
+                        "nullable": true,
                         "options": [
                             [
                                 "uk",
