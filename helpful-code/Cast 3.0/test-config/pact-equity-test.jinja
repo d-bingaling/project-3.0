@@ -611,19 +611,62 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 <p><strong>2nd and each subsequent UK Primary TX *</strong></p>
 
-<p>Peak Time 55%  <u>times £..</u> (total Artist Earnings) = £...............</p>
 
-<p>Day Time off Peak 27.5% <u>times £</u> (total Artist Earnings) = £................</p>
 
-<p>Night Time off Peak 13.75% <u>times £</u> (total Artist Earnings) = £................</p>
+<table>
+	<tbody>
+		<tr>
+			<td>Peak Time 55%</td>
+			<td>times £..</td>
+			<td>(total Artist Earnings) = £.</td>
+		</tr>
+		<tr>
+			<td>Day Time off Peak 27.5%</td>
+			<td>times £..</td>
+			<td>(total Artist Earnings) = £.</td>
+		</tr>
+		<tr>
+			<td>Night Time off Peak 13.75%</td>
+			<td>times £..</td>
+			<td>(total Artist Earnings) = £.</td>
+		</tr>
+	</tbody>
+</table>
 
 <p>* If the programme is to be repeated within a week of first TX, the repeat payments shall be 75% of the rates set out above.</p>
 
-<p><strong>Showcase Premieres</strong></p>
-
-<p>3 Showcase Premieres 25% £</p>
-
-<p>1 Showcase Premiere 10% £ <i>[minimum £50]</i></p>
+<table>
+    <tbody>
+        <tr>
+            
+            <td>3 Showcase Premieres</td>
+            {% if "3_showcase_prem" in deal_memo.project_record.project.settings['showcase_premieres'] %}
+            <td>25%</td>
+            <td>£{{ (engagement_fee_payment * decimal.Decimal("0.25")).quantize(decimal.Decimal(".01")) }}</td>
+            {% else %}
+            <td>25%</td>
+            <td>£.....</td>
+            {% endif %}
+        </tr>
+        
+        {% if (engagement_fee_payment * decimal.Decimal("0.10").quantize(decimal.Decimal(".01"))) < decimal.Decimal("50") %}
+            {% set showcase_1 = decimal.Decimal("50") %}
+        {% else %}
+            {% set showcase_1 = (engagement_fee_payment * decimal.Decimal("0.10")).quantize(decimal.Decimal(".01")) %}
+        {% endif %}
+        <tr>
+            
+            <td>1 Showcase Premieres</td>
+            {% if "1_showcase_prem" in deal_memo.project_record.project.settings['showcase_premieres'] %}
+            <td>10%</td>
+            <td>£{{ showcase_1 }} <i>[minimum £50]</i></td>
+            {% else %}
+            <td>10%</td>
+            <td>£.....  <i>[minimum £50]</i></td>
+            {% endif %}
+        </tr>
+    </tbody>
+</table>
 
 
 <p>In the event that the royalty provisions as detailed in Appendix TA are not applied (and if not already pre-purchased as set out in Section H above), the percentages for purchasing Additional Uses, as detailed below, shall be payable:</p>
