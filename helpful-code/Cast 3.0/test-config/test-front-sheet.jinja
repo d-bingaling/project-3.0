@@ -32,19 +32,12 @@
 {% else %}
     {% set additional_1 = decimal.Decimal("0") %}
 {% endif %}
-
-<p>Rest of World TV rights - {{ additional_1 }}</p>
-
-
-
-
 {% if 2 in deal_memo.project_record.project.settings['percentages_additional_uses'] %}
     {% set additional_2 = decimal.Decimal("0.75") %}
 {% else %}
     {% set additional_2 = decimal.Decimal("0") %}
 {% endif %}
 
-<p>1st USA Prime Time Network TX - {{ additional_2 }}</p>
 
 
 
