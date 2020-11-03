@@ -1,4 +1,6 @@
 {# MACROS START #}
+{% include 'cast_style' %}
+
 
 {% macro warning(field) -%} {# To handle warnings #}
 
@@ -412,7 +414,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 <p><strong>Section A</strong></p>
 
-<table>
+<table class='section-abc'>
     <tbody>
         <tr>   
             <td>Production Company: </td>
@@ -444,9 +446,9 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 {# SECTION B - SECTION B - SECTION B - SECTION B - SECTION B #}
 
 
-<p><strong>Section B<strong></p>
+<p><strong>Section B</strong></p>
 
-<table>
+<table class='section-abc'>
     <tbody>
         <tr>
             <td>Artist:</td>
@@ -466,14 +468,14 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 
 
-
+<hr noshade>
 
 
 
 <p><strong>Section C</strong></p>
 
 
-<table>
+<table class='section-abc'>
     <tbody>
         <tr>
             <td>Agent:</td>
@@ -502,7 +504,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 <p><strong>Section D</strong></p>
 
-<table>
+<table class='section-d'>
     <tbody>
         <tr>
             <td>Part:</td>
@@ -524,10 +526,11 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 <p><strong>Section E</strong></p>
 
 
+{% if deal_memo.meta['engagement_period'] == 'clause_t8_1_and_2' %}
 
 	<p>The Producer shall have first call on the Artist's services for a period beginning on the first day on which the Artist shall, following a call from the Producer, attend to render services in the filming/recording of the Artist's part for the following nominated and/or unspecified period(s) in accordance with the provisions of Clause (T8)1 and 2:</p>
 
-	<table class="indent top table_j">
+	<table>
 		<tbody>
 			<tr>
 				<td></td>
@@ -706,19 +709,21 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 {% endif %}
 
-
 <hr noshade>
+
+
+<br />
+
 
 {# SECTION F - SECTION F - SECTION F - SECTION F - SECTION F #}
 
 
 <p><strong>Section F</strong></p>
 
-<table>
+<table class='section-f'>
     <tbody>
         <tr>
-            <td>(i)  Number of episodes:</td>
-            <td>{{ deal_memo.meta.get('number_of_episodes', zero) }}</td>
+            <td>(i)  Number of episodes: <strong>{{ deal_memo.meta.get('number_of_episodes', zero) }}</strong></td>
             <td>Category A {% if episode_category == 'category_a' %} {{ tick }}{% else %} {{ box }}{% endif %}</td>
             <td>Category B {% if episode_category == 'category_b' %} {{ tick }}{% else %} {{ box }}{% endif %}</td>
         </tr>        
@@ -754,7 +759,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 <p><strong>Section G</strong></p>
 
-<p>The Producer shall pay the Artist £{{ comm_num(engagement_fee_payment) }} for the period(s) specified in Section E above calculated by adding Section F(iv) and F(v) whether or not the Artist is called to render services. This payment shall acquire one transmission on one of the main UK channels as well as non theatric rights throughout the world.  Other payments under the Agreement may form part of the Artist's aggregate earnings upon which additional uses are calculated.</p>
+<p>The Producer shall pay the Artist £<strong>{{ comm_num(engagement_fee_payment) }}</strong> for the period(s) specified in Section E above calculated by adding Section F(iv) and F(v) whether or not the Artist is called to render services. This payment shall acquire one transmission on one of the main UK channels as well as non theatric rights throughout the world.  Other payments under the Agreement may form part of the Artist's aggregate earnings upon which additional uses are calculated.</p>
 
 
 

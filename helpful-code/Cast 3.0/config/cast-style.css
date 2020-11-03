@@ -63,6 +63,27 @@ table.signature-block td {
 }
 
 
+/* Top Section */
+
+table.top {
+    border: none;
+    width: 100%;
+}
+
+table.top tr {
+    border: none;
+}
+
+table.top td {
+    border: none;
+    padding: 5px;
+}
+
+table.top td:first-child {
+    width: 60%;
+}
+
+
 /* Section H - Additional Uses Table */
 
 table.section-h-add {
@@ -84,6 +105,83 @@ table.section-h-add td:nth-child(2) {
 
 table.section-h-add td:nth-child(3) {
     width: 25%
+}
+
+
+/* Section A,B & C */
+
+table.section-abc {
+    border: none;
+    width: 100%;
+}
+
+table.section-abc tr {
+    border: none;
+}
+
+table.section-abc td {
+    border: none;
+    padding: 5px;
+}
+
+table.section-abc td:first-child {
+    width: 20%;
+}
+
+table.section-abc td:nth-child(2) {
+    width: 40%;
+}
+
+table.section-abc td:nth-child(3) {
+    width: 40%;
+}
+
+
+/* Section D */
+
+table.section-d {
+    border: none;
+    width: 100%;
+}
+
+table.section-d tr {
+    border: none;
+}
+
+table.section-d td {
+    border: none;
+    padding: 5px;
+}
+
+table.section-d td:first-child {
+    width: 20%;
+}
+
+
+/* Section F */
+
+table.section-f {
+    border: none;
+    width: 100%;
+}
+
+table.section-f tr {
+    border: none;
+}
+
+table.section-f td {
+    border: none;
+    padding: 0px;
+}
+
+table.section-f td:first-child {
+    border: none;
+    width: 60%
+}
+
+table.section-f td:nth-child(2) td:nth-child(3) {
+    border: none;
+    width: 20%
 }
 
 
