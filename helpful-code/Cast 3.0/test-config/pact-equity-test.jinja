@@ -759,7 +759,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 <p><strong>Section G</strong></p>
 
-<p>The Producer shall pay the Artist £<strong>{{ comm_num(engagement_fee_payment) }}</strong> for the period(s) specified in Section E above calculated by adding Section F(iv) and F(v) whether or not the Artist is called to render services. This payment shall acquire one transmission on one of the main UK channels as well as non theatric rights throughout the world.  Other payments under the Agreement may form part of the Artist's aggregate earnings upon which additional uses are calculated.</p>
+<p>The Producer shall pay the Artist <strong>{{ comm_num(engagement_fee_payment) }}</strong> for the period(s) specified in Section E above calculated by adding Section F(iv) and F(v) whether or not the Artist is called to render services. This payment shall acquire one transmission on one of the main UK channels as well as non theatric rights throughout the world.  Other payments under the Agreement may form part of the Artist's aggregate earnings upon which additional uses are calculated.</p>
 
 
 
@@ -779,14 +779,14 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 <p>Use Fees are calculated as percentages of Artists Earnings as specified in Section G.</p>
 
-<table class='table_f_a indent'>
+<table class='option'>
 	<tbody>
         <tr>
-            <td>(a) Rest of World (ex UK and US) TV</td>
+			<td>(a) Rest of World (ex UK and US) TV</td>
             <td>{% if nom_add_uses_option == 'option_a' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
         </tr>
         <tr>
-            <td>(b) Nominated US TV Uses</td>
+			<td>(b) Nominated US TV Uses</td>
             <td>{% if nom_add_uses_option == 'option_b' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
         </tr>
 	</tbody>
