@@ -111,11 +111,56 @@
 
 	{# SECTION H - Nominated additional uses #}
 
-		{% set nom_add_uses_option = 'option_a' %} {# Set the nominated additional uses (section H) --- SET BY - SET DATE  #}
-			{# Option A = option_a  #}
-			{# Option B = option_b  #}
-
 		{% set nom_add_uses_base_percent = decimal.Decimal("0.35") %} {# PROBABLY DOESNT NEED TO CHANGE Set the nominated additional uses percent (section H) This is 35% (as of 2019) #}
+
+		{# Option B - Percentages #}
+		{% if 1 in deal_memo.project_record.project.settings['option_b_percentages']%}
+			{% set option_b1 = decimal.Decimal("0.75") %}
+		{% else %}
+			{% set option_b1 = decimal.Decimal("0") %}
+		{% endif %} {# 1st USA Prime Time Network TX - 75 %#}
+
+		{% if 2 in deal_memo.project_record.project.settings['option_b_percentages']%}
+			{% set option_b2 = decimal.Decimal("0.35") %}
+		{% else %}
+			{% set option_b2 = decimal.Decimal("0") %}
+		{% endif %} {# 1st USA non PrimeTime Network TX - 35% #}
+		
+		{% if 3 in deal_memo.project_record.project.settings['option_b_percentages']%}
+			{% set option_b3 = decimal.Decimal("0.15") %}
+		{% else %}
+			{% set option_b3 = decimal.Decimal("0") %}
+		{% endif %} {# USA PBS Network - 15% #}
+
+		{% if 4 in deal_memo.project_record.project.settings['option_b_percentages']%}
+			{% set option_b4 = decimal.Decimal("0.25") %}
+		{% else %}
+			{% set option_b4 = decimal.Decimal("0") %}
+		{% endif %} {# USA Full Syndication - 25% #}
+
+		{% if 5 in deal_memo.project_record.project.settings['option_b_percentages']%}
+			{% set option_b5 = decimal.Decimal("0.10") %}
+		{% else %}
+			{% set option_b5 = decimal.Decimal("0") %}
+		{% endif %} {# USA Basic Cable - 10% #}
+
+		{% if 6 in deal_memo.project_record.project.settings['option_b_percentages']%}
+			{% set option_b6 = decimal.Decimal("0.30") %}
+		{% else %}
+			{% set option_b6 = decimal.Decimal("0") %}
+		{% endif %} {# USA Major Pay - 30% #}
+
+		{% set option_b_percent_total = (option_b1 + option_b2 + option_b3 + option_b4 + option_b5 + option_b6) %}
+
+		{# Section H - Total if option B is selected #}
+		{# This takes into account the minimum of 35% in section H - part B #}
+
+			{% if option_b_percent_total >= nom_add_uses_base_percent %}
+				{% set option_b_total = (option_b_percent_total * engagement_fee_payment) %}
+			{% else %}
+				{% set option_b_total = (engagement_fee_payment * nom_add_uses_base_percent) %}
+			{% endif %}
+
 
 
 
@@ -783,77 +828,152 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 	<tbody>
         <tr>
 			<td>(a) Rest of World (ex UK and US) TV</td>
-            <td>{% if nom_add_uses_option == 'option_a' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
+            <td>{% if deal_memo.project_record.project.settings['options_a_and_b'] == 'option_a' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
         </tr>
         <tr>
 			<td>(b) Nominated US TV Uses</td>
-            <td>{% if nom_add_uses_option == 'option_b' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
+            <td>{% if deal_memo.project_record.project.settings['options_a_and_b'] == 'option_b' %}{{ tick }}{% else %}{{ box }}{% endif %}</td>
         </tr>
 	</tbody>
 </table>
+
+
 
 
 <p><strong>(a) Rest of World (ex UK and US) Television</strong></p>
 
+{% if deal_memo.project_record.project.settings['options_a_and_b'] == 'option_a' or deal_memo.project_record.project.settings['options_a_and_b'] == null %}
 
-<p>Pre-Purchase of Rest of World (ex UK and US) TV:  35% times £………. (total Artist Earnings) = £……….</p>
-
-
-<p><strong>(b) Nominated US TV Uses</strong></p>
-
-
-<p>Pre-Purchase of Nominated US TV Uses:    35% times £……….. (total Artist Earnings) = £……….</p>
+	{# Section H - Total if option A is selected #}
+			{% set option_b_total = (engagement_fee_payment * nom_add_uses_base_percent).quantize(decimal.Decimal(".01")) %}
 
 
-<p>This pre-purchase will be applied to the Uses ticked below:</p>
+	<p>Pre-Purchase of Rest of World (ex UK and US) TV: <strong>{{ percent(nom_add_uses_base_percent) }}%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£{{ option_b_total }}</strong></p>
+
+	<p><strong>(b) Nominated US TV Uses</strong></p>
 
 
-<table class='section-h'>
-	<tbody>
-		<tr>
-			<td><p>1st USA Prime Time Network TX</p></td>
-			<td><p>75%</p></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td><p>1st USA non PrimeTime Network TX</p></td>
-			<td><p>35%</p></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td><p>USA PBS Network</p></td>
-			<td><p>15%</p></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td><p>USA Full Syndication</p></td>
-			<td><p>25%</p></td>
-			<td></td>
-		</tr>
-		<tr>
-			<td><p>USA Basic Cable</p></td>
-			<td><p>10%</p></td>
-			<td></td>
-		</tr>
-		<tr> 
-			<td><p>USA Major Pay</p></td>
-			<td><p>30%</p></td>
-			<td></td>
-		</tr>
-	</tbody>
-</table>
+	<p>Pre-Purchase of Nominated US TV Uses:    35% times £……….. (total Artist Earnings) = £……….</p>
 
 
+	<p>This pre-purchase will be applied to the Uses ticked below:</p>
+
+	<table class='section-h'>
+		<tbody>
+			<tr>
+				<td><p>1st USA Prime Time Network TX</p></td>
+				<td><p>75%</p></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><p>1st USA non PrimeTime Network TX</p></td>
+				<td><p>35%</p></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><p>USA PBS Network</p></td>
+				<td><p>15%</p></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><p>USA Full Syndication</p></td>
+				<td><p>25%</p></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td><p>USA Basic Cable</p></td>
+				<td><p>10%</p></td>
+				<td></td>
+			</tr>
+			<tr> 
+				<td><p>USA Major Pay</p></td>
+				<td><p>30%</p></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
 
 
-<p>If the Total % of Nominated Uses is greater than 35%, then an additional payment equivalent to the difference in the percentages multiplied by the Artist’s total Earnings must also be made:</p>
+{% elif deal_memo.project_record.project.settings['options_a_and_b'] == 'option_b' %}
 
 
-<p>Total % of Nominated Uses: %</p>
+	<p>Pre-Purchase of Rest of World (ex UK and US) TV: <strong>{{ percent(nom_add_uses_base_percent) }}%</strong> times <strong>£......
+	</strong> (total Artist Earnings) = <strong>£.....</strong></p>
 
-<p>LESS: <u>35 %</u></p>
 
-<p>Difference % times £………. (total Artist Earnings) = £……….</p>
+	<p><strong>(b) Nominated US TV Uses</strong></p>
+
+
+	<p>Pre-Purchase of Nominated US TV Uses: {{ percent(nom_add_uses_base_percent) }}% times £{{ engagement_fee_payment }} (total Artist Earnings) = £{{ (engagement_fee_payment * nom_add_uses_base_percent).quantize(decimal.Decimal(".01")) }}</p>
+
+
+	<p>This pre-purchase will be applied to the Uses ticked below:</p>
+
+	<table class='section-h'>
+		<tbody>
+			<tr>
+				<td><p>1st USA Prime Time Network TX</p></td>
+				<td><p>75%</p></td>
+				<td>{% if 1 in deal_memo.project_record.project.settings['option_b_percentages']%}{{ tick }}{% endif %}</td>
+			</tr>
+			<tr>
+				<td><p>1st USA non PrimeTime Network TX</p></td>
+				<td><p>35%</p></td>
+				<td>{% if 2 in deal_memo.project_record.project.settings['option_b_percentages']%}{{ tick }}{% endif %}</td>
+			</tr>
+			<tr>
+				<td><p>USA PBS Network</p></td>
+				<td><p>15%</p></td>
+				<td>{% if 3 in deal_memo.project_record.project.settings['option_b_percentages']%}{{ tick }}{% endif %}</td>
+			</tr>
+			<tr>
+				<td><p>USA Full Syndication</p></td>
+				<td><p>25%</p></td>
+				<td>{% if 4 in deal_memo.project_record.project.settings['option_b_percentages']%}{{ tick }}{% endif %}</td>
+			</tr>
+			<tr>
+				<td><p>USA Basic Cable</p></td>
+				<td><p>10%</p></td>
+				<td>{% if 5 in deal_memo.project_record.project.settings['option_b_percentages']%}{{ tick }}{% endif %}</td>
+			</tr>
+			<tr> 
+				<td><p>USA Major Pay</p></td>
+				<td><p>30%</p></td>
+				<td>{% if 6 in deal_memo.project_record.project.settings['option_b_percentages']%}{{ tick }}{% endif %}</td>
+			</tr>
+		</tbody>
+	</table>
+
+{% endif %}
+
+	<p>If the Total % of Nominated Uses is greater than 35%, then an additional payment equivalent to the difference in the percentages multiplied by the Artist’s total Earnings must also be made:</p>
+
+	<p>Total % of Nominated Uses: {{ percent(option_b_percent_total) }}%</p>
+
+	<p>LESS: <u>{{ percent(nom_add_uses_base_percent) }}%</u></p>
+
+	{% if deal_memo.project_record.project.settings['options_a_and_b'] == 'option_b'%}
+		
+		{% if option_b_percent_total > nom_add_uses_base_percent %}
+			<tr>
+				<td>Difference:</td>
+				<td><strong>{{ percent((option_b_percent_total - nom_add_uses_base_percent)) }}%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£{{ (engagement_fee_payment * (option_b_percent_total - nom_add_uses_base_percent)).quantize(decimal.Decimal(".01")) }}</strong></td> 
+			</tr>
+		{% else %}
+			<tr>
+				<td>Difference:</td>
+				<td><strong>{{ percent((option_b_percent_total - nom_add_uses_base_percent)) }}%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£......</strong></td> 
+			</tr>
+		{% endif %}
+		
+	{% else %}
+			<tr>
+				<td>Difference:</td>
+				<td><strong>%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£{{(engagement_fee_payment * nom_add_uses_base_percent).quantize(decimal.Decimal(".01"))}}</strong></td> 
+			</tr>
+
+	{% endif %}
+
 
 
 <p>If the Total % of Nominated Uses is less than 35%, then the unused difference may be applied at a later date to any US Television Use as set out in the above table.</p>

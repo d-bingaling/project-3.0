@@ -4,7 +4,7 @@
         "open": true,
         "widgets": [{
                 "cast_title": {
-                    "acl": "only_internal",
+                    "acl": "deal_memo",
                     "args": {
                         "document": "<h4>Cast Variables</h4>"
                     },
@@ -16,6 +16,10 @@
                     "acl": "deal_memo",
                     "args": {
                         "dynamic": true,
+                        "controls": [
+                            "option_a_percentage",
+                            "option_b_percentages"
+                        ],
                         "nullable": true,
                         "options": [
                             [
@@ -30,7 +34,19 @@
                         ]
                     },
                     "label": "Select either:",
-                    "widget_type": "multiselect"
+                    "widget_type": "enum"
+                }
+            },
+            {
+                "option_a_percentage": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "document": "<p>Pre-Purchase of Rest of World (ex UK and US) TV: 35%</p>"
+                    },
+                    "read_condition": {
+                        "settings.options_a_and_b": "option_a"
+                    },
+                    "widget_type": "prt"
                 }
             },
             {
@@ -38,6 +54,7 @@
                     "acl": "deal_memo",
                     "args": {
                         "dynamic": true,
+                        "help_text": "If the Total % of Nominated Uses is greater than 35%, then an additional payment equivalent to the difference in the percentages multiplied by the Artist’s total Earnings must also be made:",
                         "nullable": true,
                         "options": [
                             [
@@ -69,7 +86,7 @@
                     },
                     "label": "(b) Nominated US TV Uses",
                     "read_condition": {
-                        "meta.options_a_and_b": "option_b"
+                        "settings.options_a_and_b": "option_b"
                     },
                     "widget_type": "multiselect"
                 }
