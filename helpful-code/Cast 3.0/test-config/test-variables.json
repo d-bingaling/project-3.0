@@ -12,6 +12,69 @@
                 }
             },
             {
+                "options_a_and_b": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true,
+                        "nullable": true,
+                        "options": [
+                            [
+                                "option_a",
+                                "(a) Rest of World (ex UK and US) TV"
+                            ],
+                            [
+                                "option_b",
+                                "(b) Nominated US TV Uses"
+                            ]
+
+                        ]
+                    },
+                    "label": "Select either:",
+                    "widget_type": "multiselect"
+                }
+            },
+            {
+                "option_b_percentages": {
+                    "acl": "deal_memo",
+                    "args": {
+                        "dynamic": true,
+                        "nullable": true,
+                        "options": [
+                            [
+                                1,
+                                "1st USA Prime Time Network TX - 75%"
+                            ],
+                            [
+                                2,
+                                "1st USA non PrimeTime Network TX - 35%"
+                            ],
+                            [
+                                3,
+                                "USA PBS Network - 15%"
+                            ],
+                            [
+                                4,
+                                "USA Full Syndication - 25%"
+                            ],
+                            [
+                                5,
+                                "USA Basic Cable - 10%"
+                            ],
+                            [
+                                6,
+                                "USA Major Pay - 30%"
+                            ]
+
+                        ]
+                    },
+                    "label": "(b) Nominated US TV Uses",
+                    "read_condition": {
+                        "meta.options_a_and_b": "option_b"
+                    },
+                    "widget_type": "multiselect"
+                }
+            },
+            {
                 "2nd_sub_uk_primary": {
                     "acl": "deal_memo",
                     "args": {

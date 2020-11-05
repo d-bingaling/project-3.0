@@ -84,30 +84,6 @@ table.top td:first-child {
 }
 
 
-/* Section H - Additional Uses Table */
-
-table.section-h-add {
-    border: 1px solid black;
-    width: 100%
-}
-
-table.section-h-add td {
-    padding: 7px 7px 7px 7px;
-}
-
-table.section-h-add td:first-child {
-    width: 50%
-}
-
-table.section-h-add td:nth-child(2) {
-    width: 25%
-}
-
-table.section-h-add td:nth-child(3) {
-    width: 25%
-}
-
-
 /* Section A,B & C */
 
 table.section-abc {
@@ -182,6 +158,81 @@ table.section-f td:first-child {
 table.section-f td:nth-child(2) td:nth-child(3) {
     border: none;
     width: 20%
+}
+
+
+/* Section H Peak Time & Showcase Premieres */
+
+table.prem {
+    border: none;
+    width: 100%
+}
+
+table.prem td {
+    border: none;
+    padding: 5px;
+}
+
+table.prem td:first-child {
+    width: 50%
+}
+
+table.prem td:nth-child(2) {
+    width: 25%
+}
+
+table.prem td:nth-child(3) {
+    width: 25%
+}
+
+table.prem {
+    border: none;
+    width: 100%
+}
+
+
+/* Rest of World (ex UK and US) TV or Nominated US TV Uses*/
+
+table.option {
+    border: none;
+}
+
+table.option td {
+    border: none;
+    padding: 5px;
+}
+
+table.option td:first-child {
+    width: 75%
+}
+
+table.option td:nth-child(2) {
+    width: 25%
+}
+
+
+/* Section H - Additional Uses Table */
+
+table.section-h {
+    border: 1px solid black;
+    width: 100%
+}
+
+table.section-h td {
+    padding: 5px;
+    vertical-align: text-top;
+}
+
+table.section-h td:first-child {
+    width: 50%
+}
+
+table.section-h td:nth-child(2) {
+    width: 25%
+}
+
+table.section-h td:nth-child(3) {
+    width: 25%
 }
 
 
