@@ -861,3 +861,11 @@ US DTO/DTR - {{ additional_19 }}
         </tr>
     </tbody>
 </table>
+
+
+
+
+
+{% if deal_memo.project_record.project.settings['options_a_and_b'] == 'option_a' %}
+    {% set nom_add_uses_base_percent = decimal.Decimal("0.35") %} 
+{% elif deal_memo.project_record.project.settings['options_a_and_b'] == 'option_b'%}
