@@ -236,6 +236,36 @@ table.section-h td:nth-child(3) {
 }
 
 
+/* Section H - Options A & B */
+
+table.ops {
+    border: none;
+    width: 100%
+}
+
+table.ops td {
+    border: none;
+    padding: 5px;
+    vertical-align: text-top;
+}
+
+table.ops td:first-child {
+    width: 50%
+}
+
+table.ops td:nth-child(2) {
+    width: 10%
+}
+
+table.ops td:nth-child(3) {
+    width: 30%
+}
+
+table.ops td:nth-child(4) {
+    width: 10%
+}
+
+
 /* Frequently used CSS across all contract types */
 
 
