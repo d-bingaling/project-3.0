@@ -462,7 +462,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 <table class='section-abc'>
     <tbody>
         <tr>   
-            <td>Production Company: </td>
+            <td>Production Company:</td>
             <td>{% if deal_memo.project_record.project.production_company.name %}{{ deal_memo.project_record.project.production_company.name }}{% else %}{{ warning('production company name') }}{% endif %}</td>
             <td>Phone No: {{ deal_memo.project_record.project.settings['prod_company_phone'] or  warning('prod company phone') }}</td>
         </tr>
@@ -847,13 +847,33 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 	{# Section H - Total if option A is selected #}
 			{% set option_b_total = (engagement_fee_payment * nom_add_uses_base_percent).quantize(decimal.Decimal(".01")) %}
 
-
-	<p>Pre-Purchase of Rest of World (ex UK and US) TV: <strong>{{ percent(nom_add_uses_base_percent) }}%</strong> times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings) = <strong>£{{ option_b_total }}</strong></p>
+	<table class='ops'>
+		<tbody>
+			<tr>
+				<td>Pre-Purchase of Rest of World (ex UK and US) TV:</td>
+				<td>{{ percent(nom_add_uses_base_percent) }}%</td>
+				<td>times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings)</td>
+				<td>= <strong>£{{ option_b_total }}</strong></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
 
 	<p><strong>(b) Nominated US TV Uses</strong></p>
 
-
-	<p>Pre-Purchase of Nominated US TV Uses:    35% times £……….. (total Artist Earnings) = £……….</p>
+	<table class='ops'>
+		<tbody>
+			<tr>
+				<td>Pre-Purchase of Nominated US TV Uses:</td>
+				<td>{{ percent(nom_add_uses_base_percent) }}</td>
+				<td>times £……….. (total Artist Earnings)</td>
+				<td>= £………</td>
+			</tr>
+		</tbody>
+	</table>
 
 
 	<p>This pre-purchase will be applied to the Uses ticked below:</p>
@@ -896,15 +916,32 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 {% elif deal_memo.project_record.project.settings['options_a_and_b'] == 'option_b' %}
 
+	<table class='ops'>
+		<tbody>
+			<tr>
+				<td>Pre-Purchase of Rest of World (ex UK and US) TV:</td>
+				<td>{{ percent(nom_add_uses_base_percent) }}%</td>
+				<td>times £..... (total Artist Earnings)</td>
+				<td>= <strong>£.....</strong></td>
+			</tr>
+		</tbody>
+	</table>
 
-	<p>Pre-Purchase of Rest of World (ex UK and US) TV: <strong>{{ percent(nom_add_uses_base_percent) }}%</strong> times <strong>£......
-	</strong> (total Artist Earnings) = <strong>£.....</strong></p>
 
 
 	<p><strong>(b) Nominated US TV Uses</strong></p>
 
+	<table class='ops'>
+		<tbody>
+			<tr>
+				<td>Pre-Purchase of Nominated US TV Uses:</td>
+				<td>{{ percent(nom_add_uses_base_percent) }}%</td>
+				<td>times <strong>£{{ engagement_fee_payment }}</strong> (total Artist Earnings)</td>
+				<td>= <strong>£{{ (engagement_fee_payment * nom_add_uses_base_percent).quantize(decimal.Decimal(".01")) }}</strong></td>
+			</tr>
+		</tbody>
+	</table>
 
-	<p>Pre-Purchase of Nominated US TV Uses: {{ percent(nom_add_uses_base_percent) }}% times £{{ engagement_fee_payment }} (total Artist Earnings) = £{{ (engagement_fee_payment * nom_add_uses_base_percent).quantize(decimal.Decimal(".01")) }}</p>
 
 
 	<p>This pre-purchase will be applied to the Uses ticked below:</p>
