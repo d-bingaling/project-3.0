@@ -118,9 +118,9 @@
                     "section_b": {
                         "acl": "only_internal",
                         "args": {
-                            "document": "<h2>Artist information</h2>"
+                            "template": "<h2>Artist information</h2>"
                         },
-                        "widget_type": "prt"
+                        "widget_type": "jinja2"
                     }
                 },
                 {
@@ -1926,14 +1926,16 @@
                     }
                 },
                 {
-                    "nominated_add_uses_info": {
+                    "a_pre_purch_row": {
                         "acl": "only_internal",
                         "args": {
-                            "hide_empty": true,
-                            "static": "Rest of World (ex UK and US) TV (Option A) - 35%"
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}"
                         },
-                        "label": " ",
-                        "widget_type": "info"
+                        "label": "Pre-Purchase of Rest of World (ex UK and US) TV - 35%",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_a"
+                        },
+                        "widget_type": "jinja2"
                     }
                 },
                 {
@@ -1943,68 +1945,762 @@
                             "document": "<p><strong>Please note:</strong> The options for Nominated US TV Uses (Option B) have been removed for this production.</p>"
                         },
                         "label": "",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_a"
+                        },
                         "widget_type": "prt"
                     }
                 },
                 {
-                    "row_can": {
-                        "acl": "deal_memo",
+                    "option_b1": {
+                        "acl": "only_internal",
                         "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}"
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.75\")).quantize(decimal.Decimal(\".01\")) }}"
                         },
-                        "label": "Pre-Purchase of Rest of World (ex UK and US) TV",
+                        "label": "1st USA Prime Time Network TX - 75%",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_b",
+                            "project_record.project.settings.option_b_percentages": {
+                                "includes": [
+                                    1
+                                ]
+                            }
+                        },
                         "widget_type": "jinja2"
                     }
                 },
                 {
-                    "hr": {
-                        "acl": "deal_memo",
+                    "option_b2": {
+                        "acl": "only_internal",
                         "args": {
-                            "document": "<hr />"
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "1st USA non PrimeTime Network TX - 35%",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_b",
+                            "project_record.project.settings.option_b_percentages": {
+                                "includes": [
+                                    2
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "option_b3": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA PBS Network - 15%",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_b",
+                            "project_record.project.settings.option_b_percentages": {
+                                "includes": [
+                                    3
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "option_b4": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA Full Syndication - 25%",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_b",
+                            "project_record.project.settings.option_b_percentages": {
+                                "includes": [
+                                    4
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "option_b5": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA Basic Cable - 10%",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_b",
+                            "project_record.project.settings.option_b_percentages": {
+                                "includes": [
+                                    5
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "option_65": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.30\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA Major Pay - 30%",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_b",
+                            "project_record.project.settings.option_b_percentages": {
+                                "includes": [
+                                    6
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "option_b_sec_h_info": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<p><strong>Please note:</strong> Rest of World (ex UK and US) TV (Option A) has been removed for this production.</p>"
+                        },
+                        "label": "",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_b"
                         },
                         "widget_type": "prt"
+                    }
+                },
+                {
+                    "hr_okay": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['percentages_additional_uses'] %}<hr />{% endif %}"
+                        },
+                        "widget_type": "jinja2"
                     }
                 },
                 {
                     "section_i": {
                         "acl": "only_internal",
                         "args": {
-                            "document": "<h2>Other additional uses</h2>"
+                            "template": "{% if deal_memo.project_record.project.settings['percentages_additional_uses'] %}<h2>Other additional uses</h2>{% endif %}"
                         },
-                        "widget_type": "prt"
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr_sub": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}<hr />{% endif %}"
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "sub_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}<h4>2nd and each subsequent UK Primary TX</h4>{% endif %}"
+                        },
+                        "widget_type": "jinja2"
                     }
                 },
                 {
                     "peak_time_percent": {
                         "acl": "only_internal",
                         "args": {
-                            "template": "{% if \"peak_time\" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.55\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}"
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.55\")).quantize(decimal.Decimal(\".01\")) }}"
                         },
                         "label": "Peak Time - 55%",
+                        "read_condition": {
+                            "project_record.project.settings.2nd_sub_uk_primary": {
+                                "includes": [
+                                    "peak_time"
+                                ]
+                            }
+                        },
                         "widget_type": "jinja2"
                     }
                 },
-
-
-
                 {
                     "day_time_percent": {
                         "acl": "only_internal",
                         "args": {
-                            "template": "{% if \"day_time_op\" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.275\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}"
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.275\")).quantize(decimal.Decimal(\".01\")) }}"
                         },
                         "label": "Day Time off Peak - 27.5%",
+                        "read_condition": {
+                            "project_record.project.settings.2nd_sub_uk_primary": {
+                                "includes": [
+                                    "day_time_op"
+                                ]
+                            }
+                        },
                         "widget_type": "jinja2"
                     }
                 },
-
                 {
                     "night_time_percent": {
                         "acl": "only_internal",
                         "args": {
-                            "template": "{% if \"night_time_op\" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.1375\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}"
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.1375\")).quantize(decimal.Decimal(\".01\")) }}"
                         },
                         "label": "Night Time off Peak - 13.75%",
+                        "read_condition": {
+                            "project_record.project.settings.2nd_sub_uk_primary": {
+                                "includes": [
+                                    "night_time_op"
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "showcase_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['showcase_premieres'] %}<h4>Showcase Premieres</h4>{% endif %}"
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "3_showcase_percent": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "3 Showcase Premieres - 25%",
+                        "read_condition": {
+                            "project_record.project.settings.showcase_premieres": {
+                                "includes": [
+                                    "3_showcase_prem"
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "1_showcase_percent": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")) < decimal.Decimal(\"50\") %}{% set showcase_1 = decimal.Decimal(\"50.00\") %}{% else %}{% set showcase_1 = (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) %}{% endif %}\u00a3{{ showcase_1 }} <i>[minimum £50]</i>"
+                        },
+                        "label": "1 Showcase Premieres - 10%",
+                        "read_condition": {
+                            "project_record.project.settings.showcase_premieres": {
+                                "includes": [
+                                    "1_showcase_prem"
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr_yeah": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['showcase_premieres'] %}<hr />{% endif %}"
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "row_tv_rights": {
+                        "acl": "default",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Rest of World TV rights - 7 years 35%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    1
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "1st_usa_prime": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.75\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "1st USA Prime Time Network TX 75%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    2
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "2nd_usa_prime": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "2nd USA Prime Time Network TX 25%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    3
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "thereafter_tx": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Thereafter per TX 15%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    4
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "1st_usa_non_prime": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "1st USA non PrimeTime Network TX 35%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    5
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "2nd_and_each_non_prime": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.075\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "2nd & each subsequent non Prime Time TX 7.5%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    6
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "usa_pbs": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA PBS Network 15%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    7
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "usa_full_syn": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA Full Syndication 25%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    8
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "usa_basic": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA Basic Cable 10%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    9
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "usa_major": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.30\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA Major Pay 30%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    10
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "usa_ott_vod": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.03\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "USA OTT VOD Rights 3%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    11
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "uk_theatric": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Limited Theatric (UK) 14%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    12
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "usa_theatric": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Limited Theatric (USA) 14%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    13
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "row_theatric": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Limited Theatric (Rest of World) 14%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    14
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "uk_video": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "UK Video - 5%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    15
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "us_video": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "US Video - 4%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    16
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "row_video": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Rest of World Video - 4%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    17
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "uk_dto_dtr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "UK DTO/DTR - 2%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    18
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "us_dto_dtr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "US DTO/DTR - 2%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    19
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "row_dto_dtr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "ROW DTO/DTR - 2%",
+                        "read_condition": {
+                            "project_record.project.settings.percentages_additional_uses": {
+                                "includes": [
+                                    20
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "svod_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['svod_pre_purchases'] %}<h4>SVOD Pre-Purchases</h4>{% endif %}"
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "uk_svod_primary": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['uk_primary'] == 1 %}<p><strong>Primary Window: UK-SVOD - 7%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.07\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_primary'] == 2 %}<p><strong>Primary Window: UK-SVOD - 11%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.08\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_primary'] == 3 %}<p><strong>Primary Window: UK-SVOD - 9%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.09\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_primary'] == 4 %}<p><strong>Primary Window: UK-SVOD - 11%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.11\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    1
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "usa_svod_primary": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['usa_primary'] == 1 %}<p><strong>Primary Window: USA-SVOD - 5 yrs 15%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['usa_primary'] == 2 %}<p><strong>Primary Window: USA-SVOD - 7 yrs 16%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.16\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['usa_primary'] == 3 %}<p><strong>Primary Window: USA-SVOD - 10 yrs 18%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.18\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['usa_primary'] == 4 %}<p><strong>Primary Window: USA-SVOD - 15 yrs 21%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.21\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    2
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "na_can_svod_primary": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['na_can_primary'] == 1 %}<p><strong>Primary Window: North America (US & Canada) - 5 yrs 16%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.16\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_primary'] == 2 %}<p><strong>Primary Window: North America (US & Canada) - 7 yrs 17%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.17\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_primary'] == 3 %}<p><strong>Primary Window: North America (US & Canada) - 10 yrs 19%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.19\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_primary'] == 4 %}<p><strong>Primary Window: North America (US & Canada) - 15 yrs 22%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.22\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    3
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "second_hold_uk": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['uk_second_holdback'] == 1 %}<p><strong>Second Window Holdback UK - 7 yrs (6 months: 6%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.06\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_second_holdback'] == 2 %}<p><strong>Second Window Holdback UK - 7 yrs (12 months: 4%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.04\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_second_holdback'] == 3 %}<p><strong>Second Window Holdback UK - 10 yrs (6 months: 7%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.07\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_second_holdback'] == 4 %}<p><strong>Second Window Holdback UK - 10 yrs (12 months: 5%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    4
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "second_hold_us": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['us_second_holdback'] == 1 %}<p><strong>Second Window Holdback US - 7 yrs (6 months: 10%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['us_second_holdback'] == 2 %}<p><strong>Second Window Holdback US - 7 yrs (12 months: 8%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.08\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['us_second_holdback'] == 3 %}<p><strong>Second Window Holdback US - 10 yrs (6 months: 12%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.12\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['us_second_holdback'] == 4 %}<p><strong>Second Window Holdback US - 10 yrs (12 months: 10%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    5
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "second_hold_na_can": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['na_can_second_holdback'] == 1 %}<p><strong>Second Window Holdback North America (US and Canada) - 7 yrs (6 months: 11%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.11\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_holdback'] == 2 %}<p><strong>Second Window Holdback North America (US and Canada) - 7 yrs (12 months: 9%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.09\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_holdback'] == 3 %}<p><strong>Second Window Holdback North America (US and Canada) - 10 yrs (6 months: 13.5%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.135\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_holdback'] == 4 %}<p><strong>Second Window Holdback North America (US and Canada) - 10 yrs (12 months: 11.5%)</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.115\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    6
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "second_uk_svod": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['uk_second_svod'] == 1 %}<p><strong>Second Window UK SVoD - 5 yrs 6%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.06\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_second_svod'] == 2 %}<p><strong>Second Window UK SVoD - 7yrs 7%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.07\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_second_svod'] == 3 %}<p><strong>Second Window UK SVoD - 10 yrs 8%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.08\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['uk_second_svod'] == 4 %}<p><strong>Second Window UK SVoD - 15 yrs 10%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    7
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "second_usa_svod": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['usa_second_svod'] == 1 %}<p><strong>Second Window USA SVoD (including OTT SVOD Rights) - 5 yrs 13%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.13\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['usa_second_svod'] == 2 %}<p><strong>Second Window USA SVoD (including OTT SVOD Rights) - 7yrs 14%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['usa_second_svod'] == 3 %}<p><strong>Second Window USA SVoD (including OTT SVOD Rights) - 10 yrs 16%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.08\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['usa_second_svod'] == 4 %}<p><strongSecond Window USA SVoD (including OTT SVOD Rights) - 15 yrs 19%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.19\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    8
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "second_na_can_svod": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['na_can_second_svod'] == 1 %}<p><strong>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights) - 5yrs 14%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 2 %}<p><strong>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights) - 7yrs 15%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 3 %}<p><strong>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights) - 10yrs 17%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.17\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 4 %}<p><strong>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights) - 15yrs 20%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.20\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    9
+                                ]
+                            }
+                        },
                         "widget_type": "jinja2"
                     }
                 },
@@ -2012,18 +2708,37 @@
 
 
 
-
-
-
+                {
+                    "row_only_svod": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['row_svod_only'] == 1 %}<p><strong>ROW SVOD only - 7-10yrs 2%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['row_svod_only'] == 2 %}<p><strong>ROW SVOD only - 7-15yrs 5%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    10
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
 
 
                 {
-                    "3_showcase_percent": {
+                    "pre_purch_svod": {
                         "acl": "only_internal",
                         "args": {
-                            "template": "{% if \"3_showcase_prem\" in deal_memo.project_record.project.settings['showcase_premieres'] %}\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}{% endif %}"
+                            "template": "{% if deal_memo.project_record.project.settings['pre_purchased_svod'] == 'uk' %}<p><strong>SVOD Rights Pre-Purchased - UK 0.25%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.0025\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['pre_purchased_svod'] == 'us' %}<p><strong>SVOD Rights Pre-Purchased - UK 0.5%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['pre_purchased_svod'] == 'row' %}<p><strong>SVOD Rights Pre-Purchased - ROW 0.25%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.0025\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
                         },
-                        "label": "3 Showcase Premieres - 25%",
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    11
+                                ]
+                            }
+                        },
                         "widget_type": "jinja2"
                     }
                 },
