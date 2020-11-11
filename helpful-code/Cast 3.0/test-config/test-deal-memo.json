@@ -758,7 +758,62 @@
                         },
                         "widget_type": "jinja2"
                     }
+                },
+                {
+                    "second_na_can_svod": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['na_can_second_svod'] == 1 %}<p><strong>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights) - 5yrs 14%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.14\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 2 %}<p><strong>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights) - 7yrs 15%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 3 %}<p><strong>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights) - 10yrs 17%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.17\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['na_can_second_svod'] == 4 %}<p><strong>Second Window North America (US & Canada) – SvoD (including OTT SVOD Rights) - 15yrs 20%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.20\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    9
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+
+
+
+
+                {
+                    "row_only_svod": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['row_svod_only'] == 1 %}<p><strong>ROW SVOD only - 7-10yrs 2%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.02\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['row_svod_only'] == 2 %}<p><strong>ROW SVOD only - 7-15yrs 5%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    10
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+
+
+                {
+                    "pre_purch_svod": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "{% if deal_memo.project_record.project.settings['pre_purchased_svod'] == 'uk' %}<p><strong>SVOD Rights Pre-Purchased - UK 0.25%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.0025\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['pre_purchased_svod'] == 'us' %}<p><strong>SVOD Rights Pre-Purchased - UK 0.5%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.05\")).quantize(decimal.Decimal(\".01\")) }}</p>{% elif deal_memo.project_record.project.settings['pre_purchased_svod'] == 'row' %}<p><strong>SVOD Rights Pre-Purchased - ROW 0.25%</strong><br />\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.0025\")).quantize(decimal.Decimal(\".01\")) }}</p>{% endif %}"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.svod_pre_purchases": {
+                                "includes": [
+                                    11
+                                ]
+                            }
+                        },
+                        "widget_type": "jinja2"
+                    }
                 }
+
             ]
         }
     ],
