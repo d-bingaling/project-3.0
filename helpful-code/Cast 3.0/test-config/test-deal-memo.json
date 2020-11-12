@@ -160,6 +160,27 @@
                         "widget_type": "prt"
                     }
                 },
+                {
+                    "nominated_add_uses_info": {
+                        "acl": "only_internal",
+                        "args": {
+                            "hide_empty": true,
+                            "static": "Rest of World (ex UK and US) TV (Option A) - 35%"
+                        },
+                        "label": " ",
+                        "widget_type": "info"
+                    }
+                },
+                {
+                    "section_h_info": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<p><strong>Please note:</strong> The options for Nominated US TV Uses (Option B) have been removed for this production.</p>"
+                        },
+                        "label": "",
+                        "widget_type": "prt"
+                    }
+                },
 
                 {
                     "section_i": {
