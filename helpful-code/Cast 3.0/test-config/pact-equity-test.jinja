@@ -1173,12 +1173,15 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 	{% set showcase_prem_1 = decimal.Decimal("0") %}
 {% endif %}
 
-
+{% if "1_showcase_prem" in deal_memo.project_record.project.settings['showcase_premieres'] %}
 		{% if (engagement_fee_payment * showcase_prem_1).quantize(decimal.Decimal(".01")) < decimal.Decimal("50") %}
-            {% set showcase_1 = decimal.Decimal("50") %}
+            {% set showcase_1 = decimal.Decimal("50.00") %}
         {% else %}
             {% set showcase_1 = (engagement_fee_payment * showcase_prem_1).quantize(decimal.Decimal(".01")) %}
         {% endif %}
+{% else %}
+	{% set showcase_1 = zero %}
+{% endif %}
 
 {% set premiere_total = (showcase_1 + showcase_prem_3) %}
 
