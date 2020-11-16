@@ -314,6 +314,37 @@ table.section-j td {
 }
 
 
+/* Section M - Pensions */
+
+table.pension {
+    border: none;
+    width: 100%
+}
+
+table.pension td {
+    border: none;
+    padding: 5px;
+}
+
+table.pension td:first-child(1) {
+    border: none;
+    padding: 5px;
+    width: 35%
+}
+
+table.pension td:first-child(2) {
+    border: none;
+    padding: 5px;
+    width: 32.5%
+}
+
+table.pension td:first-child(3) {
+    border: none;
+    padding: 5px;
+    width: 32.5%
+}
+
+
 /* Frequently used CSS across all contract types */
 
 

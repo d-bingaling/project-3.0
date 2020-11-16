@@ -1128,7 +1128,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 			<td>Peak Time 55%</td>
 		{% if "peak_time" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}
 			<td>times £{{ engagement_fee_payment }}</td>
-			<td>(total Artist Earnings) = £{{ ( engagement_fee_payment * peak_time_percent).quantize(decimal.Decimal(".01")) }}</td>
+			<td>(total Artist Earnings) = <strong>£{{ ( engagement_fee_payment * peak_time_percent).quantize(decimal.Decimal(".01")) }}</strong></td>
 		{% else %}
 			<td>times £.....</td>
 			<td>(total Artist Earnings) = £.....</td>
@@ -1138,7 +1138,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 			<td>Day Time off Peak 27.5%</td>
 		{% if "day_time_op" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}
 			<td>times £{{ engagement_fee_payment }}</td>
-			<td>(total Artist Earnings) = £{{ ( engagement_fee_payment * day_time_percent).quantize(decimal.Decimal(".01")) }}</td>
+			<td>(total Artist Earnings) = <strong>£{{ ( engagement_fee_payment * day_time_percent).quantize(decimal.Decimal(".01")) }}</strong></td>
 		{% else %}
 			<td>times £.....</td>
 			<td>(total Artist Earnings) = £.....</td>
@@ -1148,7 +1148,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 			<td>Night Time off Peak 13.75%</td>
 		{% if "night_time_op" in deal_memo.project_record.project.settings['2nd_sub_uk_primary'] %}
 			<td>times £{{ engagement_fee_payment }}</td>
-			<td>(total Artist Earnings) = £{{ ( engagement_fee_payment * night_time_percent).quantize(decimal.Decimal(".01")) }}</td>
+			<td>(total Artist Earnings) = <strong>£{{ ( engagement_fee_payment * night_time_percent).quantize(decimal.Decimal(".01")) }}</strong></td>
 		{% else %}
 			<td>times £.....</td>
 			<td>(total Artist Earnings) = £.....</td>
@@ -1194,7 +1194,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
             <td>3 Showcase Premieres</td>
 			<td>25%</td>
         {% if "3_showcase_prem" in deal_memo.project_record.project.settings['showcase_premieres'] %}
-            <td>£{{ (engagement_fee_payment * showcase_prem_3).quantize(decimal.Decimal(".01")) }}</td>
+            <td><strong>£{{ (engagement_fee_payment * showcase_prem_3).quantize(decimal.Decimal(".01")) }}</strong></td>
         {% else %}
             <td>£.....</td>
         {% endif %}
@@ -1205,7 +1205,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
             <td>1 Showcase Premieres</td>
 			<td>10%</td>
         {% if "1_showcase_prem" in deal_memo.project_record.project.settings['showcase_premieres'] %}
-            <td>£{{ showcase_1 }} <i>[minimum £50]</i></td>
+            <td><strong>£{{ showcase_1 }}</strong> <i>[minimum £50]</i></td>
         {% else %}
             <td>£.....  <i>[minimum £50]</i></td>
         {% endif %}
@@ -1640,11 +1640,11 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 <p><strong>Section K</strong></p>
 
-<p>Total Guaranteed Minimum Payment (Section G+H+*I+*J) =     £ {{ 
-(engagement_fee_payment + option_b_total + second_sub_total + additional_uses_total + premiere_total + svod_pre_total + deal_memo.calculators.cast.rehearsal_fee(deal_memo) + (deal_memo.meta.get('cast_self_isolation_weeks_fee', zero)) * (deal_memo.meta.get('cast_self_isolation_weeks', zero))).quantize(decimal.Decimal(".01")) }}</p>
+<p>Total Guaranteed Minimum Payment (Section G+H+*I+*J) = <strong>£{{ 
+(engagement_fee_payment + option_b_total + second_sub_total + additional_uses_total + premiere_total + svod_pre_total + deal_memo.calculators.cast.rehearsal_fee(deal_memo) + (deal_memo.meta.get('cast_self_isolation_weeks_fee', zero)) * (deal_memo.meta.get('cast_self_isolation_weeks', zero))).quantize(decimal.Decimal(".01")) }}</strong></p>
 
 
-<p>    <i>[*I and J where applicable]</i></p>
+<p><i>[*I and J where applicable]</i></p>
 
 
 
@@ -1676,9 +1676,17 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 <p><strong>Section M Pensions</strong> <i>[see clause (T26)]</i></p>
 
-<p>Equity Personal Pension Scheme Number..............................................</p>
+<p>Equity Personal Pension Scheme Number {{ deal_memo.meta['equity_pension_no'] or 'No Equity Pension Scheme Number supplied.' }}</p>
 
-<p>Producer Contribution £....................  Artist’s contribution £....................  Total = £..................</p>
+<table class='pension'>
+	<tbody>
+		<tr>
+			<td>Producer Contribution {% if deal_memo.meta['equity_contributions_producer'] %}<strong>£{{ deal_memo.meta['equity_contributions_producer'] }}</strong>{% else %}£.....{% endif %}</td>
+			<td>Artist’s contribution {% if deal_memo.meta['equity_contributions_artist'] %}<strong>£{{ deal_memo.meta['equity_contributions_artist'] }}</strong>{% else %}£.....{% endif %}</td>
+			<td>Total = {% if deal_memo.meta['equity_contributions_producer'] and deal_memo.meta['equity_contributions_artist'] %}<strong>£{{ (deal_memo.meta.get('equity_contributions_producer', zero) + deal_memo.meta.get('equity_contributions_artist', zero)).quantize(decimal.Decimal(".01")) }}</strong>{% else %}£.....{% endif %}</td>
+		</tr>
+	</tbody>
+</table>
 
 
 
@@ -1760,7 +1768,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
     </div>
 
-    <p>12. Data Protection </p>
+    <p>12. <strong>Data Protection</strong></p>
 
 
     <p>12.1 The Producer shall process the Artist’s personal data in accordance with the General Data Protection Regulation EU 2016/679, the Data Protection Act 2018 and any other UK or EU laws and regulations relating to personal data and privacy as may be in force in the UK from time to time.</p>
@@ -1773,15 +1781,25 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
     <p>12.5 The Producer is required to maintain personal data that is accurate and may ask the Artist to update their personal data at any time. The Artist shall, in any event, inform the Producer as soon as reasonably practicable of any changes to their personal data.</p>
 
-    <p>12.6 The Artist has certain rights in respect of their personal data (such as access, rectification and portability) and further information about those rights and the processing of personal data by the Producer/ Company generally can be found by visiting the Producer ‘s data protection/privacy policy at: [insert URL] or can otherwise be obtained from the Producer/ Company upon reasonable written request.</p>
+    <p>12.6 The Artist has certain rights in respect of their personal data (such as access, rectification and portability) and further information about those rights and the processing of personal data by the Producer/ Company generally can be found by visiting the Producer ‘s data protection/privacy policy at: <a href="">[insert URL]</a> or can otherwise be obtained from the Producer/ Company upon reasonable written request.</p>
 
-    <p>13.  [Diamond Notice</p>
+    <p>13. 
+
+	{% if start_form.meta['project_diamond_declaration'] == 'yes' %}
+		
+		<strong>Diamond Notice</strong></p>
 
 
-    <p> UK broadcasters are researching diversity on their productions. This covers diversity characteristics you choose to tell the broadcasters about and also how viewers might perceive diversity on screen. If you provide the Company with your e-mail address they will enter this in a system called Silvermouse. You will be invited to provide, and may do so at your option, your diversity characteristics – gender, ethnicity, disability, age, gender identity and sexual orientation. The broadcaster, as data controller, is responsible for this data and will have access to reports compiled from it for purposes of the research. If you would prefer not to be involved in Diamond please let your production contact know within 7 days of the issue date of this contract. Further information can be found here: <a href="http://creativediversitynetwork.com/diamond-contributors/"><u>http://creativediversitynetwork.com/diamond-contributors/</u></a>.] </p>
+		<p>UK broadcasters are researching diversity on their productions. This covers diversity characteristics you choose to tell the broadcasters about and also how viewers might perceive diversity on screen. If you provide the Company with your e-mail address they will enter this in a system called Silvermouse. You will be invited to provide, and may do so at your option, your diversity characteristics – gender, ethnicity, disability, age, gender identity and sexual orientation. The broadcaster, as data controller, is responsible for this data and will have access to reports compiled from it for purposes of the research. If you would prefer not to be involved in Diamond please let your production contact know within 7 days of the issue date of this contract. Further information can be found here: <a href="https://creativediversitynetwork.com/diamond/diamond-faq/contributors/"><u>https://creativediversitynetwork.com/diamond/diamond-faq/contributors/.</u></a></p>
+
+	{% else %}
+
+		<p>Intentionally Deleted</p>
+
+	{% endif %}
 
 
-    <p>14.  Bribery </p>
+    <p>14. <strong>Bribery</strong></p>
 
 
     <p>14.1 You shall:</p>
@@ -1804,45 +1822,11 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 
 
-<p>SPECIAL STIPULATIONS - where appropriate must be specified on a separate sheet attached to this contract and initialled by both parties.</p>
+<p><strong>SPECIAL STIPULATIONS</strong> - where appropriate must be specified on a separate sheet attached to this contract and initialled by both parties.</p>
 
-<p><u></u><br/></p>
+<p><br /></p>
 
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p><u>SIGNATORIES:</u> </p>
+<p><u><strong>SIGNATORIES:</strong></u> </p>
 
 
 <p>Both parties to this contract recognise that the engagement includes all the foregoing, and is subject to the details above and overleaf and any special stipulations attached (where applicable) provided that such are initialled by both Parties.</p>
@@ -1851,16 +1835,84 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 <p>As WITNESS the hands of the Parties hereto the day and year first before written</p>
 
 
-<p>.....................................................  Producer </p>
+<table class="signature-block">
+    <tbody>
+        {% if deal_memo.meta.profile_type == 'service_company' %}
+            {% if deal_memo and deal_memo.meta['lender_signatory_email'] %}
+                <tr>
+                        <td>Artist:</td>
+                        <td>{{signature_block(user_email=deal_memo.lender_signatory_email, role="worker", routing_order=1, show_name=False, fullname='{} for and on behalf of {}'.format(deal_memo.meta.lender_signatory_name, deal_memo.meta.company_name))}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{ deal_memo.meta.lender_signatory_name }} for and on behalf of {{ deal_memo.meta['company_name'] or '<span class="warning">Missing information - Company name</span>' }}</td>
+                </tr>
+                <tr class="spacing">
+                </tr>
+                <tr>
+                        <td>Artist:</td>
+                        <td>{{signature_block(show_name=False, role="worker", routing_order=2)}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{ deal_memo.meta['firstname'] or '<span class="warning">[Missing information - First name]'}} {{ deal_memo.meta['lastname'] or '<span class="warning">[Missing information - Last name]</span>' }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                        <td>Artist:</td>
+                        <td>{{signature_block(show_name=False, role="worker", routing_order=2, fullname='{} {} for and on behalf of {}'.format(deal_memo.meta.firstname if deal_memo.meta.firstname else 'MISSING - First name', deal_memo.meta.lastname if deal_memo.meta.lastname else 'MISSING - Surname', deal_memo.meta.company_name ) )}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{ deal_memo.meta['firstname'] or '<span class="warning">[Missing information - First name]'}} {{ deal_memo.meta['lastname'] or '<span class="warning">[Missing information - Last name]</span>' }} for and on behalf of {{ deal_memo.meta['company_name'] or '<span class="warning">Missing information - Company name</span>' }} </td>
+                </tr>
+            {% endif %}
+
+        {% else %}
+                <tr>
+                        <td>Artist:</td>
+                        <td>{{signature_block(show_name=False, role="worker", routing_order=2)}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{ deal_memo.meta['firstname'] or '<span class="warning">[Missing information - First name]'}} {{ deal_memo.meta['lastname'] or '<span class="warning">[Missing information - Last name]</span>' }}</td>
+                </tr>
+        {% endif %}
+                <tr class="spacing">
+                </tr>
+        {% if deal_memo.meta.contract_signer == 'second_countersigner' %}
+
+                <tr>
+                        <td>{{ deal_memo.project_record.project.settings.get('second_countersigner_role') }}:</td>
+                        <td>{{signature_block(user_email=deal_memo.project_record.project.settings.get('second_countersigner_email'), show_name=False, role='producer', routing_order=3, fullname=deal_memo.project_record.project.settings.get('second_countersigner_name'))}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{deal_memo.project_record.project.settings.get('second_countersigner_name')}} ({{deal_memo.project_record.project.settings.get('second_countersigner_role')}}) for and on behalf of {{deal_memo.project_record.project.production_company.name}}</td>
+                </tr>              
+
+        {% else %}
+
+                <tr>
+                        <td>{{ deal_memo.project_record.project.settings.get('default_countersigner_role') }}:</td>
+                        <td>{{signature_block(user_email=deal_memo.project_record.project.settings.get('default_countersigner_email'), show_name=False, role='producer', routing_order=3, fullname=deal_memo.project_record.project.settings.get('default_countersigner_name'))}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{deal_memo.project_record.project.settings.get('default_countersigner_name')}} ({{deal_memo.project_record.project.settings.get('default_countersigner_role')}}) for and on behalf of {{deal_memo.project_record.project.production_company.name}}</td>
+                </tr>
+
+        {% endif %}
+    </tbody>
+</table>
+
+<br />
 
 
-<p>............................................................ Artist   </p>
+<p>VAT No (if applicable){% if deal_memo.meta['vat_regno'] != null %}{{ deal_memo.meta['vat_regno'] }}{% else %}......{% endif %}</p>
 
 
-<p>VAT No (if applicable) .............................</p>
-
-
-<p>N. I. Number ..................................................</p>
+<p>N. I. Number {% if deal_memo.meta['nino'] != null %}{{ deal_memo.meta['nino'] }}{% else %}.....{% endif %}</p>
 
 
 <p>Please sign and return the duplicate of this Standard Form of Engagement to the Production Company</p>
@@ -1871,87 +1923,11 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 
 
-<p></p>
-
-<p>IMPORTANT GUIDANCE NOTES FOR PRODUCERS</p>
 
 
 
-<p>WORKING TIME REGULATIONS – SPECIAL STIPULATION</p>
-
-<p><u></u><br/></p>
-
-<p><u></u><br/></p>
-
-<p>The terms of the PACT/Equity agreement allow for the possibility of working hours in excess of 48 per week, so it is essential that you add the following special stipulation to the Form of Engagement;</p>
 
 
-
-<p>‘The Artist agrees that he/she will work such hours as are necessary to fulfil his/her obligations under this agreement, and accepts that this may involve working an average of more than 48 hours per week. The Artist agrees that the maximum weekly working time specified in Regulation 4 of The Working Time Regulations 1998 (‘The Regulations’) shall not apply to this contract. This clause shall constitute an agreement in writing for the purposes of Regulation 5 of the Regulations. If the Artist wishes to terminate the agreement contained in this clause he must give the Producer three months’ notice in writing.’</p>
-
-
-<p>SECTION F</p>
-
-
-<p><i>Note (a)</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>The Artist shall be paid an Engagement Fee for the first day worked in each consecutive seven day period.  See Clause T8(1) of the Agreement.</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>Examples:</i></p>
-
-<p><i>1 Artist is engaged to work for 6 days in both weeks 1 and 2.  That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p>
-
-<p><i>2 Artist works for 2 days in both weeks 1 and 5.  That represents two consecutive seven day periods (even though they are separated by several weeks), and two Engagement Fees are payable.</i></p>
-
-<p><i>3 Artist works for 2 days in both weeks 1 and 2.  That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p>
-
-<p><i>4 Artist works from Wednesday in week 1 to Monday in week 2.  Even though that crosses from one calendar week to another, it still represents one consecutive seven day period, and one Engagement Fee is payable.</i></p>
-
-<p><i>5 Artist works from Wednesday in week 1 to Friday in week 2. That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>NB If you re-engage an Artist, an engagement fee or fees will be payable even if the new engagement falls within the same consecutive seven day period as a previous engagement.</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>Note (b)</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>UK Network Production</i></p>
-
-<p><i>For Category A productions the Artist shall be guaranteed their Engagement Fee per episode, segment or instalment into which their performance is incorporated.  Therefore, if the number of episodes into which their performance is incorporated is greater than the number of consecutive seven day periods for which they are engaged, then you will need to pay additional Engagement Fees to bring them up to the total number of episodes.</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>Category A programmes are: adult and children’s productions in the following categories:- drama productions, series and serials - including "soaps", situation comedy, light entertainment productions, broken comedy, fully dramatised documentary and schools/adult education productions documentary and schools/adult education productions that contain a significant drama element. All other productions are Category B.</i></p>
-
-<p><i>Note (c)</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>For Category B productions, the aggregate of the Artist's engagement fee(s) shall not amount to less than £144.00 per episode, segment or installment.</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>ITV Regional Production </i></p>
-
-<p><i>The aggregate of the Artist's engagement fee(s) shall not amount to less than £129.00 per episode, segment or installment.</i></p>
-
-<p><u><i></i></u><br/></p>
-
-<p><i>Note (d)</i></p>
-
-<p><i></i><br/></p>
-
-<p><i>If you are unsure how many episodes will include the Artist’s performance, insert the same answer in (i) as for (ii).  At the end of the production you will need to provide the Artist with a statement showing their total earnings and any pension contributions.  If the Artist appears in a greater number of episodes than originally set out in this form of Engagement, the Producer will need to pay an additional multi-episodic engagement fee for each additional episode (see note (b) unless otherwise provided for in another contract.</i></p>
-
-<p><u></u><br/></p>
 
 
 <p><u>MORAL RIGHTS WAIVER</u></p>
