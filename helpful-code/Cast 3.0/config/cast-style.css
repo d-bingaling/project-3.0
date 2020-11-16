@@ -134,6 +134,39 @@ table.section-d td:first-child {
 }
 
 
+/* Section E - Engagement */
+
+table.eng-table {
+    border: none;
+    width: 100%;
+}
+
+table.eng-table tr {
+    border: none;
+}
+
+table.eng-table td {
+    border: none;
+    padding: 5px;
+}
+
+table.eng-table td:first-child {
+    width: 10%;
+}
+
+table.eng-table td:nth-child(2) {
+    width: 22.5%;
+}
+
+table.eng-table td:nth-child(3) {
+    width: 22.5%;
+}
+
+table.eng-table td:nth-child(4) {
+    width: 22.5%;
+}
+
+
 /* Section F */
 
 table.section-f {
@@ -178,11 +211,11 @@ table.prem td:first-child {
 }
 
 table.prem td:nth-child(2) {
-    width: 25%
+    width: 20%
 }
 
 table.prem td:nth-child(3) {
-    width: 25%
+    width: 30%
 }
 
 table.prem {
@@ -250,11 +283,11 @@ table.ops td {
 }
 
 table.ops td:first-child {
-    width: 50%
+    width: 40%
 }
 
 table.ops td:nth-child(2) {
-    width: 10%
+    width: 15%
 }
 
 table.ops td:nth-child(3) {
@@ -262,7 +295,22 @@ table.ops td:nth-child(3) {
 }
 
 table.ops td:nth-child(4) {
-    width: 10%
+    width: 15%
+}
+
+
+/* Section J - Rehearsal Period */
+
+table.section-j {
+    border: none;
+    width: 100%
+}
+
+table.section-j td {
+    border: none;
+    padding: 5px;
+    vertical-align: text-top;
+    width: 25%
 }
 
 

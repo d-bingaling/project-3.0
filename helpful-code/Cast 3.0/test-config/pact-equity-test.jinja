@@ -577,7 +577,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 	<p>The Producer shall have first call on the Artist's services for a period beginning on the first day on which the Artist shall, following a call from the Producer, attend to render services in the filming/recording of the Artist's part for the following nominated and/or unspecified period(s) in accordance with the provisions of Clause (T8)1 and 2:</p>
 
-	<table>
+	<table class='eng-table'>
 		<tbody>
 			<tr>
 				<td></td>
@@ -1459,7 +1459,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 <p>The Artist shall be required to render services for rehearsal of their part prior to their first day of principal photography specified in Section E.</p>
 
 
-<table class="table_j">
+<table class='section-j'>
 	<tbody>
 		<tr>
 			<td>Rehearsal Period</td>
@@ -1482,21 +1482,13 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 				<td>
 					To: <strong>{% if deal_memo.meta['cast_rehearsal_end_date_2'] %}{{ date('cast_rehearsal_end_date_2') }}{% else %} - {% endif %}</strong>
 				</td>
-				<td>
-				</td>
 			</tr>
 		{% endif %}
-		<tr>
-			<td colspan="4">&nbsp;</td>
-		</tr>
 		<tr>
 			<td>Rehearsal Fee(s) </td>
 			<td colspan="3">
 				<strong>£{{ deal_memo.meta.get('cast_rehearsal_weeks_fee', zero).quantize(decimal.Decimal(".01")) }}</strong>{% if deal_memo.meta['cast_rehearsal_days_weeks'] == 'days' %} per day{% else %} per week{% endif %}
 			</td>
-		</tr>
-		<tr>
-			<td colspan="4">&nbsp;</td>
 		</tr>
 		<tr>
 			<td>Total Rehearsal payments</td>
@@ -1512,7 +1504,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 
 {% if deal_memo.meta['self_iso_period'] != null %}
-	<table class="table_j">
+	<table class="section-j">
 		<tbody>
 			<tr>
 				<td>Isolation Period</td>
@@ -1585,16 +1577,10 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 			{% endif %}
 			</tr>
 			<tr>
-				<td colspan="4">&nbsp;</td>
-			</tr>
-			<tr>
 				<td>Isolation Fee(s) </td>
 				<td colspan="3">
 					<strong>£{{ deal_memo.meta.get('cast_self_isolation_weeks_fee', zero).quantize(decimal.Decimal(".01")) }}</strong>{% if deal_memo.meta['cast_self_isolation_days_weeks'] == 'days' %} per day{% else %} per week{% endif %}
 				</td>
-			</tr>
-			<tr>
-				<td colspan="4">&nbsp;</td>
 			</tr>
 			<tr>
 				<td>Total Isolation payments</td>
@@ -1610,7 +1596,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 
 {% else %}
 
-		<table class="table_j">
+		<table class="section-j">
 		<tbody>
 			<tr>
 				<td>Isolation Period</td>
@@ -1631,16 +1617,10 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 				</td>
 			</tr>
 			<tr>
-				<td colspan="4">&nbsp;</td>
-			</tr>
-			<tr>
 				<td>Isolation Fee(s) </td>
 				<td colspan="3">
 					<strong>£.........</strong> per week 
 				</td>
-			</tr>
-			<tr>
-				<td colspan="4">&nbsp;</td>
 			</tr>
 			<tr>
 				<td>Total Isolation payments</td>

@@ -465,9 +465,6 @@
                             "dynamic": true
                         },
                         "label": "Agency name",
-                        "read_condition": {
-                            "meta.agent_toggle": "agent_yes"
-                        },
                         "widget_type": "string"
                     }
                 },
