@@ -2008,109 +2008,26 @@
                     }
                 },
                 {
+                    "option_b_title": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<p><strong>(b) Nominated US TV Uses</strong></p>"
+                        },
+                        "label": "",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": "option_b"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
                     "option_b1": {
                         "acl": "only_internal",
                         "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.75\")).quantize(decimal.Decimal(\".01\")) }}"
+                            "template": "<p>This pre-purchase will be applied to the Uses ticked below:</p><table style=\"width: 60%\"><tbody>{% if 1 in deal_memo.project_record.project.settings.option_b_percentages %}<tr><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 30%\"><p>1st USA Prime Time Network TX</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\"><p>75%</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\">&#10004;</td></tr>{% endif %}{% if 2 in deal_memo.project_record.project.settings.option_b_percentages %}<tr><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 30%\"><p>1st USA non PrimeTime Network TX</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\"><p>35%</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\">&#10004;</td></tr>{% endif %}{% if 3 in deal_memo.project_record.project.settings.option_b_percentages %}<tr><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 30%\"><p>USA PBS Network</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\"><p>15%</p></td><td style=\"vertical-align: baseline;  border: 1px solid black; padding:5px; width: 15%\">&#10004;</td></tr>{% endif %}{% if 4 in deal_memo.project_record.project.settings.option_b_percentages %}<tr><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 30%\"><p>USA Full Syndication</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\"><p>25%</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\">&#10004;</td></tr>{% endif %}{% if 5 in deal_memo.project_record.project.settings.option_b_percentages %}<tr><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 30%\"><p>USA Basic Cable</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\"><p>10%</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\">&#10004;</td></tr>{% endif %}{% if 6 in deal_memo.project_record.project.settings.option_b_percentages %}<tr><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 30%\"><p>USA Major Pay</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\"><p>30%</p></td><td style=\"vertical-align: baseline; border: 1px solid black; padding:5px; width: 15%\">&#10004;</td></tr>{% endif %}</tbody></table>"
                         },
-                        "label": "1st USA Prime Time Network TX - 75%",
                         "read_condition": {
-                            "project_record.project.settings.options_a_and_b": "option_b",
-                            "project_record.project.settings.option_b_percentages": {
-                                "includes": [
-                                    1
-                                ]
-                            }
-                        },
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "option_b2": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "1st USA non PrimeTime Network TX - 35%",
-                        "read_condition": {
-                            "project_record.project.settings.options_a_and_b": "option_b",
-                            "project_record.project.settings.option_b_percentages": {
-                                "includes": [
-                                    2
-                                ]
-                            }
-                        },
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "option_b3": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.15\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "USA PBS Network - 15%",
-                        "read_condition": {
-                            "project_record.project.settings.options_a_and_b": "option_b",
-                            "project_record.project.settings.option_b_percentages": {
-                                "includes": [
-                                    3
-                                ]
-                            }
-                        },
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "option_b4": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.25\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "USA Full Syndication - 25%",
-                        "read_condition": {
-                            "project_record.project.settings.options_a_and_b": "option_b",
-                            "project_record.project.settings.option_b_percentages": {
-                                "includes": [
-                                    4
-                                ]
-                            }
-                        },
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "option_b5": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.10\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "USA Basic Cable - 10%",
-                        "read_condition": {
-                            "project_record.project.settings.options_a_and_b": "option_b",
-                            "project_record.project.settings.option_b_percentages": {
-                                "includes": [
-                                    5
-                                ]
-                            }
-                        },
-                        "widget_type": "jinja2"
-                    }
-                },
-                {
-                    "option_65": {
-                        "acl": "only_internal",
-                        "args": {
-                            "template": "\u00a3{{ (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.30\")).quantize(decimal.Decimal(\".01\")) }}"
-                        },
-                        "label": "USA Major Pay - 30%",
-                        "read_condition": {
-                            "project_record.project.settings.options_a_and_b": "option_b",
-                            "project_record.project.settings.option_b_percentages": {
-                                "includes": [
-                                    6
-                                ]
-                            }
+                            "project_record.project.settings.options_a_and_b": "option_b"
                         },
                         "widget_type": "jinja2"
                     }

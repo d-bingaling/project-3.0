@@ -1889,7 +1889,18 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
                 <tr>
                         <td></td>
                         <td>{{deal_memo.project_record.project.settings.get('second_countersigner_name')}} ({{deal_memo.project_record.project.settings.get('second_countersigner_role')}}) for and on behalf of {{deal_memo.project_record.project.production_company.name}}</td>
-                </tr>              
+                </tr>
+
+		{% elif deal_memo.meta.contract_signer == 'third_countersigner' %}
+
+				<tr>
+                        <td>{{ deal_memo.project_record.project.settings.get('third_countersigner_role') }}:</td>
+                        <td>{{signature_block(user_email=deal_memo.project_record.project.settings.get('third_countersigner_email'), show_name=False, role='producer', routing_order=3, fullname=deal_memo.project_record.project.settings.get('third_countersigner_name'))}}</td>
+                </tr>
+                <tr>
+                        <td></td>
+                        <td>{{deal_memo.project_record.project.settings.get('third_countersigner_name')}} ({{deal_memo.project_record.project.settings.get('third_countersigner_role')}}) for and on behalf of {{deal_memo.project_record.project.production_company.name}}</td>
+                </tr>		              
 
         {% else %}
 
@@ -1918,15 +1929,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 <p>Please sign and return the duplicate of this Standard Form of Engagement to the Production Company</p>
 
 
-
-
-
-
-
-
-
-
-
+<br />
 
 
 
