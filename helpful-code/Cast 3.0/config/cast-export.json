@@ -1,0 +1,829 @@
+{
+    "template": [{
+            "profile_type": {
+                "args": {
+                    "dynamic": true,
+                    "options": [
+                        [
+                            "employee",
+                            "Employee"
+                        ],
+                        [
+                            "service_company",
+                            "Loan-out company"
+                        ],
+                        [
+                            "sole_trader",
+                            "Self-employed / Schedule D"
+                        ]
+                    ]
+                },
+                "context": "deal_memo",
+                "label": "Engagement",
+                "widget_type": "enum"
+            }
+        },
+        {
+            "firstname": {
+                "context": "deal_memo",
+                "label": "Forenames"
+            }
+        },
+        {
+            "lastname": {
+                "context": "deal_memo",
+                "label": "Surname"
+            }
+        },
+        {
+            "crew_phone": {
+                "context": "deal_memo",
+                "label": "Cast Mobile"
+            }
+        },
+        {
+            "email": {
+                "context": "deal_memo",
+                "label": "Email"
+            }
+        },
+        {
+            "email_payslip": {
+                "context": "deal_memo",
+                "label": "Email (payslip)"
+            }
+        },
+        {
+            "email_pension": {
+                "context": "deal_memo",
+                "label": "Email (pension)"
+            }
+        },
+        {
+            "dob": {
+                "context": "start_form",
+                "label": "Date of birth"
+            }
+        },
+        {
+            "address": {
+                "context": "deal_memo",
+                "label": "Address"
+            }
+        },
+        {
+            "postcode": {
+                "context": "deal_memo",
+                "label": "Postcode"
+            }
+        },
+        {
+            "address_county": {
+                "context": "deal_memo",
+                "label": "County"
+            }
+        },
+        {
+            "department_name": {
+                "context": "deal_memo",
+                "label": "Department"
+            }
+        },
+        {
+            "grade": {
+                "context": "deal_memo",
+                "label": "Grade"
+            }
+        },
+        {
+            "title": {
+                "args": {
+                    "dynamic": true,
+                    "options": [
+                        [
+                            "mr",
+                            "Mr"
+                        ],
+                        [
+                            "mrs",
+                            "Mrs"
+                        ],
+                        [
+                            "ms",
+                            "Ms"
+                        ],
+                        [
+                            "miss",
+                            "Miss"
+                        ]
+                    ]
+                },
+                "context": "start_form",
+                "label": "Title",
+                "widget_type": "enum"
+            }
+        },
+
+        {
+            "gender": {
+                "context": "start_form",
+                "label": "Gender"
+            }
+        },
+        {
+            "nationality_id": {
+                "args": {
+                    "dynamic": true,
+                    "link_id": "nationality_id",
+                    "link_table": "Nationality"
+                },
+                "context": "start_form",
+                "label": "Nationality",
+                "widget_type": "link"
+            }
+        },
+        {
+            "company_name": {
+                "context": "deal_memo",
+                "label": "Lender Company name"
+            }
+        },
+        {
+            "company_reg_office": {
+                "context": "deal_memo",
+                "label": "Lender address 1"
+            }
+        },
+        {
+            "company_jurisdiction": {
+                "context": "deal_memo",
+                "label": "Lender company jurisdiction"
+            }
+        },
+        {
+            "company_regno": {
+                "context": "deal_memo",
+                "label": "Lender Company reg no"
+            }
+        },
+        {
+            "character_name": {
+                "context": "deal_memo",
+                "label": "Character Name"
+            }
+        },
+        {
+            "character_number": {
+                "context": "deal_memo",
+                "label": "Character Number"
+            }
+        },
+        {
+            "nino": {
+                "context": "start_form",
+                "label": "NI number"
+            }
+        },
+        {
+            "vat_regno": {
+                "context": "start_form",
+                "label": "VAT number"
+            }
+        },
+
+        {
+            "agency_name": {
+                "context": "deal_memo",
+                "label": "Agency name"
+            }
+        },
+        {
+            "agent_name": {
+                "context": "deal_memo",
+                "label": "Agent"
+            }
+        },
+        {
+            "agent_address": {
+                "context": "deal_memo",
+                "label": "Agent address"
+            }
+        },
+        {
+            "agent_email": {
+                "context": "deal_memo",
+                "label": "Agent email"
+            }
+        },
+        {
+            "agent_phone": {
+                "context": "deal_memo",
+                "label": "Agent phone"
+            }
+        },
+        {
+            "bank_name": {
+                "context": "start_form",
+                "label": "Bank name"
+            }
+        },
+        {
+            "account_holder": {
+                "context": "start_form",
+                "label": "Account holder"
+            }
+        },
+        {
+            "account_no": {
+                "context": "start_form",
+                "label": "Account no"
+            }
+        },
+        {
+            "sort_code": {
+                "context": "start_form",
+                "label": "Sort code"
+            }
+        },
+        {
+            "iban_no": {
+                "context": "start_form",
+                "label": "IBAN no"
+            }
+        },
+        {
+            "swift_code": {
+                "context": "start_form",
+                "label": "SWIFT code"
+            }
+        },
+        {
+            "bank_name_a": {
+                "context": "start_form",
+                "label": "Bank name"
+            }
+        },
+        {
+            "account_holder_a": {
+                "context": "start_form",
+                "label": "Account holder"
+            }
+        },
+        {
+            "account_no_a": {
+                "context": "start_form",
+                "label": "Account no"
+            }
+        },
+        {
+            "sort_code_a": {
+                "context": "start_form",
+                "label": "Sort code"
+            }
+        },
+        {
+            "iban_no_a": {
+                "context": "start_form",
+                "label": "IBAN no"
+            }
+        },
+        {
+            "swift_code_a": {
+                "context": "start_form",
+                "label": "SWIFT code"
+            }
+        },
+        {
+            "agent_bank_name": {
+                "context": "start_form",
+                "label": "Agent bank name"
+            }
+        },
+        {
+            "agent_account_holder": {
+                "context": "start_form",
+                "label": "Agent account holder"
+            }
+        },
+        {
+            "agent_account_no": {
+                "context": "start_form",
+                "label": "Agent account no"
+            }
+        },
+        {
+            "agent_sort_code": {
+                "context": "start_form",
+                "label": "Agent sort code"
+            }
+        },
+        {
+            "agent_iban_no": {
+                "context": "start_form",
+                "label": "Agent IBAN no"
+            }
+        },
+        {
+            "agent_swift_code": {
+                "context": "start_form",
+                "label": "Agent SWIFT code"
+            }
+        },
+        {
+            "engagement_notes": {
+                "context": "deal_memo",
+                "label": "Other payments - notes"
+            }
+        },
+        {
+            "start_date": {
+                "context": "deal_memo",
+                "label": "Start date"
+            }
+        },
+        {
+            "leaving_date": {
+                "context": "deal_memo",
+                "label": "End date"
+            }
+        },
+        {
+            "engagement_period": {
+                "acl": "deal_memo",
+                "args": {
+                    "dynamic": true,
+                    "nullable": true,
+                    "options": [
+                        [
+                            "clause_t8_1_and_2",
+                            "First call (Clause T8 1 and 2)"
+                        ],
+                        [
+                            "clause_t8_3",
+                            "Eight weeks or more continuous (Clause T8 3)"
+                        ],
+                        [
+                            "clause_t8_4",
+                            "One day network engagement (Clause T8 4)"
+                        ]
+                    ]
+                },
+                "label": "Engagement period",
+                "context": "deal_memo",
+                "widget_type": "enum"
+            }
+        },
+        {
+            "number_engagement_period": {
+                "acl": "only_internal",
+                "args": {
+                    "dynamic": true,
+                    "nullable": false,
+                    "options": [
+                        [
+                            1,
+                            "1"
+                        ],
+                        [
+                            2,
+                            "2"
+                        ],
+                        [
+                            3,
+                            "3"
+                        ],
+                        [
+                            4,
+                            "4"
+                        ],
+                        [
+                            5,
+                            "5"
+                        ],
+                        [
+                            6,
+                            "6"
+                        ],
+                        [
+                            7,
+                            "7"
+                        ],
+                        [
+                            8,
+                            "8"
+                        ],
+                        [
+                            9,
+                            "9"
+                        ],
+                        [
+                            10,
+                            "10"
+                        ]
+                    ]
+                },
+                "label": "Number of engagement periods",
+                "context": "deal_memo",
+                "widget_type": "enum"
+            }
+        },
+        {
+            "engagement_period_1_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period i - Days"
+            }
+        },
+        {
+            "engagement_period_2_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period ii - Days"
+            }
+        },
+        {
+            "engagement_period_3_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period iii - Days"
+            }
+        },
+        {
+            "engagement_period_4_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period iv - Days"
+            }
+        },
+        {
+            "engagement_period_5_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period v - Days"
+            }
+        },
+        {
+            "engagement_period_6_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period vi - Days"
+            }
+        },
+        {
+            "engagement_period_7_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period vii - Days"
+            }
+        },
+        {
+            "engagement_period_8_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period viii - Days"
+            }
+        },
+        {
+            "engagement_period_9_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period ix - Days"
+            }
+        },
+        {
+            "engagement_period_10_days": {
+                "context": "deal_memo",
+                "label": "Engagement Period x - Days"
+            }
+        },
+        {
+            "guaranteed_day_fees": {
+                "context": "deal_memo",
+                "label": "Number of engagement day fees"
+            }
+        },
+        {
+            "guaranteed_production_days": {
+                "context": "deal_memo",
+                "label": "Number of production days"
+            }
+        },
+        {
+            "number_of_episodes": {
+                "context": "deal_memo",
+                "label": "Number of episodes"
+            }
+        },
+        {
+            "number_engagement_fees": {
+                "context": "deal_memo",
+                "label": "Number of Engagement Fees payable"
+            }
+        },
+        {
+            "additional_multi_episodic": {
+                "context": "deal_memo",
+                "label": "Additonal Multi-episodic Engagement Fees payable"
+            }
+        },
+        {
+            "engagement_fee": {
+                "context": "deal_memo",
+                "label": "Engagement Fee"
+            }
+        },
+        {
+            "production_day_payments": {
+                "context": "deal_memo",
+                "label": "Number of production day payments"
+            }
+        },
+        {
+            "engagement_production_total_jinja": {
+                "context": "deal_memo",
+                "format": "numeric",
+                "label": "Total of engagement and production fees",
+                "widget_type": "jinja2"
+            }
+        },
+        {
+            "cast_rehearsal_weeks": {
+                "context": "deal_memo",
+                "label": "Rehearsal Weeks"
+            }
+        },
+        {
+            "cast_rehearsal_weeks_fee": {
+                "context": "deal_memo",
+                "label": "Weekly Rehearsal Fee"
+            }
+        },
+        {
+            "cast_rehearsal_days": {
+                "context": "deal_memo",
+                "label": "Rehearsal Days"
+            }
+        },
+        {
+            "cast_rehearsal_day_fee": {
+                "context": "deal_memo",
+                "label": "Daily Rehearsal Fee"
+            }
+        },
+        {
+            "rehearsal_total": {
+                "context": "deal_memo",
+                "format": "numeric",
+                "label": "Total rehearsal fee",
+                "widget_type": "jinja2"
+            }
+        },
+        {
+            "cast_self_isolation_toggle": {
+                "acl": "only_internal",
+                "args": {
+                    "dynamic": true,
+                    "nullable": true,
+                    "options": [
+                        [
+                            "yes",
+                            "Yes"
+                        ],
+                        [
+                            "no",
+                            "No"
+                        ]
+                    ]
+                },
+                "context": "deal_memo",
+                "label": "Do you wish to add a Pre-filming self-isolation period?",
+                "widget_type": "enum"
+            }
+        },
+        {
+            "self_iso_period": {
+                "acl": "only_internal",
+                "args": {
+                    "dynamic": true,
+                    "nullable": false,
+                    "options": [
+                        [
+                            1,
+                            "One"
+                        ],
+                        [
+                            2,
+                            "Two"
+                        ],
+                        [
+                            3,
+                            "Three"
+                        ],
+                        [
+                            4,
+                            "Four"
+                        ],
+                        [
+                            5,
+                            "Five"
+                        ]
+                    ]
+                },
+                "context": "deal_memo",
+                "label": "Total number of pre-filming self-isolation dates",
+                "widget_type": "enum"
+            }
+        },
+        {
+            "cast_self_isolation_weeks": {
+                "context": "deal_memo",
+                "label": "Pre-filming self-isolation weeks"
+            }
+        },
+        {
+            "cast_self_isolation_weeks_fee": {
+                "context": "deal_memo",
+                "label": "Weekly pre-filming self-isolation fee"
+            }
+        },
+        {
+            "cast_self_isolation_days": {
+                "context": "deal_memo",
+                "label": "Pre-filming self-isolation days"
+            }
+        },
+        {
+            "cast_self_isolation_day_fee": {
+                "context": "deal_memo",
+                "label": "Daily pre-filming self-isolation fee"
+            }
+        },
+        {
+            "self_isolation_total": {
+                "context": "deal_memo",
+                "format": "numeric",
+                "label": "Total pre-filming self-isolation fee",
+                "widget_type": "jinja2"
+            }
+        },
+        {
+            "additional_nominal_sum": {
+                "context": "deal_memo",
+                "label": "Additional nominal sum"
+            }
+        },
+        {
+            "total_guaranteed_minimum": {
+                "context": "deal_memo",
+                "format": "numeric",
+                "label": "Total guaranteed minimum payment",
+                "widget_type": "jinja2"
+            }
+        },
+        {
+            "equity_pension_no": {
+                "context": "deal_memo",
+                "label": "Equity Personal Pension Scheme No."
+            }
+        },
+        {
+            "equity_contributions_producer": {
+                "context": "deal_memo",
+                "label": "Producer's Contribution"
+            }
+        },
+        {
+            "equity_contributions_artist": {
+                "context": "deal_memo",
+                "label": "Artist's Contribution"
+            }
+        },
+        {
+            "pension_total": {
+                "context": "deal_memo",
+                "format": "numeric",
+                "label": "Total pension fee",
+                "widget_type": "jinja2"
+            }
+        },
+        {
+            "pension_include": {
+                "args": {
+                    "dynamic": true,
+                    "map": {
+                        "False": "No",
+                        "True": "Yes"
+                    }
+                },
+                "context": "deal_memo",
+                "label": "Pension include",
+                "widget_type": "toggle"
+            }
+        },
+        {
+            "pension_reason": {
+                "context": "deal_memo",
+                "label": "Pension reason"
+            }
+        },
+        {
+            "uk_hmrc_ni_category": {
+                "context": "deal_memo",
+                "label": "NI category"
+            }
+        },
+        {
+            "uk_hmrc_p45_leaving_date": {
+                "context": "deal_memo",
+                "label": "P45 leaving date"
+            }
+        },
+        {
+            "uk_hmrc_p45_total_tax_to_date": {
+                "context": "deal_memo",
+                "label": "P45 total tax to date"
+            }
+        },
+        {
+            "uk_hmrc_total_pay_to_date": {
+                "context": "deal_memo",
+                "label": "P45 total pay to date"
+            }
+        },
+        {
+            "weekly_rate_code": {
+                "context": "deal_memo",
+                "label": "Weekly rate code"
+            }
+        },
+        {
+            "holiday_pay_code": {
+                "context": "deal_memo",
+                "label": "Holiday pay code"
+            }
+        },
+        {
+            "daily_rate_code": {
+                "context": "deal_memo",
+                "label": "Daily rate code"
+            }
+        },
+        {
+            "box_rental_code": {
+                "context": "deal_memo",
+                "label": "Box rental code"
+            }
+        },
+        {
+            "car_code": {
+                "context": "deal_memo",
+                "label": "Car code"
+            }
+        },
+        {
+            "computer_code": {
+                "context": "deal_memo",
+                "label": "Computer code"
+            }
+        },
+        {
+            "phone_allow_code": {
+                "context": "deal_memo",
+                "label": "Phone allowance code"
+            }
+        },
+        {
+            "student_loan_code": {
+                "context": "deal_memo",
+                "label": "Student loan code"
+            }
+        },
+        {
+            "other_code": {
+                "context": "deal_memo",
+                "label": "Other code"
+            }
+        },
+        {
+            "errs_fringes": {
+                "context": "deal_memo",
+                "label": "Errs/Fringes"
+            }
+        },
+        {
+            "pension_code": {
+                "context": "deal_memo",
+                "label": "Pension code"
+            }
+        },
+        {
+            "overtime_code": {
+                "context": "deal_memo",
+                "label": "Overtime code"
+            }
+        },
+        {
+            "nationality_region_flag": {
+                "context": "deal_memo",
+                "label": "Nationality / Region flag"
+            }
+        },
+        {
+            "allowances_description": {
+                "context": "deal_memo",
+                "label": "Allowances"
+            }
+        }
+    ]
+}
