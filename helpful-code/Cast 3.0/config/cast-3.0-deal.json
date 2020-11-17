@@ -73,7 +73,7 @@
                 },
                 {
                     "hr": {
-                        "acl": "default",
+                        "acl": "only_internal",
                         "args": {
                             "document": "<hr />"
                         },
@@ -107,9 +107,65 @@
                 },
                 {
                     "hr": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "guidance_notes_toggle": {
+                        "acl": "only_internal",
+                        "args": {
+                            "dynamic": true,
+                            "nullable": true,
+                            "options": [
+                                [
+                                    "hide_guidance",
+                                    "Hide guidance notes"
+                                ],
+                                [
+                                    "show_guidance",
+                                    "Show guidance notes"
+                                ]
+                            ],
+                            "show_comments": true
+                        },
+                        "label": "Show guidance notes",
+                        "widget_type": "enum"
+                    }
+                },
+
+                {
+                    "hr": {
                         "acl": "default",
                         "args": {
                             "document": "<hr />"
+                        },
+                        "widget_type": "prt"
+                    }
+                },
+                {
+                    "guidance_notes": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "<p style=\"text-transform: uppercase;\"><strong>important guidance notes for producers</strong></p><p style=\"text-transform: uppercase;\"><strong>working time regulations - special stipulation</strong></p><p>The terms of the PACT/Equity agreement allow for the possibility of working hours in excess of 48 per week, so <strong>it is essential that you add the following special stipulation to the Form of Engagement;</strong></p><p>'The Artist agrees that he/she will work such hours as are necessary to fulfil his/her obligations under this agreement, and accepts that this may involve working an average of more than 48 hours per week. The Artist agrees that the maximum weekly working time specified in Regulation 4 of The Working Time Regulations 1998 ('The Regulations') shall not apply to this contract. This clause shall constitute an agreement in writing for the purposes of Regulation 5 of the Regulations. If the Artist wishes to terminate the agreement contained in this clause he must give the Producer three months' notice in writing.'</p><p><strong>SECTION F</strong></p><table style=\"width: 100%\"><tbody><tr><td style=\"border: 1px solid black; padding:7px\"><p><i>Note (a)</i></p><p><i>The Artist shall be paid an Engagement Fee for the first day worked in each consecutive seven day period. See Clause T8(1) of the Agreement.</i></p><p><i>Examples:</i></p><div style=\"margin: 10px;\"><p><i>1 Artist is engaged to work for 6 days in both weeks 1 and 2.  That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p><p><i>2 Artist works for 2 days in both weeks 1 and 5.  That represents two consecutive seven day periods (even though they are separated by several weeks), and two Engagement Fees are payable.</i></p><p><i>3 Artist works for 2 days in both weeks 1 and 2. That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p><p><i>4 Artist works from Wednesday in week 1 to Monday in week 2.  Even though that crosses from one calendar week to another, it still represents one consecutive seven day period, and one Engagement Fee is payable.</i></p><p><i>5 Artist works from Wednesday in week 1 to Friday in week 2. That represents two consecutive seven day periods, and two Engagement Fees are payable.</i></p></div><p><i>NB If you re-engage an Artist, an engagement fee or fees will be payable even if the new engagement falls within the same consecutive seven day period as a previous engagement.</i></p></td></tr></tbody></table><br /><table style=\"width: 100%\"><tbody><tr><td style=\"border: 1px solid black; padding:7px\"><p><i>Note (b)</i></p><p><strong><i>UK Network Production</i></strong></p><p><i>For Category A productions the Artist shall be guaranteed their Engagement Fee per episode, segment or instalment into which their performance is incorporated. Therefore, if the number of episodes into which their performance is incorporated is greater than the number of consecutive seven day periods for which they are engaged, then you will need to pay additional Engagement Fees to bring them up to the total number of episodes.</i></p><p><i>Category A programmes are: adult and children’s productions in the following categories:- drama productions, series and serials - including \"soaps\", situation comedy, light entertainment productions, broken comedy, fully dramatised documentary and schools/adult education productions documentary and schools/adult education productions that contain a significant drama element. All other productions are Category B.</i></p></td></tr></tbody></table><br /><table style=\"width: 100%\"><tbody><tr><td style=\"border: 1px solid black; padding:7px\"><p><i>Note (c)</i></p><p><i>For Category B productions, the aggregate of the Artist's engagement fee(s) shall not amount to less than £144.00 per episode, segment or installment.</i></p><p><strong><i>ITV Regional Production</i></strong></p><p><i>The aggregate of the Artist's engagement fee(s) shall not amount to less than £129.00 per episode, segment or installment.</i></p></td></tr></tbody></table><br /><table style=\"width: 100%\"><tbody><tr><td style=\"border: 1px solid black; padding:7px\"><p><i>Note (d)</i></p><p><i>If you are unsure how many episodes will include the Artist’s performance, insert the same answer in (i) as for (ii).  At the end of the production you will need to provide the Artist with a statement showing their total earnings and any pension contributions.  If the Artist appears in a greater number of episodes than originally set out in this form of Engagement, the Producer will need to pay an additional multi-episodic engagement fee for each additional episode (see note (b) unless otherwise provided for in another contract.</i></p></td></tr></tbody></table>"
+                        },
+                        "read_condition": {
+                            "meta.guidance_notes_toggle": "show_guidance"
+                        },
+                        "widget_type": "jinja2"
+                    }
+                },
+                {
+                    "hr_guidance_notes": {
+                        "acl": "only_internal",
+                        "args": {
+                            "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "meta.guidance_notes_toggle": "show_guidance"
                         },
                         "widget_type": "prt"
                     }
@@ -465,9 +521,6 @@
                             "dynamic": true
                         },
                         "label": "Agency name",
-                        "read_condition": {
-                            "meta.agent_toggle": "agent_yes"
-                        },
                         "widget_type": "string"
                     }
                 },
@@ -3439,7 +3492,7 @@
                     "total_guaranteed_minimum": {
                         "acl": "deal_memo",
                         "args": {
-                            "template": "\u00a3{{ ((((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0')) * decimal.Decimal(\"61.50\")) + (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\"))) + (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.53\"))) + (deal_memo.calculators.cast.rehearsal_fee(deal_memo) + (deal_memo.meta.get('cast_self_isolation_weeks_fee', decimal.Decimal(\"0\")) * deal_memo.meta.get('cast_self_isolation_weeks', decimal.Decimal(\"0\"))) + deal_memo.meta.get('additional_nominal_sum', decimal.Decimal('0')))).quantize(decimal.Decimal(\".01\")) }}"
+                            "template": "\u00a3{{ ((((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0')) * decimal.Decimal(\"61.50\")) + (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.35\"))) + (((deal_memo.meta.get('number_engagement_fees', decimal.Decimal('0')) + deal_memo.meta.get('additional_multi_episodic', decimal.Decimal('0'))) * deal_memo.meta.get('engagement_fee', decimal.Decimal('0')) + (deal_memo.meta.get('production_day_payments', decimal.Decimal('0'))) * decimal.Decimal(\"61.50\")) * decimal.Decimal(\"0.55\"))) + (deal_memo.calculators.cast.rehearsal_fee(deal_memo) + (deal_memo.meta.get('cast_self_isolation_weeks_fee', decimal.Decimal(\"0\")) * deal_memo.meta.get('cast_self_isolation_weeks', decimal.Decimal(\"0\"))) + deal_memo.meta.get('additional_nominal_sum', decimal.Decimal('0')))).quantize(decimal.Decimal(\".01\")) }}"
                         },
                         "label": "Total guaranteed minimum payment",
                         "widget_type": "jinja2"
@@ -3551,6 +3604,46 @@
                         },
                         "label": "Equity Personal Pension Scheme No.",
                         "widget_type": "string"
+                    }
+                },
+                {
+                    "equity_contributions_producer": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "pension_total"
+                            ],
+                            "placeholder": "-.-",
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Producer's Contribution",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "equity_contributions_artist": {
+                        "acl": "only_internal",
+                        "args": {
+                            "controls": [
+                                "pension_total"
+                            ],
+                            "placeholder": "-.-",
+                            "dynamic": true,
+                            "hide_empty": true
+                        },
+                        "label": "Artist's Contribution",
+                        "widget_type": "numeric"
+                    }
+                },
+                {
+                    "pension_total": {
+                        "acl": "only_internal",
+                        "args": {
+                            "template": "\u00a3{{ (deal_memo.meta.get('equity_contributions_producer', decimal.Decimal('0')) + deal_memo.meta.get('equity_contributions_artist', decimal.Decimal('0'))).quantize(decimal.Decimal(\".01\")) }}"
+                        },
+                        "label": "Total pension fee",
+                        "widget_type": "jinja2"
                     }
                 },
 
