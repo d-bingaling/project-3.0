@@ -347,6 +347,28 @@ table.pension td:first-child(3) {
 
 /* Frequently used CSS across all contract types */
 
+table.signature-block {
+    border: none;
+    width: 100%
+}
+
+table.signature-block td {
+    border: none;
+    padding: 7px;
+}
+
+table.signature-block td:first-child(1) {
+    border: none;
+    padding: 7px;
+    width: 35%
+}
+
+table.signature-block td:first-child(2) {
+    border: none;
+    padding: 7px;
+    width: 60%
+}
+
 
 /* When using the pre tage this wraps the text */
 

@@ -1610,22 +1610,20 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 				<td>
 					To: <strong>-</strong>
 				</td>
-			</tr>
-			<tr>
 				<td>
-					Number of weeks:
+					Number of weeks: <strong>0</strong> 
 				</td>
 			</tr>
 			<tr>
 				<td>Isolation Fee(s) </td>
 				<td colspan="3">
-					<strong>£.........</strong> per week 
+					<strong>£0.00</strong> per week 
 				</td>
 			</tr>
 			<tr>
 				<td>Total Isolation payments</td>
 				<td colspan="3">
-					<strong>£...........</strong>     
+					<strong>£0.00</strong>     
 				</td>
 			</tr>		
 		</tbody>
@@ -1641,7 +1639,7 @@ effective from 1 January 2008 as revised from 5 August 2013, 1 July 2015 and 1 J
 <p><strong>Section K</strong></p>
 
 <p>Total Guaranteed Minimum Payment (Section G+H+*I+*J) = <strong>£{{ 
-(engagement_fee_payment + option_b_total + second_sub_total + additional_uses_total + premiere_total + svod_pre_total + deal_memo.calculators.cast.rehearsal_fee(deal_memo) + (deal_memo.meta.get('cast_self_isolation_weeks_fee', zero)) * (deal_memo.meta.get('cast_self_isolation_weeks', zero))).quantize(decimal.Decimal(".01")) }}</strong></p>
+(engagement_fee_payment + option_b_total + second_sub_total + additional_uses_total + premiere_total + svod_pre_total + deal_memo.calculators.cast.rehearsal_fee(deal_memo) + (deal_memo.meta.get('cast_self_isolation_weeks_fee', zero)) * (deal_memo.meta.get('cast_self_isolation_weeks', zero)) + deal_memo.meta.get('additional_nominal_sum', zero)).quantize(decimal.Decimal(".01")) }}</strong></p>
 
 
 <p><i>[*I and J where applicable]</i></p>
