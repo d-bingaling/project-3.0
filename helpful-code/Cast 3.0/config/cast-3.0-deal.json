@@ -1963,10 +1963,15 @@
                     }
                 },
                 {
-                    "hr": {
+                    "hr_yerp": {
                         "acl": "deal_memo",
                         "args": {
                             "document": "<hr />"
+                        },
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": {
+                                "not": null
+                            }
                         },
                         "widget_type": "prt"
                     }
@@ -1978,6 +1983,11 @@
                             "document": "<h2>Nominated additional uses</h2>"
                         },
                         "label": "",
+                        "read_condition": {
+                            "project_record.project.settings.options_a_and_b": {
+                                "not": null
+                            }
+                        },
                         "widget_type": "prt"
                     }
                 },
