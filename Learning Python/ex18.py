@@ -6,11 +6,12 @@
     # 3. Using 1 and 2, they let you make your own 'mini-scripts' or 'tiny commands'.
 
 
-# this one is like your scripts with argv 
+# def is what we use to 'define' a function. Using an asterics is similar to us calling argvs 
 def print_two(*args):
     arg1, arg2 = args
     print(f"arg1: {arg1}, arg2: {arg2}")
 
+# it doesn't matter what you name your function, as long as it explains what you're doing
 def print_two_again(arg1, arg2):
     print(f"arg1: {arg1}, arg2: {arg2}")
 
