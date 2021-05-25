@@ -1,13 +1,11 @@
-#Comments 
+# A comment, this is so you can read your program later on.
+# Anything after the # is ignored by python
 
-print("Just printing come more text, nothing to see here.")
+print("I could have code like this.") # and the comment after is ignored
 
-# This will not print as it is a comment 
+# You can also use a comment to "disable" or comment out the code:
 
-print("but this will print")
+# print("This won't run.")
 
-# more comments 
-# more comments 
+print("This will run.")
 
-
-# here are some more comments for exercise 2
