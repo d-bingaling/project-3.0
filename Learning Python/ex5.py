@@ -1,23 +1,21 @@
-name = 'Dan Bingaling'
-age = 25 
-height = 176.784 # cm
-weight = 69.85 # kg 
-eyes = 'Brown' # eye colour 
-teeth = 'Stained' # 50 shades of yellow
-hair = 'Purple'
-weight_in_stone = weight / 6.35
-height_in_ft = height / 30.48
+# Exercise 5 - More Variables and Printing
 
-# use round() to round up a decimal/equation  
+my_name = 'Dan Bingaling'
+my_age = 26 
+my_height = 69.6 # inches 
+my_weight = 154 # lbs
+my_eyes = 'Brown'
+my_teeth = 'Yellow'
+my_hair = 'Purple'
 
-print(f"Let's talk about {name}.")
-print(f"She's {height} centimeters tall, which in feet is {height_in_ft}.")
-print(f"She's {weight} kilos heavy, which amounts to {weight_in_stone} stone.")
+print(f"Let's talk about {my_name}.")
+print(f"He's {my_height} inches tall.")
+print(f"He's {my_weight} pounds heavy.")
 print("Actually that's not too heavy.")
-print(f"She's got {eyes} eyes and {hair} hair.")
-print(f"Her teeth are usually {teeth} due to all the tea.")
+print(f"He's got {my_eyes} eyes and {my_hair} hair.")
+print(f"His teeth are usually {my_teeth} depending on the peppermint tea.")
 
 # this line is tricky, try to get it exactly right
-total = age + height + weight 
-print(f"If I add {age}, {height}, and {weight} I get {total}.")
 
+total = my_age + my_height + my_weight
+print(f"If I add {my_age}, {my_height}, and {my_weight} I get {total}.")

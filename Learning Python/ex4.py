@@ -1,23 +1,30 @@
-# car quantity
-cars = 100 
-# avaliable space in the car 
+# number of cars 
+cars = 100
+
+# how much space is in the car 
 space_in_a_car = 4.0 
-# amount of drivers 
+
+# how many drivers 
 drivers = 30 
-# amount of passengers 
-passengers = 90 
-# cars that are not being driven
-cars_not_driven = cars - drivers 
-# cars being driven 
+
+# number of passenger 
+passengers = 90
+
+# how many cars not being driven
+cars_not_driven = cars - drivers
+
+# how many cars are driven
 cars_driven = drivers 
-# capool capacity 
+
+# carpool capacity
 carpool_capacity = cars_driven * space_in_a_car
-# average passengers per car
+
+# how many passengers per car 
 average_passengers_per_car = passengers / cars_driven
 
 
-print("There are", cars, "cars avaliable.")
-print("There are only", drivers, "drivers avaliable.")
+print("There are", cars, "cars available.")
+print("There are only", drivers, "drivers avaiable.")
 print("There will be", cars_not_driven, "empty cars today.")
 print("We can transport", carpool_capacity, "people today.")
 print("We have", passengers, "to carpool today.")
